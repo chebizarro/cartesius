@@ -1,0 +1,1284 @@
+ERROR - 2013-09-29T02:36:12+00:00 - exception 'Google_AuthException' with message 'Error fetching OAuth2 access token, message: 'invalid_grant'' in /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/auth/Google_OAuth2.php:114
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/Google_Client.php(127): Google_OAuth2->authenticate(Array, '4/4QfTnHeouiwGs...')
+#1 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(48): Google_Client->authenticate('4/4QfTnHeouiwGs...')
+#2 [internal function]: Slim\Extras\Middleware\GoogleOAuth->Slim\Extras\Middleware\{closure}(NULL)
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1163): call_user_func(Object(Closure), NULL)
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1296): Slim\Slim->applyHook('slim.before.rou...')
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#8 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(51): Slim\Middleware\SessionCookie->call()
+#9 [internal function]: Slim\Extras\Middleware\GoogleOAuth->Slim\Extras\Middleware\{closure}(NULL)
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1163): call_user_func(Object(Closure), NULL)
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1296): Slim\Slim->applyHook('slim.before.rou...')
+#12 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#13 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#14 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#15 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(63): Slim\Middleware\SessionCookie->call()
+#16 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#17 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#18 /mnt/hgfs/web/cartesius/public_html/index.php(197): Slim\Slim->run()
+#19 {main}
+ERROR - 2013-09-29T02:37:07+00:00 - exception 'Google_AuthException' with message 'Error fetching OAuth2 access token, message: 'invalid_grant'' in /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/auth/Google_OAuth2.php:114
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/Google_Client.php(127): Google_OAuth2->authenticate(Array, '4/4QfTnHeouiwGs...')
+#1 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(48): Google_Client->authenticate('4/4QfTnHeouiwGs...')
+#2 [internal function]: Slim\Extras\Middleware\GoogleOAuth->Slim\Extras\Middleware\{closure}(NULL)
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1163): call_user_func(Object(Closure), NULL)
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1296): Slim\Slim->applyHook('slim.before.rou...')
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#8 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(63): Slim\Middleware\SessionCookie->call()
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#11 /mnt/hgfs/web/cartesius/public_html/index.php(197): Slim\Slim->run()
+#12 {main}
+ERROR - 2013-09-29T02:38:55+00:00 - exception 'Google_AuthException' with message 'Error fetching OAuth2 access token, message: 'invalid_grant'' in /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/auth/Google_OAuth2.php:114
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/Google_Client.php(127): Google_OAuth2->authenticate(Array, '4/4QfTnHeouiwGs...')
+#1 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(48): Google_Client->authenticate('4/4QfTnHeouiwGs...')
+#2 [internal function]: Slim\Extras\Middleware\GoogleOAuth->Slim\Extras\Middleware\{closure}(NULL)
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1163): call_user_func(Object(Closure), NULL)
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1296): Slim\Slim->applyHook('slim.before.rou...')
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#8 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(63): Slim\Middleware\SessionCookie->call()
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#11 /mnt/hgfs/web/cartesius/public_html/index.php(197): Slim\Slim->run()
+#12 {main}
+ERROR - 2013-09-29T02:42:56+00:00 - exception 'Google_AuthException' with message 'Error fetching OAuth2 access token, message: 'invalid_grant'' in /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/auth/Google_OAuth2.php:114
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/Google_Client.php(127): Google_OAuth2->authenticate(Array, '4/4QfTnHeouiwGs...')
+#1 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(50): Google_Client->authenticate('4/4QfTnHeouiwGs...')
+#2 [internal function]: Slim\Extras\Middleware\GoogleOAuth->Slim\Extras\Middleware\{closure}(NULL)
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1163): call_user_func(Object(Closure), NULL)
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1296): Slim\Slim->applyHook('slim.before.rou...')
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#8 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(65): Slim\Middleware\SessionCookie->call()
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#11 /mnt/hgfs/web/cartesius/public_html/index.php(197): Slim\Slim->run()
+#12 {main}
+ERROR - 2013-09-29T02:43:16+00:00 - exception 'Google_AuthException' with message 'Error fetching OAuth2 access token, message: 'invalid_grant'' in /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/auth/Google_OAuth2.php:114
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/Google_Client.php(127): Google_OAuth2->authenticate(Array, '4/4QfTnHeouiwGs...')
+#1 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(50): Google_Client->authenticate('4/4QfTnHeouiwGs...')
+#2 [internal function]: Slim\Extras\Middleware\GoogleOAuth->Slim\Extras\Middleware\{closure}(NULL)
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1163): call_user_func(Object(Closure), NULL)
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1296): Slim\Slim->applyHook('slim.before.rou...')
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#8 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(65): Slim\Middleware\SessionCookie->call()
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#11 /mnt/hgfs/web/cartesius/public_html/index.php(197): Slim\Slim->run()
+#12 {main}
+ERROR - 2013-09-29T02:43:48+00:00 - exception 'Google_AuthException' with message 'Error fetching OAuth2 access token, message: 'invalid_grant'' in /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/auth/Google_OAuth2.php:114
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/Google_Client.php(127): Google_OAuth2->authenticate(Array, '4/4QfTnHeouiwGs...')
+#1 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(51): Google_Client->authenticate('4/4QfTnHeouiwGs...')
+#2 [internal function]: Slim\Extras\Middleware\GoogleOAuth->Slim\Extras\Middleware\{closure}(NULL)
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1163): call_user_func(Object(Closure), NULL)
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1296): Slim\Slim->applyHook('slim.before.rou...')
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#8 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(66): Slim\Middleware\SessionCookie->call()
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#11 /mnt/hgfs/web/cartesius/public_html/index.php(197): Slim\Slim->run()
+#12 {main}
+ERROR - 2013-09-29T02:43:49+00:00 - exception 'ErrorException' with message 'Undefined index: code' in /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php:36
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(36): Slim\Slim::handleErrors(8, 'Undefined index...', '/mnt/hgfs/web/c...', 36, Array)
+#1 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#2 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#3 /mnt/hgfs/web/cartesius/public_html/index.php(197): Slim\Slim->run()
+#4 {main}
+ERROR - 2013-09-29T02:44:50+00:00 - exception 'Google_AuthException' with message 'Error fetching OAuth2 access token, message: 'invalid_grant'' in /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/auth/Google_OAuth2.php:114
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/Google_Client.php(127): Google_OAuth2->authenticate(Array, '4/4QfTnHeouiwGs...')
+#1 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(39): Google_Client->authenticate('4/4QfTnHeouiwGs...')
+#2 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#4 /mnt/hgfs/web/cartesius/public_html/index.php(197): Slim\Slim->run()
+#5 {main}
+ERROR - 2013-09-29T02:44:51+00:00 - exception 'ErrorException' with message 'Undefined index: code' in /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php:36
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(36): Slim\Slim::handleErrors(8, 'Undefined index...', '/mnt/hgfs/web/c...', 36, Array)
+#1 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#2 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#3 /mnt/hgfs/web/cartesius/public_html/index.php(197): Slim\Slim->run()
+#4 {main}
+ERROR - 2013-09-29T02:47:02+00:00 - exception 'Google_AuthException' with message 'Error fetching OAuth2 access token, message: 'invalid_grant'' in /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/auth/Google_OAuth2.php:114
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/Google_Client.php(127): Google_OAuth2->authenticate(Array, '4/4QfTnHeouiwGs...')
+#1 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(39): Google_Client->authenticate('4/4QfTnHeouiwGs...')
+#2 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#4 /mnt/hgfs/web/cartesius/public_html/index.php(197): Slim\Slim->run()
+#5 {main}
+ERROR - 2013-09-29T02:47:03+00:00 - exception 'ErrorException' with message 'Undefined index: code' in /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php:36
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(36): Slim\Slim::handleErrors(8, 'Undefined index...', '/mnt/hgfs/web/c...', 36, Array)
+#1 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#2 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#3 /mnt/hgfs/web/cartesius/public_html/index.php(197): Slim\Slim->run()
+#4 {main}
+ERROR - 2013-09-29T02:55:54+00:00 - exception 'Google_AuthException' with message 'Error fetching OAuth2 access token, message: 'invalid_grant'' in /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/auth/Google_OAuth2.php:114
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/Google_Client.php(127): Google_OAuth2->authenticate(Array, '4/4QfTnHeouiwGs...')
+#1 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(40): Google_Client->authenticate('4/4QfTnHeouiwGs...')
+#2 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#4 /mnt/hgfs/web/cartesius/public_html/index.php(197): Slim\Slim->run()
+#5 {main}
+ERROR - 2013-09-29T02:55:55+00:00 - exception 'ErrorException' with message 'Undefined index: code' in /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php:36
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(36): Slim\Slim::handleErrors(8, 'Undefined index...', '/mnt/hgfs/web/c...', 36, Array)
+#1 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#2 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#3 /mnt/hgfs/web/cartesius/public_html/index.php(197): Slim\Slim->run()
+#4 {main}
+ERROR - 2013-09-29T02:58:52+00:00 - exception 'Google_AuthException' with message 'Error fetching OAuth2 access token, message: 'invalid_grant'' in /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/auth/Google_OAuth2.php:114
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/Google_Client.php(127): Google_OAuth2->authenticate(Array, '4/4QfTnHeouiwGs...')
+#1 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(42): Google_Client->authenticate('4/4QfTnHeouiwGs...')
+#2 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#4 /mnt/hgfs/web/cartesius/public_html/index.php(197): Slim\Slim->run()
+#5 {main}
+ERROR - 2013-09-29T02:58:52+00:00 - exception 'ErrorException' with message 'Undefined index: code' in /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php:36
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(36): Slim\Slim::handleErrors(8, 'Undefined index...', '/mnt/hgfs/web/c...', 36, Array)
+#1 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#2 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#3 /mnt/hgfs/web/cartesius/public_html/index.php(197): Slim\Slim->run()
+#4 {main}
+ERROR - 2013-09-29T02:59:30+00:00 - exception 'Google_AuthException' with message 'Error fetching OAuth2 access token, message: 'invalid_grant'' in /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/auth/Google_OAuth2.php:114
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/Google_Client.php(127): Google_OAuth2->authenticate(Array, '4/4QfTnHeouiwGs...')
+#1 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(55): Google_Client->authenticate('4/4QfTnHeouiwGs...')
+#2 [internal function]: Slim\Extras\Middleware\GoogleOAuth->Slim\Extras\Middleware\{closure}(NULL)
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1163): call_user_func(Object(Closure), NULL)
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1296): Slim\Slim->applyHook('slim.before.rou...')
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#8 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(70): Slim\Middleware\SessionCookie->call()
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#11 /mnt/hgfs/web/cartesius/public_html/index.php(197): Slim\Slim->run()
+#12 {main}
+ERROR - 2013-09-29T02:59:31+00:00 - exception 'ErrorException' with message 'Undefined index: code' in /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php:36
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(36): Slim\Slim::handleErrors(8, 'Undefined index...', '/mnt/hgfs/web/c...', 36, Array)
+#1 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#2 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#3 /mnt/hgfs/web/cartesius/public_html/index.php(197): Slim\Slim->run()
+#4 {main}
+ERROR - 2013-09-29T03:02:49+00:00 - exception 'ErrorException' with message 'Undefined property: Google_Client::$auth' in /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php:40
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(40): Slim\Slim::handleErrors(8, 'Undefined prope...', '/mnt/hgfs/web/c...', 40, Array)
+#1 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#2 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#3 /mnt/hgfs/web/cartesius/public_html/index.php(197): Slim\Slim->run()
+#4 {main}
+ERROR - 2013-09-29T03:02:49+00:00 - exception 'ErrorException' with message 'Undefined index: code' in /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php:36
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(36): Slim\Slim::handleErrors(8, 'Undefined index...', '/mnt/hgfs/web/c...', 36, Array)
+#1 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#2 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#3 /mnt/hgfs/web/cartesius/public_html/index.php(197): Slim\Slim->run()
+#4 {main}
+ERROR - 2013-09-29T03:03:21+00:00 - exception 'Google_AuthException' with message 'Error fetching OAuth2 access token, message: 'invalid_grant'' in /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/auth/Google_OAuth2.php:114
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/Google_Client.php(127): Google_OAuth2->authenticate(Array, '4/4QfTnHeouiwGs...')
+#1 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(55): Google_Client->authenticate('4/4QfTnHeouiwGs...')
+#2 [internal function]: Slim\Extras\Middleware\GoogleOAuth->Slim\Extras\Middleware\{closure}(NULL)
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1163): call_user_func(Object(Closure), NULL)
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1296): Slim\Slim->applyHook('slim.before.rou...')
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#8 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(70): Slim\Middleware\SessionCookie->call()
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#11 /mnt/hgfs/web/cartesius/public_html/index.php(197): Slim\Slim->run()
+#12 {main}
+ERROR - 2013-09-29T03:03:22+00:00 - exception 'ErrorException' with message 'Undefined index: code' in /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php:36
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(36): Slim\Slim::handleErrors(8, 'Undefined index...', '/mnt/hgfs/web/c...', 36, Array)
+#1 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#2 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#3 /mnt/hgfs/web/cartesius/public_html/index.php(197): Slim\Slim->run()
+#4 {main}
+ERROR - 2013-09-29T03:04:17+00:00 - exception 'Google_AuthException' with message 'Error fetching OAuth2 access token, message: 'invalid_grant'' in /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/auth/Google_OAuth2.php:114
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/Google_Client.php(127): Google_OAuth2->authenticate(Array, '4/4QfTnHeouiwGs...')
+#1 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(55): Google_Client->authenticate('4/4QfTnHeouiwGs...')
+#2 [internal function]: Slim\Extras\Middleware\GoogleOAuth->Slim\Extras\Middleware\{closure}(NULL)
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1163): call_user_func(Object(Closure), NULL)
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1296): Slim\Slim->applyHook('slim.before.rou...')
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#8 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(70): Slim\Middleware\SessionCookie->call()
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#11 /mnt/hgfs/web/cartesius/public_html/index.php(197): Slim\Slim->run()
+#12 {main}
+ERROR - 2013-09-29T03:04:17+00:00 - exception 'ErrorException' with message 'Undefined index: code' in /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php:36
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(36): Slim\Slim::handleErrors(8, 'Undefined index...', '/mnt/hgfs/web/c...', 36, Array)
+#1 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#2 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#3 /mnt/hgfs/web/cartesius/public_html/index.php(197): Slim\Slim->run()
+#4 {main}
+ERROR - 2013-09-29T03:04:34+00:00 - exception 'Google_AuthException' with message 'Error fetching OAuth2 access token, message: 'invalid_grant'' in /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/auth/Google_OAuth2.php:114
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/Google_Client.php(127): Google_OAuth2->authenticate(Array, '4/4QfTnHeouiwGs...')
+#1 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(55): Google_Client->authenticate('4/4QfTnHeouiwGs...')
+#2 [internal function]: Slim\Extras\Middleware\GoogleOAuth->Slim\Extras\Middleware\{closure}(NULL)
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1163): call_user_func(Object(Closure), NULL)
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1296): Slim\Slim->applyHook('slim.before.rou...')
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#8 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(70): Slim\Middleware\SessionCookie->call()
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#11 /mnt/hgfs/web/cartesius/public_html/index.php(197): Slim\Slim->run()
+#12 {main}
+ERROR - 2013-09-29T03:04:34+00:00 - exception 'ErrorException' with message 'Undefined index: code' in /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php:36
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(36): Slim\Slim::handleErrors(8, 'Undefined index...', '/mnt/hgfs/web/c...', 36, Array)
+#1 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#2 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#3 /mnt/hgfs/web/cartesius/public_html/index.php(197): Slim\Slim->run()
+#4 {main}
+ERROR - 2013-09-29T03:05:17+00:00 - exception 'ErrorException' with message 'Undefined property: Google_Client::$auth' in /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php:40
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(40): Slim\Slim::handleErrors(8, 'Undefined prope...', '/mnt/hgfs/web/c...', 40, Array)
+#1 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#2 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#3 /mnt/hgfs/web/cartesius/public_html/index.php(197): Slim\Slim->run()
+#4 {main}
+ERROR - 2013-09-29T03:05:18+00:00 - exception 'ErrorException' with message 'Undefined index: code' in /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php:36
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(36): Slim\Slim::handleErrors(8, 'Undefined index...', '/mnt/hgfs/web/c...', 36, Array)
+#1 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#2 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#3 /mnt/hgfs/web/cartesius/public_html/index.php(197): Slim\Slim->run()
+#4 {main}
+ERROR - 2013-09-29T03:05:59+00:00 - exception 'ErrorException' with message 'Undefined property: Google_Client::$auth' in /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php:40
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(40): Slim\Slim::handleErrors(8, 'Undefined prope...', '/mnt/hgfs/web/c...', 40, Array)
+#1 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#2 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#3 /mnt/hgfs/web/cartesius/public_html/index.php(197): Slim\Slim->run()
+#4 {main}
+ERROR - 2013-09-29T03:06:00+00:00 - exception 'ErrorException' with message 'Undefined index: code' in /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php:36
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(36): Slim\Slim::handleErrors(8, 'Undefined index...', '/mnt/hgfs/web/c...', 36, Array)
+#1 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#2 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#3 /mnt/hgfs/web/cartesius/public_html/index.php(197): Slim\Slim->run()
+#4 {main}
+ERROR - 2013-09-29T03:18:50+00:00 - exception 'ErrorException' with message 'Undefined index: code' in /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php:36
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(36): Slim\Slim::handleErrors(8, 'Undefined index...', '/mnt/hgfs/web/c...', 36, Array)
+#1 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#2 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#3 /mnt/hgfs/web/cartesius/public_html/index.php(197): Slim\Slim->run()
+#4 {main}
+ERROR - 2013-09-29T03:18:51+00:00 - exception 'ErrorException' with message 'Undefined index: code' in /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php:36
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(36): Slim\Slim::handleErrors(8, 'Undefined index...', '/mnt/hgfs/web/c...', 36, Array)
+#1 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#2 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#3 /mnt/hgfs/web/cartesius/public_html/index.php(197): Slim\Slim->run()
+#4 {main}
+ERROR - 2013-09-29T03:18:55+00:00 - exception 'ErrorException' with message 'Undefined index: code' in /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php:36
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(36): Slim\Slim::handleErrors(8, 'Undefined index...', '/mnt/hgfs/web/c...', 36, Array)
+#1 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#2 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#3 /mnt/hgfs/web/cartesius/public_html/index.php(197): Slim\Slim->run()
+#4 {main}
+ERROR - 2013-09-29T03:18:56+00:00 - exception 'ErrorException' with message 'Undefined index: code' in /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php:36
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(36): Slim\Slim::handleErrors(8, 'Undefined index...', '/mnt/hgfs/web/c...', 36, Array)
+#1 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#2 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#3 /mnt/hgfs/web/cartesius/public_html/index.php(197): Slim\Slim->run()
+#4 {main}
+ERROR - 2013-09-29T03:20:13+00:00 - exception 'Google_AuthException' with message 'Error fetching OAuth2 access token, message: 'invalid_grant'' in /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/auth/Google_OAuth2.php:114
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/Google_Client.php(127): Google_OAuth2->authenticate(Array, '4/8rw-4cTq_mE_N...')
+#1 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(55): Google_Client->authenticate('4/8rw-4cTq_mE_N...')
+#2 [internal function]: Slim\Extras\Middleware\GoogleOAuth->Slim\Extras\Middleware\{closure}(NULL)
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1163): call_user_func(Object(Closure), NULL)
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1296): Slim\Slim->applyHook('slim.before.rou...')
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#8 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(58): Slim\Middleware\SessionCookie->call()
+#9 [internal function]: Slim\Extras\Middleware\GoogleOAuth->Slim\Extras\Middleware\{closure}(NULL)
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1163): call_user_func(Object(Closure), NULL)
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1296): Slim\Slim->applyHook('slim.before.rou...')
+#12 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#13 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#14 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#15 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(70): Slim\Middleware\SessionCookie->call()
+#16 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#17 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#18 /mnt/hgfs/web/cartesius/public_html/index.php(197): Slim\Slim->run()
+#19 {main}
+ERROR - 2013-09-29T03:32:13+00:00 - exception 'Google_AuthException' with message 'Error fetching OAuth2 access token, message: 'invalid_grant'' in /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/auth/Google_OAuth2.php:114
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/Google_Client.php(127): Google_OAuth2->authenticate(Array, '4/8rw-4cTq_mE_N...')
+#1 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(55): Google_Client->authenticate('4/8rw-4cTq_mE_N...')
+#2 [internal function]: Slim\Extras\Middleware\GoogleOAuth->Slim\Extras\Middleware\{closure}(NULL)
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1163): call_user_func(Object(Closure), NULL)
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1296): Slim\Slim->applyHook('slim.before.rou...')
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#8 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(70): Slim\Middleware\SessionCookie->call()
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#11 /mnt/hgfs/web/cartesius/public_html/index.php(197): Slim\Slim->run()
+#12 {main}
+ERROR - 2013-09-29T03:32:33+00:00 - exception 'Google_AuthException' with message 'Error fetching OAuth2 access token, message: 'invalid_grant'' in /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/auth/Google_OAuth2.php:114
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/Google_Client.php(127): Google_OAuth2->authenticate(Array, '4/7ednQHsZhDHXk...')
+#1 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(55): Google_Client->authenticate('4/7ednQHsZhDHXk...')
+#2 [internal function]: Slim\Extras\Middleware\GoogleOAuth->Slim\Extras\Middleware\{closure}(NULL)
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1163): call_user_func(Object(Closure), NULL)
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1296): Slim\Slim->applyHook('slim.before.rou...')
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#8 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(58): Slim\Middleware\SessionCookie->call()
+#9 [internal function]: Slim\Extras\Middleware\GoogleOAuth->Slim\Extras\Middleware\{closure}(NULL)
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1163): call_user_func(Object(Closure), NULL)
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1296): Slim\Slim->applyHook('slim.before.rou...')
+#12 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#13 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#14 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#15 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(70): Slim\Middleware\SessionCookie->call()
+#16 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#17 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#18 /mnt/hgfs/web/cartesius/public_html/index.php(197): Slim\Slim->run()
+#19 {main}
+ERROR - 2013-09-29T03:43:26+00:00 - exception 'Google_AuthException' with message 'Error fetching OAuth2 access token, message: 'invalid_grant'' in /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/auth/Google_OAuth2.php:114
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/Google_Client.php(127): Google_OAuth2->authenticate(Array, '4/brYZJWtyEnbVs...')
+#1 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(55): Google_Client->authenticate('4/brYZJWtyEnbVs...')
+#2 [internal function]: Slim\Extras\Middleware\GoogleOAuth->Slim\Extras\Middleware\{closure}(NULL)
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1163): call_user_func(Object(Closure), NULL)
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1296): Slim\Slim->applyHook('slim.before.rou...')
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#8 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(58): Slim\Middleware\SessionCookie->call()
+#9 [internal function]: Slim\Extras\Middleware\GoogleOAuth->Slim\Extras\Middleware\{closure}(NULL)
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1163): call_user_func(Object(Closure), NULL)
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1296): Slim\Slim->applyHook('slim.before.rou...')
+#12 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#13 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#14 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#15 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(70): Slim\Middleware\SessionCookie->call()
+#16 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#17 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#18 /mnt/hgfs/web/cartesius/public_html/index.php(197): Slim\Slim->run()
+#19 {main}
+ERROR - 2013-09-29T03:44:27+00:00 - exception 'Google_AuthException' with message 'Error fetching OAuth2 access token, message: 'invalid_grant'' in /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/auth/Google_OAuth2.php:114
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/Google_Client.php(127): Google_OAuth2->authenticate(Array, '4/7ednQHsZhDHXk...')
+#1 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(55): Google_Client->authenticate('4/7ednQHsZhDHXk...')
+#2 [internal function]: Slim\Extras\Middleware\GoogleOAuth->Slim\Extras\Middleware\{closure}(NULL)
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1163): call_user_func(Object(Closure), NULL)
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1296): Slim\Slim->applyHook('slim.before.rou...')
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#8 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(70): Slim\Middleware\SessionCookie->call()
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#11 /mnt/hgfs/web/cartesius/public_html/index.php(197): Slim\Slim->run()
+#12 {main}
+ERROR - 2013-09-29T03:44:52+00:00 - exception 'Google_AuthException' with message 'Error fetching OAuth2 access token, message: 'invalid_grant'' in /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/auth/Google_OAuth2.php:114
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/Google_Client.php(127): Google_OAuth2->authenticate(Array, '4/A9W4zBCYWi0B7...')
+#1 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(55): Google_Client->authenticate('4/A9W4zBCYWi0B7...')
+#2 [internal function]: Slim\Extras\Middleware\GoogleOAuth->Slim\Extras\Middleware\{closure}(NULL)
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1163): call_user_func(Object(Closure), NULL)
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1296): Slim\Slim->applyHook('slim.before.rou...')
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#8 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(58): Slim\Middleware\SessionCookie->call()
+#9 [internal function]: Slim\Extras\Middleware\GoogleOAuth->Slim\Extras\Middleware\{closure}(NULL)
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1163): call_user_func(Object(Closure), NULL)
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1296): Slim\Slim->applyHook('slim.before.rou...')
+#12 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#13 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#14 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#15 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(70): Slim\Middleware\SessionCookie->call()
+#16 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#17 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#18 /mnt/hgfs/web/cartesius/public_html/index.php(197): Slim\Slim->run()
+#19 {main}
+ERROR - 2013-09-29T03:47:55+00:00 - exception 'Google_AuthException' with message 'Error fetching OAuth2 access token, message: 'invalid_grant'' in /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/auth/Google_OAuth2.php:114
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/Google_Client.php(127): Google_OAuth2->authenticate(Array, '4/A9W4zBCYWi0B7...')
+#1 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(55): Google_Client->authenticate('4/A9W4zBCYWi0B7...')
+#2 [internal function]: Slim\Extras\Middleware\GoogleOAuth->Slim\Extras\Middleware\{closure}(NULL)
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1163): call_user_func(Object(Closure), NULL)
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1296): Slim\Slim->applyHook('slim.before.rou...')
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#7 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(70): Slim\Middleware\MethodOverride->call()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#10 /mnt/hgfs/web/cartesius/public_html/index.php(198): Slim\Slim->run()
+#11 {main}
+ERROR - 2013-09-29T08:13:47+00:00 - exception 'ErrorException' with message 'Undefined variable: MODULES' in /mnt/hgfs/web/cartesius/public_html/index.php:192
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/public_html/index.php(192): Slim\Slim::handleErrors(8, 'Undefined varia...', '/mnt/hgfs/web/c...', 192, Array)
+#1 [internal function]: {closure}()
+#2 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#7 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(67): Slim\Middleware\SessionCookie->call()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#10 /mnt/hgfs/web/cartesius/public_html/index.php(205): Slim\Slim->run()
+#11 {main}
+ERROR - 2013-09-29T08:47:37+00:00 - exception 'ErrorException' with message 'Use of undefined constant XMLORM - assumed 'XMLORM'' in /mnt/hgfs/web/cartesius/public_html/index.php:198
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/public_html/index.php(198): Slim\Slim::handleErrors(8, 'Use of undefine...', '/mnt/hgfs/web/c...', 198, Array)
+#1 [internal function]: {closure}()
+#2 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#7 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(67): Slim\Middleware\SessionCookie->call()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#10 /mnt/hgfs/web/cartesius/public_html/index.php(207): Slim\Slim->run()
+#11 {main}
+ERROR - 2013-09-29T08:47:53+00:00 - exception 'ErrorException' with message 'Use of undefined constant XMLORM - assumed 'XMLORM'' in /mnt/hgfs/web/cartesius/public_html/index.php:198
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/public_html/index.php(198): Slim\Slim::handleErrors(8, 'Use of undefine...', '/mnt/hgfs/web/c...', 198, Array)
+#1 [internal function]: {closure}()
+#2 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#7 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(67): Slim\Middleware\SessionCookie->call()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#10 /mnt/hgfs/web/cartesius/public_html/index.php(207): Slim\Slim->run()
+#11 {main}
+ERROR - 2013-09-29T08:52:36+00:00 - exception 'ErrorException' with message 'Use of undefined constant XMLORM - assumed 'XMLORM'' in /mnt/hgfs/web/cartesius/public_html/index.php:198
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/public_html/index.php(198): Slim\Slim::handleErrors(8, 'Use of undefine...', '/mnt/hgfs/web/c...', 198, Array)
+#1 [internal function]: {closure}()
+#2 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#7 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(67): Slim\Middleware\SessionCookie->call()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#10 /mnt/hgfs/web/cartesius/public_html/index.php(207): Slim\Slim->run()
+#11 {main}
+ERROR - 2013-09-29T09:46:19+00:00 - exception 'ErrorException' with message 'Undefined property: XMLResultSet::$_table_name' in /mnt/hgfs/web/cartesius/app/lib/XMLORM.php:2112
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/lib/XMLORM.php(2112): Slim\Slim::handleErrors(8, 'Undefined prope...', '/mnt/hgfs/web/c...', 2112, Array)
+#1 /mnt/hgfs/web/cartesius/public_html/index.php(195): XMLResultSet->as_xml()
+#2 [internal function]: {closure}()
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#8 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(67): Slim\Middleware\SessionCookie->call()
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#11 /mnt/hgfs/web/cartesius/public_html/index.php(204): Slim\Slim->run()
+#12 {main}
+ERROR - 2013-09-29T09:46:32+00:00 - exception 'ErrorException' with message 'Undefined property: XMLResultSet::$_table_name' in /mnt/hgfs/web/cartesius/app/lib/XMLORM.php:2112
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/lib/XMLORM.php(2112): Slim\Slim::handleErrors(8, 'Undefined prope...', '/mnt/hgfs/web/c...', 2112, Array)
+#1 /mnt/hgfs/web/cartesius/public_html/index.php(195): XMLResultSet->as_xml()
+#2 [internal function]: {closure}()
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#8 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(67): Slim\Middleware\SessionCookie->call()
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#11 /mnt/hgfs/web/cartesius/public_html/index.php(204): Slim\Slim->run()
+#12 {main}
+ERROR - 2013-09-29T09:47:36+00:00 - exception 'ErrorException' with message 'Undefined property: XMLResultSet::$_table_name' in /mnt/hgfs/web/cartesius/app/lib/XMLORM.php:2112
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/lib/XMLORM.php(2112): Slim\Slim::handleErrors(8, 'Undefined prope...', '/mnt/hgfs/web/c...', 2112, Array)
+#1 /mnt/hgfs/web/cartesius/public_html/index.php(195): XMLResultSet->as_xml()
+#2 [internal function]: {closure}()
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#8 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(67): Slim\Middleware\SessionCookie->call()
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#11 /mnt/hgfs/web/cartesius/public_html/index.php(204): Slim\Slim->run()
+#12 {main}
+ERROR - 2013-09-29T10:17:51+00:00 - exception 'ErrorException' with message 'Argument 1 passed to DOMNode::appendChild() must be an instance of DOMNode, null given, called in /mnt/hgfs/web/cartesius/public_html/index.php on line 195 and defined' in /mnt/hgfs/web/cartesius/app/lib/XMLORM.php:1660
+Stack trace:
+#0 [internal function]: Slim\Slim::handleErrors(4096, 'Argument 1 pass...', '/mnt/hgfs/web/c...', 1660, Array)
+#1 /mnt/hgfs/web/cartesius/app/lib/XMLORM.php(1660): DOMNode->appendChild(NULL)
+#2 /mnt/hgfs/web/cartesius/public_html/index.php(195): XMLORM->as_xml()
+#3 [internal function]: {closure}()
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#9 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(67): Slim\Middleware\SessionCookie->call()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#12 /mnt/hgfs/web/cartesius/public_html/index.php(204): Slim\Slim->run()
+#13 {main}
+ERROR - 2013-09-29T10:17:57+00:00 - exception 'ErrorException' with message 'Argument 1 passed to DOMNode::appendChild() must be an instance of DOMNode, null given, called in /mnt/hgfs/web/cartesius/public_html/index.php on line 195 and defined' in /mnt/hgfs/web/cartesius/app/lib/XMLORM.php:1660
+Stack trace:
+#0 [internal function]: Slim\Slim::handleErrors(4096, 'Argument 1 pass...', '/mnt/hgfs/web/c...', 1660, Array)
+#1 /mnt/hgfs/web/cartesius/app/lib/XMLORM.php(1660): DOMNode->appendChild(NULL)
+#2 /mnt/hgfs/web/cartesius/public_html/index.php(195): XMLORM->as_xml()
+#3 [internal function]: {closure}()
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#9 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(67): Slim\Middleware\SessionCookie->call()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#12 /mnt/hgfs/web/cartesius/public_html/index.php(204): Slim\Slim->run()
+#13 {main}
+ERROR - 2013-09-29T10:23:52+00:00 - exception 'ErrorException' with message 'Undefined property: XMLResultSet::$_table_name' in /mnt/hgfs/web/cartesius/app/lib/XMLORM.php:2109
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/lib/XMLORM.php(2109): Slim\Slim::handleErrors(8, 'Undefined prope...', '/mnt/hgfs/web/c...', 2109, Array)
+#1 /mnt/hgfs/web/cartesius/public_html/index.php(195): XMLResultSet->as_xml()
+#2 [internal function]: {closure}()
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#8 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(67): Slim\Middleware\SessionCookie->call()
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#11 /mnt/hgfs/web/cartesius/public_html/index.php(204): Slim\Slim->run()
+#12 {main}
+ERROR - 2013-09-29T10:23:56+00:00 - exception 'ErrorException' with message 'Undefined property: XMLResultSet::$_table_name' in /mnt/hgfs/web/cartesius/app/lib/XMLORM.php:2109
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/lib/XMLORM.php(2109): Slim\Slim::handleErrors(8, 'Undefined prope...', '/mnt/hgfs/web/c...', 2109, Array)
+#1 /mnt/hgfs/web/cartesius/public_html/index.php(195): XMLResultSet->as_xml()
+#2 [internal function]: {closure}()
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#8 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(67): Slim\Middleware\SessionCookie->call()
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#11 /mnt/hgfs/web/cartesius/public_html/index.php(204): Slim\Slim->run()
+#12 {main}
+ERROR - 2013-09-29T10:31:57+00:00 - exception 'DOMException' with message 'Invalid Character Error' in /mnt/hgfs/web/cartesius/app/lib/XMLORM.php:2118
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/lib/XMLORM.php(2118): DOMDocument->createElement('')
+#1 /mnt/hgfs/web/cartesius/app/lib/XMLORM.php(2112): XMLResultSet->array_to_xml(Object(DOMElement), Array)
+#2 /mnt/hgfs/web/cartesius/public_html/index.php(195): XMLResultSet->as_xml()
+#3 [internal function]: {closure}()
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#9 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(67): Slim\Middleware\SessionCookie->call()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#12 /mnt/hgfs/web/cartesius/public_html/index.php(204): Slim\Slim->run()
+#13 {main}
+ERROR - 2013-09-29T10:32:02+00:00 - exception 'DOMException' with message 'Invalid Character Error' in /mnt/hgfs/web/cartesius/app/lib/XMLORM.php:2118
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/lib/XMLORM.php(2118): DOMDocument->createElement('')
+#1 /mnt/hgfs/web/cartesius/app/lib/XMLORM.php(2112): XMLResultSet->array_to_xml(Object(DOMElement), Array)
+#2 /mnt/hgfs/web/cartesius/public_html/index.php(195): XMLResultSet->as_xml()
+#3 [internal function]: {closure}()
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#9 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(67): Slim\Middleware\SessionCookie->call()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#12 /mnt/hgfs/web/cartesius/public_html/index.php(204): Slim\Slim->run()
+#13 {main}
+ERROR - 2013-09-29T10:33:35+00:00 - exception 'ErrorException' with message 'Undefined offset: 0' in /mnt/hgfs/web/cartesius/public_html/index.php:197
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/public_html/index.php(197): Slim\Slim::handleErrors(8, 'Undefined offse...', '/mnt/hgfs/web/c...', 197, Array)
+#1 [internal function]: {closure}()
+#2 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#7 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(67): Slim\Middleware\SessionCookie->call()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#10 /mnt/hgfs/web/cartesius/public_html/index.php(205): Slim\Slim->run()
+#11 {main}
+ERROR - 2013-09-29T10:33:42+00:00 - exception 'ErrorException' with message 'Undefined offset: 0' in /mnt/hgfs/web/cartesius/public_html/index.php:197
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/public_html/index.php(197): Slim\Slim::handleErrors(8, 'Undefined offse...', '/mnt/hgfs/web/c...', 197, Array)
+#1 [internal function]: {closure}()
+#2 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#7 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(67): Slim\Middleware\SessionCookie->call()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#10 /mnt/hgfs/web/cartesius/public_html/index.php(205): Slim\Slim->run()
+#11 {main}
+ERROR - 2013-09-29T10:42:14+00:00 - exception 'ErrorException' with message 'Undefined variable: newnode' in /mnt/hgfs/web/cartesius/app/lib/XMLORM.php:2121
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/lib/XMLORM.php(2121): Slim\Slim::handleErrors(8, 'Undefined varia...', '/mnt/hgfs/web/c...', 2121, Array)
+#1 /mnt/hgfs/web/cartesius/app/lib/XMLORM.php(2115): XMLResultSet->array_to_xml(Object(DOMElement), Array)
+#2 /mnt/hgfs/web/cartesius/public_html/index.php(195): XMLResultSet->as_xml()
+#3 [internal function]: {closure}()
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#9 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(67): Slim\Middleware\SessionCookie->call()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#12 /mnt/hgfs/web/cartesius/public_html/index.php(204): Slim\Slim->run()
+#13 {main}
+ERROR - 2013-09-29T10:44:32+00:00 - exception 'DOMException' with message 'Wrong Document Error' in /mnt/hgfs/web/cartesius/app/lib/XMLORM.php:1670
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/lib/XMLORM.php(1670): DOMNode->appendChild(Object(DOMElement))
+#1 /mnt/hgfs/web/cartesius/app/lib/XMLORM.php(2121): XMLORM->array_to_xml(Object(DOMElement), NULL)
+#2 /mnt/hgfs/web/cartesius/app/lib/XMLORM.php(2115): XMLResultSet->array_to_xml(Object(DOMElement), Array)
+#3 /mnt/hgfs/web/cartesius/public_html/index.php(195): XMLResultSet->as_xml()
+#4 [internal function]: {closure}()
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#10 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(67): Slim\Middleware\SessionCookie->call()
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#12 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#13 /mnt/hgfs/web/cartesius/public_html/index.php(204): Slim\Slim->run()
+#14 {main}
+ERROR - 2013-09-29T11:21:25+00:00 - exception 'ErrorException' with message 'PDOStatement::execute(): SQLSTATE[42601]: Syntax error: 7 ERROR:  syntax error at or near &quot;.&quot;
+LINE 1: SELECT &quot;modulename&quot; AS &quot;modules&quot;.&quot;name&quot; FROM &quot;components&quot; JO...
+                                        ^' in /mnt/hgfs/web/cartesius/app/lib/XMLORM.php:417
+Stack trace:
+#0 [internal function]: Slim\Slim::handleErrors(2, 'PDOStatement::e...', '/mnt/hgfs/web/c...', 417, Array)
+#1 /mnt/hgfs/web/cartesius/app/lib/XMLORM.php(417): PDOStatement->execute(Array)
+#2 /mnt/hgfs/web/cartesius/app/lib/XMLORM.php(1609): XMLORM::_execute('SELECT "modulen...', Array, 'default')
+#3 /mnt/hgfs/web/cartesius/app/lib/XMLORM.php(617): XMLORM->_run()
+#4 /mnt/hgfs/web/cartesius/app/lib/XMLORM.php(644): XMLORM->_find_many()
+#5 /mnt/hgfs/web/cartesius/app/lib/XMLORM.php(604): XMLORM->find_result_set()
+#6 /mnt/hgfs/web/cartesius/public_html/index.php(195): XMLORM->find_many()
+#7 [internal function]: {closure}()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#12 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#13 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(67): Slim\Middleware\SessionCookie->call()
+#14 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#15 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#16 /mnt/hgfs/web/cartesius/public_html/index.php(204): Slim\Slim->run()
+#17 {main}
+ERROR - 2013-09-29T11:44:40+00:00 - exception 'ErrorException' with message 'Undefined property: XMLResultSet::$_results' in /mnt/hgfs/web/cartesius/app/lib/XMLORM.php:214
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/lib/XMLORM.php(214): Slim\Slim::handleErrors(8, 'Undefined prope...', '/mnt/hgfs/web/c...', 214, Array)
+#1 /mnt/hgfs/web/cartesius/app/lib/XMLORM.php(125): XMLResultSet->__call('get_results', Array)
+#2 /mnt/hgfs/web/cartesius/app/lib/XMLORM.php(125): XMLResultSet->get_results()
+#3 /mnt/hgfs/web/cartesius/public_html/index.php(195): XMLResultSet->as_xml()
+#4 [internal function]: {closure}()
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#10 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(67): Slim\Middleware\SessionCookie->call()
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#12 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#13 /mnt/hgfs/web/cartesius/public_html/index.php(204): Slim\Slim->run()
+#14 {main}
+ERROR - 2013-09-29T12:01:52+00:00 - exception 'InvalidArgumentException' with message 'Cannot append view data. Expected array argument.' in /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/View.php:191
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(741): Slim\View->appendData(Object(DOMDocument))
+#1 /mnt/hgfs/web/cartesius/public_html/index.php(202): Slim\Slim->render('cartesius/templ...', Object(DOMDocument))
+#2 [internal function]: {closure}()
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#8 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(67): Slim\Middleware\SessionCookie->call()
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#11 /mnt/hgfs/web/cartesius/public_html/index.php(210): Slim\Slim->run()
+#12 {main}
+ERROR - 2013-09-29T12:01:55+00:00 - exception 'InvalidArgumentException' with message 'Cannot append view data. Expected array argument.' in /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/View.php:191
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(741): Slim\View->appendData(Object(DOMDocument))
+#1 /mnt/hgfs/web/cartesius/public_html/index.php(202): Slim\Slim->render('cartesius/templ...', Object(DOMDocument))
+#2 [internal function]: {closure}()
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#8 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(67): Slim\Middleware\SessionCookie->call()
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#11 /mnt/hgfs/web/cartesius/public_html/index.php(210): Slim\Slim->run()
+#12 {main}
+ERROR - 2013-09-29T12:07:46+00:00 - exception 'ErrorException' with message 'get_class() expects parameter 1 to be object, string given' in /mnt/hgfs/web/cartesius/public_html/index.php:198
+Stack trace:
+#0 [internal function]: Slim\Slim::handleErrors(2, 'get_class() exp...', '/mnt/hgfs/web/c...', 198, Array)
+#1 /mnt/hgfs/web/cartesius/public_html/index.php(198): get_class('This is a test ...')
+#2 [internal function]: {closure}()
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#8 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(67): Slim\Middleware\SessionCookie->call()
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#11 /mnt/hgfs/web/cartesius/public_html/index.php(212): Slim\Slim->run()
+#12 {main}
+ERROR - 2013-09-29T12:07:51+00:00 - exception 'ErrorException' with message 'get_class() expects parameter 1 to be object, string given' in /mnt/hgfs/web/cartesius/public_html/index.php:198
+Stack trace:
+#0 [internal function]: Slim\Slim::handleErrors(2, 'get_class() exp...', '/mnt/hgfs/web/c...', 198, Array)
+#1 /mnt/hgfs/web/cartesius/public_html/index.php(198): get_class('This is a test ...')
+#2 [internal function]: {closure}()
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#8 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(67): Slim\Middleware\SessionCookie->call()
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#11 /mnt/hgfs/web/cartesius/public_html/index.php(212): Slim\Slim->run()
+#12 {main}
+ERROR - 2013-09-29T12:32:59+00:00 - exception 'ErrorException' with message 'get_class() expects parameter 1 to be object, array given' in /mnt/hgfs/web/cartesius/app/lib/XSLT.php:55
+Stack trace:
+#0 [internal function]: Slim\Slim::handleErrors(2, 'get_class() exp...', '/mnt/hgfs/web/c...', 55, Array)
+#1 /mnt/hgfs/web/cartesius/app/lib/XSLT.php(55): get_class(Array)
+#2 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/View.php(252): Slim\Extras\Views\XSLT->render('cartesius/templ...')
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/View.php(242): Slim\View->fetch('cartesius/templ...')
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(742): Slim\View->display('cartesius/templ...')
+#5 /mnt/hgfs/web/cartesius/public_html/index.php(76): Slim\Slim->render('cartesius/templ...', Array)
+#6 [internal function]: {closure}()
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#12 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(67): Slim\Middleware\SessionCookie->call()
+#13 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#14 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#15 /mnt/hgfs/web/cartesius/public_html/index.php(212): Slim\Slim->run()
+#16 {main}
+ERROR - 2013-09-29T12:34:14+00:00 - exception 'ErrorException' with message 'DOMDocument::createElement() expects parameter 2 to be string, object given' in /mnt/hgfs/web/cartesius/app/lib/XSLT.php:103
+Stack trace:
+#0 [internal function]: Slim\Slim::handleErrors(2, 'DOMDocument::cr...', '/mnt/hgfs/web/c...', 103, Array)
+#1 /mnt/hgfs/web/cartesius/app/lib/XSLT.php(103): DOMDocument->createElement('modules', Object(IdiormResultSet))
+#2 /mnt/hgfs/web/cartesius/app/lib/XSLT.php(71): Slim\Extras\Views\XSLT->array_to_xml(Object(DOMElement), Array)
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/View.php(252): Slim\Extras\Views\XSLT->render('modules.xsl')
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/View.php(242): Slim\View->fetch('modules.xsl')
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(742): Slim\View->display('modules.xsl')
+#6 /mnt/hgfs/web/cartesius/public_html/index.php(109): Slim\Slim->render('modules.xsl', Array)
+#7 [internal function]: {closure}()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#12 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#13 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(67): Slim\Middleware\SessionCookie->call()
+#14 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#15 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#16 /mnt/hgfs/web/cartesius/public_html/index.php(212): Slim\Slim->run()
+#17 {main}
+ERROR - 2013-09-29T12:34:40+00:00 - exception 'ErrorException' with message 'DOMDocument::createElement() expects parameter 2 to be string, object given' in /mnt/hgfs/web/cartesius/app/lib/XSLT.php:103
+Stack trace:
+#0 [internal function]: Slim\Slim::handleErrors(2, 'DOMDocument::cr...', '/mnt/hgfs/web/c...', 103, Array)
+#1 /mnt/hgfs/web/cartesius/app/lib/XSLT.php(103): DOMDocument->createElement('modules', Object(IdiormResultSet))
+#2 /mnt/hgfs/web/cartesius/app/lib/XSLT.php(71): Slim\Extras\Views\XSLT->array_to_xml(Object(DOMElement), Array)
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/View.php(252): Slim\Extras\Views\XSLT->render('modules.xsl')
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/View.php(242): Slim\View->fetch('modules.xsl')
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(742): Slim\View->display('modules.xsl')
+#6 /mnt/hgfs/web/cartesius/public_html/index.php(109): Slim\Slim->render('modules.xsl', Array)
+#7 [internal function]: {closure}()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#12 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#13 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(67): Slim\Middleware\SessionCookie->call()
+#14 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#15 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#16 /mnt/hgfs/web/cartesius/public_html/index.php(212): Slim\Slim->run()
+#17 {main}
+ERROR - 2013-09-29T12:43:39+00:00 - exception 'ErrorException' with message 'DOMDocument::createElement() expects parameter 2 to be string, object given' in /mnt/hgfs/web/cartesius/app/lib/XSLT.php:103
+Stack trace:
+#0 [internal function]: Slim\Slim::handleErrors(2, 'DOMDocument::cr...', '/mnt/hgfs/web/c...', 103, Array)
+#1 /mnt/hgfs/web/cartesius/app/lib/XSLT.php(103): DOMDocument->createElement('1', Object(Modules))
+#2 /mnt/hgfs/web/cartesius/app/lib/XSLT.php(71): Slim\Extras\Views\XSLT->array_to_xml(Object(DOMElement), Array)
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/View.php(252): Slim\Extras\Views\XSLT->render('modules.xsl')
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/View.php(242): Slim\View->fetch('modules.xsl')
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(742): Slim\View->display('modules.xsl')
+#6 /mnt/hgfs/web/cartesius/public_html/index.php(109): Slim\Slim->render('modules.xsl', Array)
+#7 [internal function]: {closure}()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#12 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#13 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(67): Slim\Middleware\SessionCookie->call()
+#14 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#15 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#16 /mnt/hgfs/web/cartesius/public_html/index.php(212): Slim\Slim->run()
+#17 {main}
+ERROR - 2013-09-29T12:52:35+00:00 - exception 'ErrorException' with message 'DOMDocument::createElement() expects parameter 2 to be string, object given' in /mnt/hgfs/web/cartesius/app/lib/XSLT.php:103
+Stack trace:
+#0 [internal function]: Slim\Slim::handleErrors(2, 'DOMDocument::cr...', '/mnt/hgfs/web/c...', 103, Array)
+#1 /mnt/hgfs/web/cartesius/app/lib/XSLT.php(103): DOMDocument->createElement('1', Object(Modules))
+#2 /mnt/hgfs/web/cartesius/app/lib/XSLT.php(69): Slim\Extras\Views\XSLT->array_to_xml(Object(DOMElement), Array)
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/View.php(252): Slim\Extras\Views\XSLT->render('modules.xsl')
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/View.php(242): Slim\View->fetch('modules.xsl')
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(742): Slim\View->display('modules.xsl')
+#6 /mnt/hgfs/web/cartesius/public_html/index.php(109): Slim\Slim->render('modules.xsl', Array)
+#7 [internal function]: {closure}()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#12 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#13 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(67): Slim\Middleware\SessionCookie->call()
+#14 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#15 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#16 /mnt/hgfs/web/cartesius/public_html/index.php(212): Slim\Slim->run()
+#17 {main}
+ERROR - 2013-09-29T12:54:00+00:00 - exception 'DOMException' with message 'Invalid Character Error' in /mnt/hgfs/web/cartesius/app/lib/XSLT.php:103
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/lib/XSLT.php(103): DOMDocument->createElement('$key', '$value')
+#1 /mnt/hgfs/web/cartesius/app/lib/XSLT.php(69): Slim\Extras\Views\XSLT->array_to_xml(Object(DOMElement), Array)
+#2 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/View.php(252): Slim\Extras\Views\XSLT->render('modules.xsl')
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/View.php(242): Slim\View->fetch('modules.xsl')
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(742): Slim\View->display('modules.xsl')
+#5 /mnt/hgfs/web/cartesius/public_html/index.php(109): Slim\Slim->render('modules.xsl', Array)
+#6 [internal function]: {closure}()
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#12 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(67): Slim\Middleware\SessionCookie->call()
+#13 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#14 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#15 /mnt/hgfs/web/cartesius/public_html/index.php(212): Slim\Slim->run()
+#16 {main}
+ERROR - 2013-09-29T12:56:28+00:00 - exception 'ErrorException' with message 'DOMDocument::createElement() expects parameter 2 to be string, object given' in /mnt/hgfs/web/cartesius/app/lib/XSLT.php:99
+Stack trace:
+#0 [internal function]: Slim\Slim::handleErrors(2, 'DOMDocument::cr...', '/mnt/hgfs/web/c...', 99, Array)
+#1 /mnt/hgfs/web/cartesius/app/lib/XSLT.php(99): DOMDocument->createElement('1', Object(Modules))
+#2 /mnt/hgfs/web/cartesius/app/lib/XSLT.php(68): Slim\Extras\Views\XSLT->array_to_xml(Object(DOMElement), Array)
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/View.php(252): Slim\Extras\Views\XSLT->render('modules.xsl')
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/View.php(242): Slim\View->fetch('modules.xsl')
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(742): Slim\View->display('modules.xsl')
+#6 /mnt/hgfs/web/cartesius/public_html/index.php(109): Slim\Slim->render('modules.xsl', Array)
+#7 [internal function]: {closure}()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#12 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#13 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(67): Slim\Middleware\SessionCookie->call()
+#14 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#15 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#16 /mnt/hgfs/web/cartesius/public_html/index.php(212): Slim\Slim->run()
+#17 {main}
+ERROR - 2013-09-29T12:57:37+00:00 - exception 'ErrorException' with message 'DOMDocument::createElement() expects parameter 2 to be string, object given' in /mnt/hgfs/web/cartesius/app/lib/XSLT.php:99
+Stack trace:
+#0 [internal function]: Slim\Slim::handleErrors(2, 'DOMDocument::cr...', '/mnt/hgfs/web/c...', 99, Array)
+#1 /mnt/hgfs/web/cartesius/app/lib/XSLT.php(99): DOMDocument->createElement('1', Object(Modules))
+#2 /mnt/hgfs/web/cartesius/app/lib/XSLT.php(68): Slim\Extras\Views\XSLT->array_to_xml(Object(DOMElement), Array)
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/View.php(252): Slim\Extras\Views\XSLT->render('modules.xsl')
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/View.php(242): Slim\View->fetch('modules.xsl')
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(742): Slim\View->display('modules.xsl')
+#6 /mnt/hgfs/web/cartesius/public_html/index.php(109): Slim\Slim->render('modules.xsl', Array)
+#7 [internal function]: {closure}()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#12 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#13 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(67): Slim\Middleware\SessionCookie->call()
+#14 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#15 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#16 /mnt/hgfs/web/cartesius/public_html/index.php(212): Slim\Slim->run()
+#17 {main}
+ERROR - 2013-09-29T12:59:39+00:00 - exception 'ErrorException' with message 'DOMDocument::createElement() expects parameter 2 to be string, object given' in /mnt/hgfs/web/cartesius/app/lib/XSLT.php:99
+Stack trace:
+#0 [internal function]: Slim\Slim::handleErrors(2, 'DOMDocument::cr...', '/mnt/hgfs/web/c...', 99, Array)
+#1 /mnt/hgfs/web/cartesius/app/lib/XSLT.php(99): DOMDocument->createElement('1', Object(Modules))
+#2 /mnt/hgfs/web/cartesius/app/lib/XSLT.php(68): Slim\Extras\Views\XSLT->array_to_xml(Object(DOMElement), Array)
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/View.php(252): Slim\Extras\Views\XSLT->render('modules.xsl')
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/View.php(242): Slim\View->fetch('modules.xsl')
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(742): Slim\View->display('modules.xsl')
+#6 /mnt/hgfs/web/cartesius/public_html/index.php(109): Slim\Slim->render('modules.xsl', Array)
+#7 [internal function]: {closure}()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#12 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#13 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(67): Slim\Middleware\SessionCookie->call()
+#14 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#15 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#16 /mnt/hgfs/web/cartesius/public_html/index.php(212): Slim\Slim->run()
+#17 {main}
+ERROR - 2013-09-29T13:04:48+00:00 - exception 'ErrorException' with message 'DOMDocument::createElement() expects parameter 2 to be string, object given' in /mnt/hgfs/web/cartesius/app/lib/XSLT.php:99
+Stack trace:
+#0 [internal function]: Slim\Slim::handleErrors(2, 'DOMDocument::cr...', '/mnt/hgfs/web/c...', 99, Array)
+#1 /mnt/hgfs/web/cartesius/app/lib/XSLT.php(99): DOMDocument->createElement('1', Object(Modules))
+#2 /mnt/hgfs/web/cartesius/app/lib/XSLT.php(68): Slim\Extras\Views\XSLT->array_to_xml(Object(DOMElement), Array)
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/View.php(252): Slim\Extras\Views\XSLT->render('modules.xsl')
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/View.php(242): Slim\View->fetch('modules.xsl')
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(742): Slim\View->display('modules.xsl')
+#6 /mnt/hgfs/web/cartesius/public_html/index.php(109): Slim\Slim->render('modules.xsl', Array)
+#7 [internal function]: {closure}()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#12 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#13 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(67): Slim\Middleware\SessionCookie->call()
+#14 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#15 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#16 /mnt/hgfs/web/cartesius/public_html/index.php(212): Slim\Slim->run()
+#17 {main}
+ERROR - 2013-09-29T13:44:54+00:00 - exception 'ErrorException' with message 'DOMDocument::load(): I/O warning : failed to load external entity &quot;/mnt/hgfs/web/cartesius/app/modules/cartesius/modules.xsl&quot;' in /mnt/hgfs/web/cartesius/app/lib/XSLT.php:77
+Stack trace:
+#0 [internal function]: Slim\Slim::handleErrors(2, 'DOMDocument::lo...', '/mnt/hgfs/web/c...', 77, Array)
+#1 /mnt/hgfs/web/cartesius/app/lib/XSLT.php(77): DOMDocument->load('/mnt/hgfs/web/c...')
+#2 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/View.php(252): Slim\Extras\Views\XSLT->render('cartesius/modul...')
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/View.php(242): Slim\View->fetch('cartesius/modul...')
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(742): Slim\View->display('cartesius/modul...')
+#5 /mnt/hgfs/web/cartesius/public_html/index.php(203): Slim\Slim->render('cartesius/modul...', Array)
+#6 [internal function]: {closure}()
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#12 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(67): Slim\Middleware\SessionCookie->call()
+#13 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#14 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#15 /mnt/hgfs/web/cartesius/public_html/index.php(211): Slim\Slim->run()
+#16 {main}
+ERROR - 2013-09-29T14:12:11+00:00 - exception 'ErrorException' with message 'XSLTProcessor::importStylesheet(): Invalid expression' in /mnt/hgfs/web/cartesius/app/lib/XSLT.php:80
+Stack trace:
+#0 [internal function]: Slim\Slim::handleErrors(2, 'XSLTProcessor::...', '/mnt/hgfs/web/c...', 80, Array)
+#1 /mnt/hgfs/web/cartesius/app/lib/XSLT.php(80): XSLTProcessor->importStylesheet(Object(DOMDocument))
+#2 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/View.php(252): Slim\Extras\Views\XSLT->render('modules.xsl')
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/View.php(242): Slim\View->fetch('modules.xsl')
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(742): Slim\View->display('modules.xsl')
+#5 /mnt/hgfs/web/cartesius/public_html/index.php(109): Slim\Slim->render('modules.xsl', Array)
+#6 [internal function]: {closure}()
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#12 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(67): Slim\Middleware\SessionCookie->call()
+#13 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#14 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#15 /mnt/hgfs/web/cartesius/public_html/index.php(213): Slim\Slim->run()
+#16 {main}
+ERROR - 2013-09-29T14:15:14+00:00 - exception 'ErrorException' with message 'DOMDocument::createElement(): unterminated entity reference redirect_uri=http://cartesius.no-ip.info/&amp;client_id=27386843570.apps.googleusercontent.com&amp;scope=https://www.googleapis.com/auth/plus.login&amp;access_type=offline&amp;approval_prompt=force&amp;hd=greenpeace.org' in /mnt/hgfs/web/cartesius/app/lib/XSLT.php:99
+Stack trace:
+#0 [internal function]: Slim\Slim::handleErrors(2, 'DOMDocument::cr...', '/mnt/hgfs/web/c...', 99, Array)
+#1 /mnt/hgfs/web/cartesius/app/lib/XSLT.php(99): DOMDocument->createElement('link', 'https://account...')
+#2 /mnt/hgfs/web/cartesius/app/lib/XSLT.php(68): Slim\Extras\Views\XSLT->array_to_xml(Object(DOMElement), Array)
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/View.php(252): Slim\Extras\Views\XSLT->render('')
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/View.php(242): Slim\View->fetch('')
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(742): Slim\View->display('')
+#6 /mnt/hgfs/web/cartesius/public_html/index.php(94): Slim\Slim->render('', Array)
+#7 [internal function]: {closure}()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#12 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#13 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(67): Slim\Middleware\SessionCookie->call()
+#14 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#15 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#16 /mnt/hgfs/web/cartesius/public_html/index.php(213): Slim\Slim->run()
+#17 {main}
+ERROR - 2013-09-29T14:15:39+00:00 - exception 'ErrorException' with message 'DOMDocument::createElement(): unterminated entity reference redirect_uri=http%3A%2F%2Fcartesius.no-ip.info%2F&amp;client_id=27386843570.apps.googleusercontent.com&amp;scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fplus.login&amp;access_type=offline&amp;approval_prompt=force&amp;hd=greenpeace.org' in /mnt/hgfs/web/cartesius/app/lib/XSLT.php:99
+Stack trace:
+#0 [internal function]: Slim\Slim::handleErrors(2, 'DOMDocument::cr...', '/mnt/hgfs/web/c...', 99, Array)
+#1 /mnt/hgfs/web/cartesius/app/lib/XSLT.php(99): DOMDocument->createElement('link', 'https://account...')
+#2 /mnt/hgfs/web/cartesius/app/lib/XSLT.php(68): Slim\Extras\Views\XSLT->array_to_xml(Object(DOMElement), Array)
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/View.php(252): Slim\Extras\Views\XSLT->render('')
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/View.php(242): Slim\View->fetch('')
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(742): Slim\View->display('')
+#6 /mnt/hgfs/web/cartesius/public_html/index.php(94): Slim\Slim->render('', Array)
+#7 [internal function]: {closure}()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#12 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#13 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(67): Slim\Middleware\SessionCookie->call()
+#14 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#15 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#16 /mnt/hgfs/web/cartesius/public_html/index.php(213): Slim\Slim->run()
+#17 {main}
+ERROR - 2013-09-29T14:21:09+00:00 - exception 'ErrorException' with message 'DOMDocument::createElement(): unterminated entity reference redirect_uri=http://cartesius.no-ip.info/&amp;client_id=27386843570.apps.googleusercontent.com&amp;scope=https://www.googleapis.com/auth/plus.login&amp;access_type=offline&amp;approval_prompt=force&amp;hd=greenpeace.org' in /mnt/hgfs/web/cartesius/app/lib/XSLT.php:99
+Stack trace:
+#0 [internal function]: Slim\Slim::handleErrors(2, 'DOMDocument::cr...', '/mnt/hgfs/web/c...', 99, Array)
+#1 /mnt/hgfs/web/cartesius/app/lib/XSLT.php(99): DOMDocument->createElement('link', 'https://account...')
+#2 /mnt/hgfs/web/cartesius/app/lib/XSLT.php(68): Slim\Extras\Views\XSLT->array_to_xml(Object(DOMElement), Array)
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/View.php(252): Slim\Extras\Views\XSLT->render('')
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/View.php(242): Slim\View->fetch('')
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(742): Slim\View->display('')
+#6 /mnt/hgfs/web/cartesius/public_html/index.php(95): Slim\Slim->render('', Array)
+#7 [internal function]: {closure}()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#12 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#13 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(67): Slim\Middleware\SessionCookie->call()
+#14 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#15 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#16 /mnt/hgfs/web/cartesius/public_html/index.php(214): Slim\Slim->run()
+#17 {main}
+ERROR - 2013-09-29T14:23:01+00:00 - exception 'ErrorException' with message 'Undefined variable: string' in /mnt/hgfs/web/cartesius/app/lib/XSLT.php:100
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/lib/XSLT.php(100): Slim\Slim::handleErrors(8, 'Undefined varia...', '/mnt/hgfs/web/c...', 100, Array)
+#1 /mnt/hgfs/web/cartesius/app/lib/XSLT.php(68): Slim\Extras\Views\XSLT->array_to_xml(Object(DOMElement), Array)
+#2 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/View.php(252): Slim\Extras\Views\XSLT->render('')
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/View.php(242): Slim\View->fetch('')
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(742): Slim\View->display('')
+#5 /mnt/hgfs/web/cartesius/public_html/index.php(95): Slim\Slim->render('', Array)
+#6 [internal function]: {closure}()
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#12 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(67): Slim\Middleware\SessionCookie->call()
+#13 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#14 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#15 /mnt/hgfs/web/cartesius/public_html/index.php(214): Slim\Slim->run()
+#16 {main}
+ERROR - 2013-09-29T15:26:19+00:00 - exception 'ErrorException' with message 'PDOStatement::execute(): SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation &quot;Account&quot; does not exist
+LINE 1: SELECT * FROM &quot;Account&quot;
+                      ^' in /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php:413
+Stack trace:
+#0 [internal function]: Slim\Slim::handleErrors(2, 'PDOStatement::e...', '/mnt/hgfs/web/c...', 413, Array)
+#1 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(413): PDOStatement->execute(Array)
+#2 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(1605): ORM::_execute('SELECT * FROM "...', Array, 'default')
+#3 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(613): ORM->_run()
+#4 /mnt/hgfs/web/cartesius/app/lib/XMLORM.php(49): ORM->_find_many()
+#5 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(600): XMLORM->find_result_set()
+#6 /mnt/hgfs/web/cartesius/public_html/index.php(200): ORM->find_many()
+#7 [internal function]: {closure}()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#12 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#13 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(70): Slim\Middleware\SessionCookie->call()
+#14 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#15 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#16 /mnt/hgfs/web/cartesius/public_html/index.php(216): Slim\Slim->run()
+#17 {main}
+ERROR - 2013-09-29T15:34:38+00:00 - exception 'Google_AuthException' with message 'Error fetching OAuth2 access token, message: 'invalid_grant'' in /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/auth/Google_OAuth2.php:114
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/Google_Client.php(127): Google_OAuth2->authenticate(Array, '4/s1MxmoesA7NMY...')
+#1 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(51): Google_Client->authenticate('4/s1MxmoesA7NMY...')
+#2 [internal function]: Slim\Extras\Middleware\GoogleOAuth->Slim\Extras\Middleware\{closure}(NULL)
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1163): call_user_func(Object(Closure), NULL)
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1296): Slim\Slim->applyHook('slim.before.rou...')
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#8 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(70): Slim\Middleware\SessionCookie->call()
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#11 /mnt/hgfs/web/cartesius/public_html/index.php(217): Slim\Slim->run()
+#12 {main}
+ERROR - 2013-09-29T15:35:18+00:00 - exception 'Google_Exception' with message 'Cant add services after having authenticated' in /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/Google_Client.php:115
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/contrib/Google_Oauth2Service.php(112): Google_Client->addService('oauth2', 'v2')
+#1 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(110): Google_Oauth2Service->__construct(Object(Google_Client))
+#2 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(53): Slim\Extras\Middleware\GoogleOAuth->add_user('{"access_token"...')
+#3 [internal function]: Slim\Extras\Middleware\GoogleOAuth->Slim\Extras\Middleware\{closure}(NULL)
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1163): call_user_func(Object(Closure), NULL)
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1296): Slim\Slim->applyHook('slim.before.rou...')
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#9 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(70): Slim\Middleware\SessionCookie->call()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#12 /mnt/hgfs/web/cartesius/public_html/index.php(217): Slim\Slim->run()
+#13 {main}
+ERROR - 2013-09-29T15:38:30+00:00 - exception 'Google_AuthException' with message 'Error fetching OAuth2 access token, message: 'invalid_grant'' in /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/auth/Google_OAuth2.php:114
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/Google_Client.php(127): Google_OAuth2->authenticate(Array, '4/wDJ4Wd2aw2rAN...')
+#1 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(54): Google_Client->authenticate('4/wDJ4Wd2aw2rAN...')
+#2 [internal function]: Slim\Extras\Middleware\GoogleOAuth->Slim\Extras\Middleware\{closure}(NULL)
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1163): call_user_func(Object(Closure), NULL)
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1296): Slim\Slim->applyHook('slim.before.rou...')
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#8 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(73): Slim\Middleware\SessionCookie->call()
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#11 /mnt/hgfs/web/cartesius/public_html/index.php(217): Slim\Slim->run()
+#12 {main}
+ERROR - 2013-09-29T15:51:55+00:00 - exception 'Google_ServiceException' with message 'Error calling GET https://www.googleapis.com/oauth2/v2/userinfo?key=AIzaSyC49j65TFx51dcMJcdvbLWvP_2Vej2X65s: (401) Login Required' in /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/io/Google_REST.php:66
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/io/Google_REST.php(36): Google_REST::decodeHttpResponse(Object(Google_HttpRequest))
+#1 /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/service/Google_ServiceResource.php(186): Google_REST::execute(Object(Google_HttpRequest))
+#2 /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/contrib/Google_Oauth2Service.php(36): Google_ServiceResource->__call('get', Array)
+#3 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(101): Google_UserinfoServiceResource->get()
+#4 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(68): Slim\Extras\Middleware\GoogleOAuth->get_user_id()
+#5 [internal function]: Slim\Extras\Middleware\GoogleOAuth->Slim\Extras\Middleware\{closure}(NULL)
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1163): call_user_func(Object(Closure), NULL)
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1296): Slim\Slim->applyHook('slim.before.rou...')
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#11 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(75): Slim\Middleware\SessionCookie->call()
+#12 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#13 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#14 /mnt/hgfs/web/cartesius/public_html/index.php(217): Slim\Slim->run()
+#15 {main}
+ERROR - 2013-09-29T15:53:15+00:00 - exception 'Google_ServiceException' with message 'Error calling GET https://www.googleapis.com/oauth2/v2/userinfo?key=AIzaSyC49j65TFx51dcMJcdvbLWvP_2Vej2X65s: (401) Login Required' in /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/io/Google_REST.php:66
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/io/Google_REST.php(36): Google_REST::decodeHttpResponse(Object(Google_HttpRequest))
+#1 /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/service/Google_ServiceResource.php(186): Google_REST::execute(Object(Google_HttpRequest))
+#2 /mnt/hgfs/web/cartesius/app/vendor/google-api-php-client/src/contrib/Google_Oauth2Service.php(36): Google_ServiceResource->__call('get', Array)
+#3 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(101): Google_UserinfoServiceResource->get()
+#4 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(68): Slim\Extras\Middleware\GoogleOAuth->get_user_id()
+#5 [internal function]: Slim\Extras\Middleware\GoogleOAuth->Slim\Extras\Middleware\{closure}(NULL)
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1163): call_user_func(Object(Closure), NULL)
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1296): Slim\Slim->applyHook('slim.before.rou...')
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#11 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(75): Slim\Middleware\SessionCookie->call()
+#12 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#13 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#14 /mnt/hgfs/web/cartesius/public_html/index.php(217): Slim\Slim->run()
+#15 {main}
+ERROR - 2013-09-29T15:59:13+00:00 - exception 'ErrorException' with message 'Object of class DOMDocument could not be converted to string' in /mnt/hgfs/web/cartesius/public_html/index.php:207
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/public_html/index.php(207): Slim\Slim::handleErrors(4096, 'Object of class...', '/mnt/hgfs/web/c...', 207, Array)
+#1 [internal function]: {closure}()
+#2 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#7 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(74): Slim\Middleware\SessionCookie->call()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#10 /mnt/hgfs/web/cartesius/public_html/index.php(219): Slim\Slim->run()
+#11 {main}
+ERROR - 2013-09-29T16:47:53+00:00 - exception 'ErrorException' with message 'Array to string conversion' in /mnt/hgfs/web/cartesius/public_html/index.php:207
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/public_html/index.php(207): Slim\Slim::handleErrors(8, 'Array to string...', '/mnt/hgfs/web/c...', 207, Array)
+#1 [internal function]: {closure}()
+#2 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#7 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(74): Slim\Middleware\SessionCookie->call()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#10 /mnt/hgfs/web/cartesius/public_html/index.php(221): Slim\Slim->run()
+#11 {main}
+ERROR - 2013-09-29T16:47:58+00:00 - exception 'ErrorException' with message 'Array to string conversion' in /mnt/hgfs/web/cartesius/public_html/index.php:207
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/public_html/index.php(207): Slim\Slim::handleErrors(8, 'Array to string...', '/mnt/hgfs/web/c...', 207, Array)
+#1 [internal function]: {closure}()
+#2 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#7 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(74): Slim\Middleware\SessionCookie->call()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#10 /mnt/hgfs/web/cartesius/public_html/index.php(221): Slim\Slim->run()
+#11 {main}
+ERROR - 2013-09-29T16:49:11+00:00 - exception 'ErrorException' with message 'Array to string conversion' in /mnt/hgfs/web/cartesius/public_html/index.php:207
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/public_html/index.php(207): Slim\Slim::handleErrors(8, 'Array to string...', '/mnt/hgfs/web/c...', 207, Array)
+#1 [internal function]: {closure}()
+#2 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#7 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(74): Slim\Middleware\SessionCookie->call()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#10 /mnt/hgfs/web/cartesius/public_html/index.php(221): Slim\Slim->run()
+#11 {main}

@@ -1,0 +1,391 @@
+ERROR - 2013-10-02T14:54:18+00:00 - exception 'ErrorException' with message 'PDOStatement::execute(): SQLSTATE[42601]: Syntax error: 7 ERROR:  syntax error at or near &quot;\&quot;
+LINE 1: \d+ account
+        ^' in /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php:413
+Stack trace:
+#0 [internal function]: Slim\Slim::handleErrors(2, 'PDOStatement::e...', '/mnt/hgfs/web/c...', 413, Array)
+#1 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(413): PDOStatement->execute(Array)
+#2 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(1605): ORM::_execute('\d+ account', Array, 'default')
+#3 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(613): ORM->_run()
+#4 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(640): ORM->_find_many()
+#5 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(600): ORM->find_result_set()
+#6 /mnt/hgfs/web/cartesius/public_html/index.php(229): ORM->find_many()
+#7 [internal function]: {closure}()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#12 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#13 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(74): Slim\Middleware\SessionCookie->call()
+#14 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#15 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#16 /mnt/hgfs/web/cartesius/public_html/index.php(236): Slim\Slim->run()
+#17 {main}
+ERROR - 2013-10-02T14:56:12+00:00 - exception 'ErrorException' with message 'PDOStatement::execute(): SQLSTATE[42601]: Syntax error: 7 ERROR:  syntax error at or near &quot;\&quot;
+LINE 1: \d+ 'account'
+        ^' in /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php:413
+Stack trace:
+#0 [internal function]: Slim\Slim::handleErrors(2, 'PDOStatement::e...', '/mnt/hgfs/web/c...', 413, Array)
+#1 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(413): PDOStatement->execute(Array)
+#2 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(1605): ORM::_execute('\d+ 'account'', Array, 'default')
+#3 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(613): ORM->_run()
+#4 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(640): ORM->_find_many()
+#5 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(600): ORM->find_result_set()
+#6 /mnt/hgfs/web/cartesius/public_html/index.php(229): ORM->find_many()
+#7 [internal function]: {closure}()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#12 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#13 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(74): Slim\Middleware\SessionCookie->call()
+#14 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#15 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#16 /mnt/hgfs/web/cartesius/public_html/index.php(236): Slim\Slim->run()
+#17 {main}
+ERROR - 2013-10-02T14:56:49+00:00 - exception 'ErrorException' with message 'PDOStatement::execute(): SQLSTATE[42601]: Syntax error: 7 ERROR:  syntax error at or near &quot;INFORMATION_SCHEMA&quot;
+LINE 1: INFORMATION_SCHEMA.COLUMNS where table_name = 'table'
+        ^' in /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php:413
+Stack trace:
+#0 [internal function]: Slim\Slim::handleErrors(2, 'PDOStatement::e...', '/mnt/hgfs/web/c...', 413, Array)
+#1 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(413): PDOStatement->execute(Array)
+#2 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(1605): ORM::_execute('INFORMATION_SCH...', Array, 'default')
+#3 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(613): ORM->_run()
+#4 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(640): ORM->_find_many()
+#5 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(600): ORM->find_result_set()
+#6 /mnt/hgfs/web/cartesius/public_html/index.php(229): ORM->find_many()
+#7 [internal function]: {closure}()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#12 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#13 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(74): Slim\Middleware\SessionCookie->call()
+#14 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#15 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#16 /mnt/hgfs/web/cartesius/public_html/index.php(236): Slim\Slim->run()
+#17 {main}
+ERROR - 2013-10-02T14:57:00+00:00 - exception 'ErrorException' with message 'PDOStatement::execute(): SQLSTATE[42601]: Syntax error: 7 ERROR:  syntax error at or near &quot;INFORMATION_SCHEMA&quot;
+LINE 1: INFORMATION_SCHEMA.COLUMNS
+        ^' in /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php:413
+Stack trace:
+#0 [internal function]: Slim\Slim::handleErrors(2, 'PDOStatement::e...', '/mnt/hgfs/web/c...', 413, Array)
+#1 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(413): PDOStatement->execute(Array)
+#2 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(1605): ORM::_execute('INFORMATION_SCH...', Array, 'default')
+#3 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(613): ORM->_run()
+#4 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(640): ORM->_find_many()
+#5 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(600): ORM->find_result_set()
+#6 /mnt/hgfs/web/cartesius/public_html/index.php(229): ORM->find_many()
+#7 [internal function]: {closure}()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#12 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#13 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(74): Slim\Middleware\SessionCookie->call()
+#14 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#15 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#16 /mnt/hgfs/web/cartesius/public_html/index.php(236): Slim\Slim->run()
+#17 {main}
+ERROR - 2013-10-02T15:46:04+00:00 - exception 'ErrorException' with message 'Use of undefined constant i - assumed 'i'' in /mnt/hgfs/web/cartesius/app/lib/XMLORM.php:166
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/lib/XMLORM.php(166): Slim\Slim::handleErrors(8, 'Use of undefine...', '/mnt/hgfs/web/c...', 166, Array)
+#1 /mnt/hgfs/web/cartesius/app/lib/XMLORM.php(123): XMLORM->_run_schema()
+#2 /mnt/hgfs/web/cartesius/public_html/index.php(229): XMLORM->table_schema()
+#3 [internal function]: {closure}()
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#9 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(74): Slim\Middleware\SessionCookie->call()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#12 /mnt/hgfs/web/cartesius/public_html/index.php(238): Slim\Slim->run()
+#13 {main}
+ERROR - 2013-10-02T15:46:52+00:00 - exception 'ErrorException' with message 'Use of undefined constant i - assumed 'i'' in /mnt/hgfs/web/cartesius/app/lib/XMLORM.php:166
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/lib/XMLORM.php(166): Slim\Slim::handleErrors(8, 'Use of undefine...', '/mnt/hgfs/web/c...', 166, Array)
+#1 /mnt/hgfs/web/cartesius/app/lib/XMLORM.php(123): XMLORM->_run_schema()
+#2 /mnt/hgfs/web/cartesius/public_html/index.php(229): XMLORM->table_schema()
+#3 [internal function]: {closure}()
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#9 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(74): Slim\Middleware\SessionCookie->call()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#12 /mnt/hgfs/web/cartesius/public_html/index.php(238): Slim\Slim->run()
+#13 {main}
+ERROR - 2013-10-02T15:46:57+00:00 - exception 'ErrorException' with message 'Use of undefined constant i - assumed 'i'' in /mnt/hgfs/web/cartesius/app/lib/XMLORM.php:166
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/lib/XMLORM.php(166): Slim\Slim::handleErrors(8, 'Use of undefine...', '/mnt/hgfs/web/c...', 166, Array)
+#1 /mnt/hgfs/web/cartesius/app/lib/XMLORM.php(123): XMLORM->_run_schema()
+#2 /mnt/hgfs/web/cartesius/public_html/index.php(229): XMLORM->table_schema()
+#3 [internal function]: {closure}()
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#9 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(74): Slim\Middleware\SessionCookie->call()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#12 /mnt/hgfs/web/cartesius/public_html/index.php(238): Slim\Slim->run()
+#13 {main}
+ERROR - 2013-10-02T15:49:00+00:00 - exception 'ErrorException' with message 'Use of undefined constant i - assumed 'i'' in /mnt/hgfs/web/cartesius/app/lib/XMLORM.php:166
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/lib/XMLORM.php(166): Slim\Slim::handleErrors(8, 'Use of undefine...', '/mnt/hgfs/web/c...', 166, Array)
+#1 /mnt/hgfs/web/cartesius/app/lib/XMLORM.php(123): XMLORM->_run_schema()
+#2 /mnt/hgfs/web/cartesius/public_html/index.php(229): XMLORM->table_schema()
+#3 [internal function]: {closure}()
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#9 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(74): Slim\Middleware\SessionCookie->call()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#12 /mnt/hgfs/web/cartesius/public_html/index.php(238): Slim\Slim->run()
+#13 {main}
+ERROR - 2013-10-02T15:49:10+00:00 - exception 'ErrorException' with message 'Use of undefined constant i - assumed 'i'' in /mnt/hgfs/web/cartesius/app/lib/XMLORM.php:166
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/lib/XMLORM.php(166): Slim\Slim::handleErrors(8, 'Use of undefine...', '/mnt/hgfs/web/c...', 166, Array)
+#1 /mnt/hgfs/web/cartesius/app/lib/XMLORM.php(123): XMLORM->_run_schema()
+#2 /mnt/hgfs/web/cartesius/public_html/index.php(229): XMLORM->table_schema()
+#3 [internal function]: {closure}()
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#9 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(74): Slim\Middleware\SessionCookie->call()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#12 /mnt/hgfs/web/cartesius/public_html/index.php(238): Slim\Slim->run()
+#13 {main}
+ERROR - 2013-10-02T15:49:19+00:00 - exception 'ErrorException' with message 'Undefined offset: 0' in /mnt/hgfs/web/cartesius/app/lib/XMLORM.php:131
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/lib/XMLORM.php(131): Slim\Slim::handleErrors(8, 'Undefined offse...', '/mnt/hgfs/web/c...', 131, Array)
+#1 /mnt/hgfs/web/cartesius/public_html/index.php(229): XMLORM->table_schema()
+#2 [internal function]: {closure}()
+#3 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#8 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(74): Slim\Middleware\SessionCookie->call()
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#11 /mnt/hgfs/web/cartesius/public_html/index.php(238): Slim\Slim->run()
+#12 {main}
+ERROR - 2013-10-02T15:58:44+00:00 - exception 'ErrorException' with message 'Undefined index: driver:decl_type' in /mnt/hgfs/web/cartesius/app/lib/XMLORM.php:164
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/lib/XMLORM.php(164): Slim\Slim::handleErrors(8, 'Undefined index...', '/mnt/hgfs/web/c...', 164, Array)
+#1 /mnt/hgfs/web/cartesius/app/lib/XMLORM.php(123): XMLORM->_run_schema()
+#2 /mnt/hgfs/web/cartesius/public_html/index.php(229): XMLORM->table_schema()
+#3 [internal function]: {closure}()
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#9 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(74): Slim\Middleware\SessionCookie->call()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#12 /mnt/hgfs/web/cartesius/public_html/index.php(239): Slim\Slim->run()
+#13 {main}
+ERROR - 2013-10-02T16:00:23+00:00 - exception 'ErrorException' with message 'Undefined index: flags' in /mnt/hgfs/web/cartesius/app/lib/XMLORM.php:164
+Stack trace:
+#0 /mnt/hgfs/web/cartesius/app/lib/XMLORM.php(164): Slim\Slim::handleErrors(8, 'Undefined index...', '/mnt/hgfs/web/c...', 164, Array)
+#1 /mnt/hgfs/web/cartesius/app/lib/XMLORM.php(123): XMLORM->_run_schema()
+#2 /mnt/hgfs/web/cartesius/public_html/index.php(229): XMLORM->table_schema()
+#3 [internal function]: {closure}()
+#4 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#5 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#6 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#7 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#9 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(74): Slim\Middleware\SessionCookie->call()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#12 /mnt/hgfs/web/cartesius/public_html/index.php(239): Slim\Slim->run()
+#13 {main}
+ERROR - 2013-10-02T16:05:23+00:00 - exception 'ErrorException' with message 'PDOStatement::execute(): SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation &quot;columns&quot; does not exist
+LINE 1: SELECT * FROM columns WHERE table_name = &quot;account&quot;
+                      ^' in /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php:413
+Stack trace:
+#0 [internal function]: Slim\Slim::handleErrors(2, 'PDOStatement::e...', '/mnt/hgfs/web/c...', 413, Array)
+#1 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(413): PDOStatement->execute(Array)
+#2 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(1604): ORM::_execute('SELECT * FROM c...', Array, 'default')
+#3 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(612): ORM->_run()
+#4 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(639): ORM->_find_many()
+#5 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(599): ORM->find_result_set()
+#6 /mnt/hgfs/web/cartesius/public_html/index.php(232): ORM->find_many()
+#7 [internal function]: {closure}()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#12 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#13 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(74): Slim\Middleware\SessionCookie->call()
+#14 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#15 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#16 /mnt/hgfs/web/cartesius/public_html/index.php(241): Slim\Slim->run()
+#17 {main}
+ERROR - 2013-10-02T16:05:50+00:00 - exception 'ErrorException' with message 'PDOStatement::execute(): SQLSTATE[42703]: Undefined column: 7 ERROR:  column &quot;account&quot; does not exist
+LINE 1: ...FROM information_schema.columns WHERE table_name = &quot;account&quot;
+                                                              ^' in /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php:413
+Stack trace:
+#0 [internal function]: Slim\Slim::handleErrors(2, 'PDOStatement::e...', '/mnt/hgfs/web/c...', 413, Array)
+#1 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(413): PDOStatement->execute(Array)
+#2 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(1604): ORM::_execute('SELECT * FROM i...', Array, 'default')
+#3 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(612): ORM->_run()
+#4 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(639): ORM->_find_many()
+#5 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(599): ORM->find_result_set()
+#6 /mnt/hgfs/web/cartesius/public_html/index.php(232): ORM->find_many()
+#7 [internal function]: {closure}()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#12 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#13 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(74): Slim\Middleware\SessionCookie->call()
+#14 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#15 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#16 /mnt/hgfs/web/cartesius/public_html/index.php(241): Slim\Slim->run()
+#17 {main}
+ERROR - 2013-10-02T16:07:30+00:00 - exception 'ErrorException' with message 'PDOStatement::execute(): SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation &quot;information_schema&quot; does not exist
+LINE 1: SELECT * FROM information_schema WHERE table_name = 'account...
+                      ^' in /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php:413
+Stack trace:
+#0 [internal function]: Slim\Slim::handleErrors(2, 'PDOStatement::e...', '/mnt/hgfs/web/c...', 413, Array)
+#1 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(413): PDOStatement->execute(Array)
+#2 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(1604): ORM::_execute('SELECT * FROM i...', Array, 'default')
+#3 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(612): ORM->_run()
+#4 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(639): ORM->_find_many()
+#5 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(599): ORM->find_result_set()
+#6 /mnt/hgfs/web/cartesius/public_html/index.php(232): ORM->find_many()
+#7 [internal function]: {closure}()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#12 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#13 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(74): Slim\Middleware\SessionCookie->call()
+#14 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#15 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#16 /mnt/hgfs/web/cartesius/public_html/index.php(241): Slim\Slim->run()
+#17 {main}
+ERROR - 2013-10-02T16:55:18+00:00 - exception 'ErrorException' with message 'PDOStatement::execute(): SQLSTATE[42601]: Syntax error: 7 ERROR:  non-integer constant in ORDER BY
+LINE 1: ...ema.columns WHERE table_name = 'account' ORDER BY 'ordinal_p...
+                                                             ^' in /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php:413
+Stack trace:
+#0 [internal function]: Slim\Slim::handleErrors(2, 'PDOStatement::e...', '/mnt/hgfs/web/c...', 413, Array)
+#1 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(413): PDOStatement->execute(Array)
+#2 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(1604): ORM::_execute('SELECT * FROM i...', Array, 'default')
+#3 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(612): ORM->_run()
+#4 /mnt/hgfs/web/cartesius/app/lib/XMLORM.php(49): ORM->_find_many()
+#5 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(599): XMLORM->find_result_set()
+#6 /mnt/hgfs/web/cartesius/public_html/index.php(235): ORM->find_many()
+#7 [internal function]: {closure}()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#12 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#13 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(74): Slim\Middleware\SessionCookie->call()
+#14 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#15 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#16 /mnt/hgfs/web/cartesius/public_html/index.php(244): Slim\Slim->run()
+#17 {main}
+ERROR - 2013-10-02T16:56:40+00:00 - exception 'ErrorException' with message 'PDOStatement::execute(): SQLSTATE[42601]: Syntax error: 7 ERROR:  non-integer constant in ORDER BY
+LINE 1: ...ema.columns WHERE table_name = 'account' ORDER BY 'ordinal_p...
+                                                             ^' in /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php:413
+Stack trace:
+#0 [internal function]: Slim\Slim::handleErrors(2, 'PDOStatement::e...', '/mnt/hgfs/web/c...', 413, Array)
+#1 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(413): PDOStatement->execute(Array)
+#2 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(1604): ORM::_execute('SELECT * FROM i...', Array, 'default')
+#3 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(612): ORM->_run()
+#4 /mnt/hgfs/web/cartesius/app/lib/XMLORM.php(49): ORM->_find_many()
+#5 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(599): XMLORM->find_result_set()
+#6 /mnt/hgfs/web/cartesius/public_html/index.php(235): ORM->find_many()
+#7 [internal function]: {closure}()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#12 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#13 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(74): Slim\Middleware\SessionCookie->call()
+#14 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#15 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#16 /mnt/hgfs/web/cartesius/public_html/index.php(244): Slim\Slim->run()
+#17 {main}
+ERROR - 2013-10-02T16:57:13+00:00 - exception 'ErrorException' with message 'PDOStatement::execute(): SQLSTATE[42601]: Syntax error: 7 ERROR:  non-integer constant in ORDER BY
+LINE 1: ...ema.columns WHERE table_name = 'account' ORDER BY 'ordinal_p...
+                                                             ^' in /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php:413
+Stack trace:
+#0 [internal function]: Slim\Slim::handleErrors(2, 'PDOStatement::e...', '/mnt/hgfs/web/c...', 413, Array)
+#1 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(413): PDOStatement->execute(Array)
+#2 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(1604): ORM::_execute('SELECT * FROM i...', Array, 'default')
+#3 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(612): ORM->_run()
+#4 /mnt/hgfs/web/cartesius/app/lib/XMLORM.php(49): ORM->_find_many()
+#5 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(599): XMLORM->find_result_set()
+#6 /mnt/hgfs/web/cartesius/public_html/index.php(235): ORM->find_many()
+#7 [internal function]: {closure}()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#12 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#13 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(74): Slim\Middleware\SessionCookie->call()
+#14 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#15 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#16 /mnt/hgfs/web/cartesius/public_html/index.php(244): Slim\Slim->run()
+#17 {main}
+ERROR - 2013-10-02T16:57:24+00:00 - exception 'ErrorException' with message 'PDOStatement::execute(): SQLSTATE[42601]: Syntax error: 7 ERROR:  non-integer constant in ORDER BY
+LINE 1: ...ema.columns WHERE table_name = 'account' ORDER BY 'ordinal_p...
+                                                             ^' in /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php:413
+Stack trace:
+#0 [internal function]: Slim\Slim::handleErrors(2, 'PDOStatement::e...', '/mnt/hgfs/web/c...', 413, Array)
+#1 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(413): PDOStatement->execute(Array)
+#2 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(1604): ORM::_execute('SELECT * FROM i...', Array, 'default')
+#3 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(612): ORM->_run()
+#4 /mnt/hgfs/web/cartesius/app/lib/XMLORM.php(49): ORM->_find_many()
+#5 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(599): XMLORM->find_result_set()
+#6 /mnt/hgfs/web/cartesius/public_html/index.php(235): ORM->find_many()
+#7 [internal function]: {closure}()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#12 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#13 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(74): Slim\Middleware\SessionCookie->call()
+#14 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#15 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#16 /mnt/hgfs/web/cartesius/public_html/index.php(244): Slim\Slim->run()
+#17 {main}
+ERROR - 2013-10-02T16:57:54+00:00 - exception 'ErrorException' with message 'PDOStatement::execute(): SQLSTATE[42601]: Syntax error: 7 ERROR:  non-integer constant in ORDER BY
+LINE 1: ...ema.columns WHERE table_name = 'account' ORDER BY 'dtd_ident...
+                                                             ^' in /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php:413
+Stack trace:
+#0 [internal function]: Slim\Slim::handleErrors(2, 'PDOStatement::e...', '/mnt/hgfs/web/c...', 413, Array)
+#1 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(413): PDOStatement->execute(Array)
+#2 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(1604): ORM::_execute('SELECT * FROM i...', Array, 'default')
+#3 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(612): ORM->_run()
+#4 /mnt/hgfs/web/cartesius/app/lib/XMLORM.php(49): ORM->_find_many()
+#5 /mnt/hgfs/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(599): XMLORM->find_result_set()
+#6 /mnt/hgfs/web/cartesius/public_html/index.php(235): ORM->find_many()
+#7 [internal function]: {closure}()
+#8 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#9 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#10 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#11 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#12 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#13 /mnt/hgfs/web/cartesius/app/lib/GoogleOAuth.php(74): Slim\Middleware\SessionCookie->call()
+#14 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Extras\Middleware\GoogleOAuth->call()
+#15 /mnt/hgfs/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#16 /mnt/hgfs/web/cartesius/public_html/index.php(244): Slim\Slim->run()
+#17 {main}

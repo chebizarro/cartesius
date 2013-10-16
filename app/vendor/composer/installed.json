@@ -1,0 +1,331 @@
+[
+    {
+        "name": "slim/slim",
+        "version": "2.3.1",
+        "version_normalized": "2.3.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/codeguy/Slim.git",
+            "reference": "2e540cc392644b9b5cdcc57e5576db5a92ca2149"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/codeguy/Slim/zipball/2e540cc392644b9b5cdcc57e5576db5a92ca2149",
+            "reference": "2e540cc392644b9b5cdcc57e5576db5a92ca2149",
+            "shasum": ""
+        },
+        "require": {
+            "ext-mcrypt": "*",
+            "php": ">=5.3.0"
+        },
+        "time": "2013-07-20 18:38:05",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Slim": "."
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Josh Lockhart",
+                "email": "info@joshlockhart.com",
+                "homepage": "http://www.joshlockhart.com/"
+            }
+        ],
+        "description": "Slim Framework, a PHP micro framework",
+        "homepage": "http://github.com/codeguy/Slim",
+        "keywords": [
+            "microframework",
+            "rest",
+            "router"
+        ]
+    },
+    {
+        "name": "j4mie/idiorm",
+        "version": "v1.4.0",
+        "version_normalized": "1.4.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/j4mie/idiorm.git",
+            "reference": "3be516b440734811b58bb9d0b458a4109b49af71"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/j4mie/idiorm/zipball/3be516b440734811b58bb9d0b458a4109b49af71",
+            "reference": "3be516b440734811b58bb9d0b458a4109b49af71",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.2.0"
+        },
+        "time": "2013-09-05 09:01:18",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "idiorm.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-2-Clause",
+            "BSD-3-Clause",
+            "BSD-4-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Simon Holywell",
+                "email": "treffynnon@php.net",
+                "homepage": "http://simonholywell.com",
+                "role": "Maintainer"
+            },
+            {
+                "name": "Jamie Matthews",
+                "email": "jamie.matthews@gmail.com",
+                "homepage": "http://j4mie.org/",
+                "role": "Developer"
+            },
+            {
+                "name": "Durham Hale",
+                "email": "me@durhamhale.com",
+                "homepage": "http://durhamhale.com",
+                "role": "Maintainer"
+            }
+        ],
+        "description": "A lightweight nearly-zero-configuration object-relational mapper and fluent query builder for PHP5",
+        "homepage": "http://j4mie.github.com/idiormandparis",
+        "keywords": [
+            "idiorm",
+            "orm",
+            "query builder"
+        ]
+    },
+    {
+        "name": "j4mie/paris",
+        "version": "v1.4.1",
+        "version_normalized": "1.4.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/j4mie/paris.git",
+            "reference": "0932304b76dccb5eb07dc563009d0b5010865c3c"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/j4mie/paris/zipball/0932304b76dccb5eb07dc563009d0b5010865c3c",
+            "reference": "0932304b76dccb5eb07dc563009d0b5010865c3c",
+            "shasum": ""
+        },
+        "require": {
+            "j4mie/idiorm": "1.4.*",
+            "php": ">=5.2.0"
+        },
+        "time": "2013-09-05 11:15:53",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "paris.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-2-Clause",
+            "BSD-3-Clause",
+            "BSD-4-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Simon Holywell",
+                "email": "treffynnon@php.net",
+                "homepage": "http://simonholywell.com",
+                "role": "Maintainer"
+            },
+            {
+                "name": "Jamie Matthews",
+                "email": "jamie.matthews@gmail.com",
+                "homepage": "http://j4mie.org/",
+                "role": "Developer"
+            },
+            {
+                "name": "Durham Hale",
+                "email": "me@durhamhale.com",
+                "homepage": "http://durhamhale.com",
+                "role": "Maintainer"
+            }
+        ],
+        "description": "A lightweight Active Record implementation for PHP5, built on top of Idiorm",
+        "homepage": "http://j4mie.github.com/idiormandparis",
+        "keywords": [
+            "Active Record",
+            "model",
+            "orm",
+            "paris"
+        ]
+    },
+    {
+        "name": "league/oauth2-server",
+        "version": "2.1.1",
+        "version_normalized": "2.1.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/php-loep/oauth2-server.git",
+            "reference": "98be9ab2521089a7d3a9c97fbea3927c83cdaad5"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/php-loep/oauth2-server/zipball/98be9ab2521089a7d3a9c97fbea3927c83cdaad5",
+            "reference": "98be9ab2521089a7d3a9c97fbea3927c83cdaad5",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "replace": {
+            "league/oauth2server": "*",
+            "lncd/oauth2": "*"
+        },
+        "require-dev": {
+            "mockery/mockery": ">=0.7.2"
+        },
+        "suggest": {
+            "zetacomponents/database": "Allows use of the build in PDO storage classes"
+        },
+        "time": "2013-06-02 12:55:01",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "League\\OAuth2\\Server": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Alex Bilbie",
+                "email": "hello@alexbilbie.com",
+                "homepage": "http://www.alexbilbie.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "A lightweight and powerful OAuth 2.0 authorization and resource server library with support for all the core specification grants. This library will allow you to secure your API with OAuth and allow your applications users to approve apps that want to access their data from your API.",
+        "homepage": "https://github.com/php-loep/oauth2-server",
+        "keywords": [
+            "Authentication",
+            "api",
+            "authorization",
+            "oauth",
+            "oauth2",
+            "resource",
+            "server"
+        ]
+    },
+    {
+        "name": "entomb/slim-json-api",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/entomb/slim-json-api.git",
+            "reference": "6f80b47ca656c874ee14e0cac7656c9b012cfb79"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/entomb/slim-json-api/zipball/6f80b47ca656c874ee14e0cac7656c9b012cfb79",
+            "reference": "6f80b47ca656c874ee14e0cac7656c9b012cfb79",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "time": "2013-09-05 21:38:41",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "classmap": [
+                "jsonAPI/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL 3.0"
+        ],
+        "authors": [
+            {
+                "name": "Jonathan Tavares",
+                "email": "the.entomb@gmail.com",
+                "homepage": "https://github.com/entomb",
+                "role": "Developer"
+            }
+        ],
+        "description": "Slim extension to implement fast JSON API's",
+        "homepage": "https://github.com/entomb/slim-json-api",
+        "keywords": [
+            "api",
+            "json",
+            "middleware",
+            "slim",
+            "view"
+        ]
+    },
+    {
+        "name": "slim/extras",
+        "version": "2.0.3",
+        "version_normalized": "2.0.3.0",
+        "target-dir": "Slim/Extras",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/codeguy/Slim-Extras.git",
+            "reference": "a022ed23dae94e164000acd891e3394d903f9623"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/codeguy/Slim-Extras/zipball/a022ed23dae94e164000acd891e3394d903f9623",
+            "reference": "a022ed23dae94e164000acd891e3394d903f9623",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0",
+            "slim/slim": ">=2.0.0"
+        },
+        "time": "2013-01-07 17:56:10",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Twig_Extensions_": "Views/Extension/",
+                "Slim\\Extras": "."
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Andrew Smith",
+                "email": "a.smith@silentworks.co.uk",
+                "homepage": "http://thoughts.silentworks.co.uk/"
+            },
+            {
+                "name": "Josh Lockhart",
+                "email": "info@joshlockhart.com",
+                "homepage": "http://www.joshlockhart.com/"
+            }
+        ],
+        "description": "Extras package for the Slim Framework",
+        "homepage": "http://github.com/codeguy/Slim-Extras",
+        "keywords": [
+            "extensions",
+            "middleware",
+            "templating"
+        ]
+    }
+]

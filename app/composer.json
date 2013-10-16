@@ -1,0 +1,9 @@
+{
+    "require": {
+        "slim/slim": "2.*",
+        "j4mie/paris": "1.4.*",
+        "lncd/oauth2": "*",
+        "entomb/slim-json-api": "dev-master",
+        "slim/extras": "2.*"
+    }
+}
