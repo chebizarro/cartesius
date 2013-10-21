@@ -22,9 +22,7 @@ define(function(require) {
             controller.start();
 
             var projectsList = new ProjectsListRouteHandler(context);
-            
-            
-        
+
         }
     }
 

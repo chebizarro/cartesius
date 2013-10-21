@@ -99,9 +99,33 @@ Other relevant documents/tools, i.e. security policy, travel guidelines
 
 	<xsl:template name="edit.project.team">
 			<div class="section">
-                <div id="projectTeam">
-
-				</div>
+				<div><p>Instructions</p></div>
+				<form class="cartesius">
+					<div id="projectTeam">
+						
+						<div>
+							<label for="newTeam">Team name</label>
+							<input type="text" id="newTeam">
+								<xsl:attribute name='data-bind'>jqxInput: <![CDATA[{width: '200px', height: '25px', theme: 'metro'}]]></xsl:attribute>	
+							</input>
+							<input type="button" value="Add team" id='jqxButton' />
+						</div>
+						
+						<div data-bind="foreach: teams">
+							<fieldset>
+								<legend data-bind="text: name"/>
+								<div>
+									<label for="projectSummary">Description</label>
+									<textarea class="jqx-input-content-metro jqx-input-metro" id="projectSummary" />								
+								</div>
+								<div data-bind="foreach: teammember">
+									<div id="teamGrid"></div>
+								</div>
+							</fieldset>
+						</div>
+						
+					</div>
+				</form>
 			</div>
 	</xsl:template>
 
