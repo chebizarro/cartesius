@@ -9,7 +9,7 @@ define(function(require) {
         require("/lib/jqwidgets/jqwidgets/jqxbuttons.js");
         require("/lib/jqwidgets/jqwidgets/jqxscrollbar.js");
         require("/lib/jqwidgets/jqwidgets/jqxcheckbox.js");
-        require("/scripts/jqxlistbox.extn.js");
+        require("/scripts/jqx.extn.js");
 
         
 	var Component = function(moduleContext) {
@@ -17,6 +17,9 @@ define(function(require) {
 		var vm, panel = null;
 
 		this.activate = function (parent, params) {
+
+			ko.postbox.publish("MAINMENU_READY", {label :"Layers", id: "mainmenu.geo.layers", parent: "mainmenu.geo"});
+
 			var theme = "metro";
 		    if (!panel) {
 		        vm = new ViewModel(moduleContext);
@@ -37,9 +40,21 @@ define(function(require) {
 					localdata: vm.layers
 				};
 				
+				ko.jqwidgets.dataBinding = new ko.jqwidgets.dataBinding({
+					name: "jqxListBox",
+					events: ['checkChange'],
+					getProperty: function (object, event, eventName) {
+						if (eventName == 'checkChange') {
+							// update the selectedItemsCount when the selection is changed.
+							return { name: "value", value: object.getCheckedItems().length };
+						}
+					}
+				});
+				
 				$("#layersListbox").jqxListBox(
 				{
 					width: '99%',
+					checkboxes: true,
 					autoHeight: true,
 					theme: theme,
 					displayMember: 'title',
@@ -69,25 +84,18 @@ define(function(require) {
 					
 					$("#layersListbox").on('checkChange', function (event) {
 						var args = event.args;
-						//var items = $("#layersListbox").jqxListBox('getCheckedItems'); 
 
 						if (args.checked) {
-							console.log("Checked: " + vm.sltCount());
+							console.log(vm.checked());
 						}
 						else {
-							console.log("Unchecked: " + vm.sltCount());
+							//console.log("Unchecked: " + vm.sltCount());
 						}
 					});
 
 				});	
-				
-			$("#addLayer").jqxButton({ theme: theme });
-            $("#addLayer").click(function () {
-                alert("Value: " + vm.sltCount());
-            });
+							
 			
-			
-				
 		    }
 		    panel.show();
 		};
@@ -98,7 +106,8 @@ define(function(require) {
 		    }
 		};
 		var me = this;
-		ko.postbox.publish("MENU_READY", me);
+		ko.postbox.publish("WORKBENCH_READY", me);
+
 
 	};
 

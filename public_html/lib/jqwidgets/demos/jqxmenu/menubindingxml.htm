@@ -13,7 +13,7 @@
     <div id='content'>
         <script type="text/javascript">
             $(document).ready(function () {
-                var theme = "";
+                var theme = getDemoTheme();
 
                 // prepare the data
                 var source =
@@ -40,7 +40,7 @@
                 // get the tree items. The first parameter is the grouping fields. The second parameter is the sub items collection name. The third parameter is the group's name. 
                 // Each jqxMenu item has a 'label' property, but in the data source, we have a 'CompanyName' field. The last parameter 
                 // specifies the mapping between the 'CompanyName' and 'label' fields.  
-                var records = dataAdapter.getGroupedRecords(['ContactTitle'], 'items', 'label', [{ name: 'ContactName', map: 'label'}]);
+                var records = dataAdapter.getGroupedRecords(['ContactTitle', 'ContactName'], 'items', 'label', [{ name: 'ContactName', map: 'label'}]);
                 $('#jqxWidget').jqxMenu({ source: records, mode: 'vertical',  width: '150px', theme: theme });
             });
         </script>

@@ -10,7 +10,8 @@
 	<xsl:output method="html" version="4" encoding="UTF-8" indent="yes" />
 	
 	<xsl:template match ="/">
-		<html class="panel-fit">
+		<xsl:text disable-output-escaping='yes'>&lt;!DOCTYPE html></xsl:text>
+		<html>
 			<xsl:call-template name="head" />
 			<xsl:call-template name="body" />
 		</html>
@@ -19,7 +20,10 @@
 	<xsl:template name="head">
 	<head>
 		<title>Cartesius</title>
-		<link rel="shortcut icon" href="{$cs-images-icons}cartesius.ico" />		
+		<link rel="shortcut icon" href="{$cs-images-icons}cartesius.ico" />	
+		<link rel="stylesheet" href="./styles/normalize.css" type="text/css" />
+		<link rel="stylesheet" href="./styles/cartesius.css" type="text/css" />
+	
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0" />
 		
 		<xsl:text disable-output-escaping="yes">&lt;!--[if lt IE 9]&gt;
@@ -29,7 +33,8 @@
 		&lt;![endif]--&gt;</xsl:text>
 		
         <!-- we use jquery and underscore as 2 utilities in the BoilerplateJS core -->
-        <script src="./lib/jquery/jquery-min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="./lib/jquery/jquery-1.10.2.js" type="text/javascript" charset="utf-8"></script>
+        <script src="./lib/jquery/jquery-migrate-1.2.1.js" type="text/javascript" charset="utf-8"></script>
         <script src="./lib/underscore/underscore-1.3.3.js" type="text/javascript" charset="utf-8"></script>
         <!-- following libraries are used by the UrlController for client routing and browser history --> 
         <script src="./lib/signals/signals.min.js" type="text/javascript" charset="utf-8"></script>
@@ -40,9 +45,9 @@
         <!-- BPJS initializer scripts-->
         <script src="./lib/boilerplate/groundwork.js" type="text/javascript" charset="utf-8"></script>
 
-        <script src="./lib/stapling/stapling-1.5.js" type="text/javascript" charset="utf-8"></script>
+        <!--<script src="./lib/stapling/stapling-1.5.js" type="text/javascript" charset="utf-8"></script>-->
 
-        <script src="./lib/knockout/knockout-2.1.0pre.js" type="text/javascript" charset="utf-8"></script>
+        <script src="./lib/knockout/knockout-2.3.0.js" type="text/javascript" charset="utf-8"></script>
         <script src="./lib/knockout-postbox/build/knockout-postbox.min.js" type="text/javascript" charset="utf-8"></script>
 
 
@@ -56,6 +61,9 @@
         
         <!-- following is the main entry script to the application code. we use requirejs to load main.js -->
         <script type="text/javascript" data-main="./scripts/main.js" src="./lib/require/require.js"></script>
+        
+
+        
 	</head>
 	
 	</xsl:template>
@@ -105,12 +113,20 @@
 	<xsl:template name="header">
 		<div id='header'>
 			<div>
+				<div>
+					<img style='margin: 2px; float:left;' src="{$cs-images-icons}icon.png" alt="Cartesius" />
+					<!--<span style="vertical-align:middle;"><strong>Cartesius</strong></span>-->
+				</div>
+				<div id='mainMenu' style='visibility: hidden; margin-left: 5px; float: right;'>
+					<xsl:attribute name='data-bind'>jqxMenu: <![CDATA[{source: menu, height: 32, theme: 'metro'}]]></xsl:attribute>
+				</div>
+
+				<!--
 				<img style='margin: 2px; vertical-align:middle;' src="{$cs-images-icons}icon.png" alt="User" />
-				<span><strong>Cartesius</strong></span>
-				<!--<div id='themeSelector'></div>-->
 				<img style='margin: 2px; vertical-align:middle;float:right'><xsl:attribute name='src'><xsl:value-of select="/root/data/account/image" />?sz=32</xsl:attribute><xsl:attribute name='alt'><xsl:value-of select="/root/data/account/username" /></xsl:attribute></img>
 				<img style='margin: 2px; vertical-align:middle;float:right' src="{$cs-images-icons}config.png" alt="Preferences" />
 				<a href="/logout"><img style='margin: 2px; vertical-align:middle;float:right' src="{$cs-images-icons}logout.png" alt="Logout" /></a>
+				-->
 			</div>
 		</div>
 	</xsl:template>

@@ -1,0 +1,120 @@
+form.cartesius fieldset
+{
+    clear: both;
+    margin: 1em 0 0 0;
+    padding: 10px;
+    overflow: auto;
+    background-color: #f8f8f8;
+    border: 1px solid #888;
+}
+
+form.cartesius legend
+{
+    font-weight: bold;
+}
+
+
+form.cartesius > div > div
+{
+    clear: both;
+    margin: 0;
+    padding: 0.5em 0 0 0;
+    overflow: visible;
+}
+
+
+form.cartesius label 
+{
+    display: block;
+    float: left;
+    width: 120px;
+    text-align: right;
+	font-weight: bold;
+    padding: 6px 1ex 0px 0px;
+    vertical-align: baseline;
+}
+          
+form.cartesius label.after 
+{
+    width: auto;
+    text-align: left; 
+    display: inline; 
+    float: none;
+}
+
+form.cartesius label.long 
+{
+    clear: both;
+    width: auto;
+    text-align: left;
+    float: none;
+}
+
+form.cartesius input
+, form.cartesius select
+, form.cartesius textarea
+{
+    float: left;
+}     
+
+form.cartesius input[type=radio]
+, form.cartesius input[type=checkbox]
+{
+    vertical-align: text-bottom;
+}
+
+form.cartesius ul {
+    list-style-type: none; 
+    float: left;
+    padding: 0;
+    margin: 0;
+}
+
+form.cartesius li {
+    clear: both;
+    padding: 0.2em 0;
+}
+
+form.cartesius li label {
+    width: auto;
+    text-align: left;
+    padding: 0;
+}   
+
+form.cartesius div.field-row 
+{
+    clear: none;
+    float: left;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+}
+
+form.cartesius div.field-row *
+{
+    float: none;
+    display: inline;
+}
+
+form.cartesius .button-row
+{
+    text-align: right;
+}
+
+form.cartesius .button-row input
+{
+    float: none;
+}
+
+form.cartesius div.long label 
+{
+    width: auto;
+    text-align: left;  
+    float: none;
+}
+
+form.cartesius div.long textarea 
+{
+    width: 100%;
+}
+

@@ -44,10 +44,7 @@ $app = new \Slim\Slim(array(
 
 $app->add(new \Slim\Middleware\SessionCookie(array('secret' => 'whynotnoteatpigstogether')));
 
-$_SESSION['access_token'] = "wordtothemotherfuckingmasses";
-$_SESSION['userid'] = 4;
-
-
+/*
 $app->add(new \Slim\Extras\Middleware\GoogleOAuth(array(
 	'name' => 'Cartesius COP',
 	'client_id' => '27386843570.apps.googleusercontent.com',
@@ -61,9 +58,10 @@ $app->add(new \Slim\Extras\Middleware\GoogleOAuth(array(
 
 ))
 );
-
+*/
 
 function authenticate(\Slim\Route $route) {
+
 	$app = \Slim\Slim::getInstance();
     if (isset($_SESSION['access_token'])) {
 		
@@ -73,6 +71,8 @@ function authenticate(\Slim\Route $route) {
 }
 
 $app->get('/', function() use ($app) {
+	$_SESSION['access_token'] = "wordtothemotherfuckingmasses";
+	$_SESSION['userid'] = 4;
 	
 	$user = \Account::find_one($_SESSION['userid'])->as_xml();
 	

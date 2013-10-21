@@ -94,6 +94,30 @@ $('#form').jqxValidator( { rules: [{ input: '#passwordInput',
     return result;
 }
                         </code></pre>
+                        <p>
+                            Set the hintRender property of a rule.
+                        </p>
+                        <pre><code>
+$('#sendButton').on('click', function () {
+    $('#testForm').jqxValidator('validate');
+});
+
+var that = this;
+var render = function (message, input) {
+    if (that._message) {
+        that._message.remove();
+    }
+    that._message = $("<pre style='width: 700px; max-width: 700px; margin: 10px;' class='code'><span style="clear: both; padding: 0px; margin: 0px; color: #11a;">&lt;span style=<span style=" clear: both; padding: 0px; margin: 0px; color: #a24;">'background: red; color: white;'</span>&gt;</span><span style="clear: both; padding: 0px; margin: 0px; color: #a24;">" + message + "</span><span style="clear: both; padding: 0px; margin: 0px; color: #11a;">&lt;/span&gt;</span><div/></pre>")
+    that._message.appendTo($(document.body));
+    return that._message;
+}
+
+    $('#testForm').jqxValidator({
+    rules: [
+        { input: '#userInput', message: 'Username is required!', action: 'keyup, blur', rule: 'required', hintRender: render },
+        { input: '#userInput', message: 'Your username must be between 3 and 12 characters!', action: 'keyup, blur', rule: 'length=3,12', hintRender: render }
+]});
+                        </code></pre>
                     </div>
                 </td>
             </tr>

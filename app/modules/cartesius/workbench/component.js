@@ -15,7 +15,7 @@ define(function(require) {
 
 					var context = new Boiler.Context(parent);
 					
-					ko.postbox.subscribe("MENU_READY", function(component) {
+					ko.postbox.subscribe("WORKBENCH_READY", function(component) {
 						component.activate($(".workbench"));
 						var theme = 'metro';
 						$(".navigationBar").jqxExpander({ width: '100%', height:'auto', theme: theme });

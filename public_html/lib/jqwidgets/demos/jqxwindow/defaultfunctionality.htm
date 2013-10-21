@@ -47,7 +47,6 @@
                 $('#hideWindowButton').jqxButton({ theme: basicDemo.config.theme, width: '65px' });
                 $('#resizeCheckBox').jqxCheckBox({ theme: basicDemo.config.theme, width: '185px', checked: true });
                 $('#dragCheckBox').jqxCheckBox({ theme: basicDemo.config.theme, width: '185px', checked: true });
-                $('#restrictParentCheckBox').jqxCheckBox({ theme: basicDemo.config.theme, width: '185px', checked: true });
             };
 
             //Creating the demo window
@@ -78,7 +77,7 @@
         } ());
 
         $(document).ready(function () {
-            var theme = "";
+            var theme = getDemoTheme();
 
             //Setting demo's theme
             basicDemo.config.theme = theme;

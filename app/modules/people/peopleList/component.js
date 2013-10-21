@@ -15,6 +15,7 @@ define(function(require) {
 		var vm, panel = null;
 
 		this.activate = function (parent, params) {
+			
 			var theme = "metro";
 		    if (!panel) {
 		        vm = new ViewModel(moduleContext);
@@ -56,7 +57,7 @@ define(function(require) {
 		    }
 		};
 		var me = this;
-		ko.postbox.publish("MENU_READY", me);
+		ko.postbox.publish("WORKBENCH_READY", me);
 
 	};
 

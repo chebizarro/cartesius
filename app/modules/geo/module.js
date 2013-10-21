@@ -12,7 +12,14 @@ define(function(require) {
         initialize : function(parentContext) {
             var context = new Boiler.Context(parentContext);
 			var layers = new Layers(context);
-			var map = new Map(context);
+			//var map = new Map(context);
+			
+			var controller = new Boiler.UrlController($(".appcontent"));
+            controller.addRoutes({
+                "/" : new Map(context)
+            });
+            controller.start();
+
         }
         
     }

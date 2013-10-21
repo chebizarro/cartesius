@@ -1,4 +1,28 @@
 ﻿*********************************************
+* jQWidgets v3.0.3 Release, Oct-01-2013     *
+*********************************************
+
+What's New:
+
+- jqxGrid Paging mode.
+- 4 new themes. 
+
+What's Fixed:
+
+- Fixed an issue in jqxGrid regarding the "selectall" method when checkbox selection is enabled.
+- Fixed an issue in jqxGrid regarding the columns resizing in RTL mode when the Grid's horizontal scrollbar is hidden.
+- Fixed an issue in jqxGrid regarding the "cellbeginedit" and "cellendedit" events. The events were not raised correctly after pressing the "enter" key.
+- Fixed an issue in jqxGrid regarding the tooltip text formatting.
+- Fixed an issue in jqxGrid regarding the Excel export when a String column is with Null values.
+- Fixed an issue in jqxGrid regarding the Grouping of a column with "groupable" set to false when Columns Reorder is enabled.
+- Fixed an issue in jqxGrid regarding the TextBox editor, when the edited value is a localized number.
+- Fixed an issue in jqxGrid regarding the "loadstate" method when the Grid is in virtual mode.
+- Fixed an issue in jqxComboBox regarding the auto-complete when 1 item is found and a horizontal scrollbar is displayed. The DropDown's height was not enough for displaying the full item.
+- Fixed an issue in jqxCalendar regarding the Special Dates feature when the special date is added with a custom CSS Class.
+- Fixed an issue in jqxCalendar regarding the selection after navigation through the year view.
+- Fixed an issue in jqxTree regarding the horizontal scrollbar's max value calculation.
+
+*********************************************
 * jQWidgets v3.0.2 Release, Aug-26-2013     *
 *********************************************
 

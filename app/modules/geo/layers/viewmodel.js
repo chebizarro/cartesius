@@ -9,7 +9,7 @@ define(function(require) {
         
         this.index = ko.observable(0);
 		this.showBoxes = ko.observable(true);
-		this.sltCount = ko.observable(0);
+		this.checked = ko.observableArray();
 
         $.getJSON('/model/geo/layers/{}/json', function (result) {
             self.layers(result);

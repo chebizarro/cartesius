@@ -9,7 +9,7 @@
     <script type="text/javascript" src="../../jqwidgets/jqxscrollbar.js"></script>
     <script type="text/javascript" src="../../jqwidgets/jqxmenu.js"></script>
     <script type="text/javascript" src="../../jqwidgets/jqxdata.js"></script>
-    <script type="text/javascript" src="http://www.jqwidgets.com/jquery-widgets-demo/jqwidgets/jqxgrid.js"></script>
+    <script type="text/javascript" src="../../jqwidgets/jqxgrid.js"></script>
     <script type="text/javascript" src="../../jqwidgets/jqxgrid.selection.js"></script>	
     <script type="text/javascript">
         $(document).ready(function () {

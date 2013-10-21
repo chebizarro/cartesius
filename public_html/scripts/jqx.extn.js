@@ -13,17 +13,17 @@
 			if (settings.events) {
 				$.each(settings.events, function () {
 					var eventName = this;
-					$(element).bind(eventName + '.' + element.id, function (event) {
+					$(element).on(eventName + '.' + element.id, function (event) {
 						if (!updatingFromObservable) {
 							updating = true;
 							var val = valueAccessor();
 							var property = settings.getProperty(widget, event, eventName);
-							if (val[property.name] && $.isFunction(val[property.name])) {
-								val[property.name](property.value);
-							}
-							else if (val[property.name]) {
-								valueAccessor(property.value);
-							}
+								if (val[property.name] && $.isFunction(val[property.name])) {
+									val[property.name](property.value);
+								}
+								else if (val[property.name]) {
+									valueAccessor(property.value);
+								}
 							updating = false;
 						}
 					});
@@ -48,22 +48,5 @@
 		};
 		ko.bindingHandlers[settings.name] = binding;
 	};
-	ko.jqwidgets.dataBinding = new ko.jqwidgets.dataBinding({
-		name: "jqxListBox",
-		checkboxes: false,
-		events: ['select'],
-		selectedItemsCount: 0,
-		getProperty: function (object, event, eventName) {
-			if (eventName == 'select') {
-				// update the selectedItemsCount when the selection is changed.
-				return { name: "selectedItemsCount", value: object.getSelectedItems().length };
-			}
-		},
-		setProperty: function (object, key, value, newValue) {
-			if (key == 'checkboxes') {
-				object.checkboxes = newValue;
-				object.refresh();
-			}
-		}
-	});
+	
 } (jQuery, ko));

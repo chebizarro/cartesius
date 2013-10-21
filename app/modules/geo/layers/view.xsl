@@ -25,7 +25,7 @@
 					<img style='float: left; margin-left:2px;' src='{$cs-images-icons}config.png' />
 				</div>
 				<div id="layersListbox">
-					<xsl:attribute name='data-bind'>jqxListBox: <![CDATA[{checkboxes: showBoxes, selectedItemsCount: sltCount}]]></xsl:attribute>
+					<xsl:attribute name='data-bind'>jqxListBox: <![CDATA[{value: checked}]]></xsl:attribute>
 				</div>
 			</div>
 		</div>

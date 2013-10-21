@@ -2,7 +2,7 @@ define(function(require) {
 
     // Load the dependencies
     var Boiler = require('Boiler');
-        //template = require('text!../../view/cartesius/peopleDetails/view');
+        template = require('text!../../view/people/peopleDetails/view');
         //ViewModel = require('./viewmodel'); 
         //styleText = require('text!./style.css');
 
@@ -13,12 +13,12 @@ define(function(require) {
 
 		this.activate = function (parent, params) {
 		    if (!panel) {
-		        vm = new ViewModel(moduleContext, params.id);
-		        panel = new Boiler.ViewTemplate(parent, template, null, styleText);
-		        ko.applyBindings(vm, panel.getDomElement());
+		        //vm = new ViewModel(moduleContext, params.id);
+		        panel = new Boiler.ViewTemplate(parent, template);
+		        //ko.applyBindings(vm, panel.getDomElement());
 		    }
 
-		    vm.setEmployee(params.id);
+		    //vm.setEmployee(params.id);
 		    panel.show();
 		};
 

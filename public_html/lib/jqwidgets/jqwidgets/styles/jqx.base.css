@@ -89,6 +89,7 @@
     margin: 0;
     border: none;
     background: transparent;
+    outline: none;
 }
 
 .jqx-position-reset {
@@ -116,6 +117,10 @@
 /*jqxButton, jqxToggleButton, jqxRepeatButton Style*/
 .jqx-button{outline: none; border: 1px solid transparent; padding: 3px; text-align: center; vertical-align: central; margin: 0 0 0 0; cursor: default; }
 .jqx-buttongroup{}
+.jqx-group-button-normal {
+    vertical-align: middle;
+    text-align: center;
+}
 /*applied to the link button's anchor element.*/
 .jqx-link
 {
@@ -178,6 +183,7 @@
     font-weight: normal;
     font-family: Verdana;
 }
+
 /*applied to the Grid's element.*/
 .jqx-grid
 {
@@ -190,6 +196,21 @@
 {
     border: none;
     border-top: 1px solid transparent;
+}
+/*applied to the Top Pager.*/
+.jqx-grid-pager-top
+{
+    border: none;
+    border-bottom: 1px solid transparent;
+}
+.jqx-grid-pager-number {
+    color: inherit;
+    padding: 2px 5px;
+    text-decoration: none;
+    margin: 1px;
+    border: 1px solid transparent;
+    *color: expression(this.parentNode.currentStyle['color']);     
+    outline: none;
 }
 /*applied to the Grid's bottom-right area between the horizontal and vertical scrollbars.*/
 .jqx-grid-bottomright
@@ -356,7 +377,8 @@
     margin-right: 4px;
  }
 /*applied to the column anchor tags.*/
- .jqx-grid-column-header a:link{
+ .jqx-grid-column-header a:link, .jqx-grid-column-header a:visited
+ {
     display: block;
     margin: 4px;
     height: 18px;
@@ -366,8 +388,7 @@
     text-decoration: none;
     cursor: pointer;
 }
- .jqx-grid-column-header a:visited{
-    display: block;
+.jqx-grid-toolbar a:link, .jqx-grid-toolbar a:visited {
     margin: 4px;
     height: 18px;
     line-height: 18px !important;
@@ -495,6 +516,47 @@
     border: transparent !important;
 }
 .jqx-grid-cell-wrap {white-space: normal;}
+
+/*applied to a cell in jqxListView*/
+.jqx-cell {
+    min-height: 23px;
+    padding: 3px;
+    margin: 0;
+    border-collapse: separate;
+    border-spacing: 0px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border: 1px solid transparent;
+    border-top-width: 0px;
+    border-left-width: 0px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    white-space: normal;
+}
+.jqx-left-align {
+    text-align: left;
+}
+.jqx-center-align {
+    text-align: center;
+}
+.jqx-right-align {
+    text-align: right;
+}
+
+.jqx-grid-table .jqx-grid-cell {
+    position: static !important;
+}
+/*applied to the Grid's Table element.*/
+.jqx-grid-table {
+    table-layout: fixed;
+    margin: 0px;
+    padding: 0px;
+    border-collapse: collapse;
+    border-spacing: 0px;
+    -webkit-overflow-scrolling: touch;
+    border-bottom: 1px solid transparent;
+    outline: none;
+}
  /*applied to a grid cell that is part of a details row and grouping is enabled.*/
 .jqx-grid-group-details-cell {
 
@@ -1706,7 +1768,7 @@
 {
     outline: none;
     text-align: right;
-    padding: 3;
+    padding: 3px;
     border-top: none;
     border-bottom: 1px solid transparent;
     border-left: none;
@@ -2279,6 +2341,7 @@ of the horizontal scrollbar.*/
     border: 1px solid transparent;
     overflow: hidden;
     margin: 0 0 0 0;
+    cursor: pointer;
 }
 /*applied to the dropdownlist in hovered state.*/
 .jqx-dropdownlist-state-hover
@@ -2778,7 +2841,18 @@ of the horizontal scrollbar.*/
     background-repeat: no-repeat;
     background-position: center;
 }
-
+.jqx-icon-arrow-first
+{
+    background-image: url('images/icon-first.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.jqx-icon-arrow-last
+{
+    background-image: url('images/icon-last.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
 .jqx-icon-arrow-up-hover
 {
     background-image: url('images/icon-up.png');
@@ -2841,6 +2915,26 @@ of the horizontal scrollbar.*/
     background-image: url(images/close.png);
     background-repeat: no-repeat;
     background-position: center;
+}
+.jqx-icon-search
+{
+    cursor: pointer;
+    background-image: url(images/search.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 16px;
+    width: 16px;
+    height: 16px;
+}
+.jqx-icon-plus
+{
+    cursor: pointer;
+    background-image: url(images/plus.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 16px;
+    width: 16px;
+    height: 16px;
 }
 /* jqxScrollView */
 .jqx-scrollview-button
@@ -3497,4 +3591,20 @@ ol li .jqx-listmenu-item-label:before
 {
     width: 100%;
     height: 100%;
+}
+.jqx-filter-editor-group {
+    white-space: nowrap!important;
+	color: #db3412!important;
+}
+.jqx-filter-editor-column {
+	white-space: nowrap!important;
+	color: #1086d4!important;
+}
+.jqx-filter-editor-condition {
+	white-space: nowrap!important;
+	color: #6fb111!important;
+}
+.jqx-filter-editor-value {
+	white-space: nowrap!important;
+	color: Gray!important;
 }

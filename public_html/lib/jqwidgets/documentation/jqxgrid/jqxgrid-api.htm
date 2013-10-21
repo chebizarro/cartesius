@@ -1160,7 +1160,7 @@ $(&quot;#jqxgrid&quot;).jqxGrid(
                            <pre><code>'checkedlist' - dropdownlist with checkboxes that specify which records should be visible and hidden</code></pre>
                                          <pre><code>'list' - dropdownlist which specifies the visible records depending on the selection</code></pre>
                               <pre><code>'number' - numeric input field</code></pre>
-                                         <pre><code>'checkbox' - filter for boolean data</code></pre>
+                                         <pre><code>'bool' - filter for boolean data</code></pre>
                              <pre><code>'date' - filter for dates</code></pre>
                          <h4>
                             Code example</h4>
@@ -1176,6 +1176,37 @@ $(&quot;#jqxgrid&quot;).jqxGrid(
                     </div>
                 </td>
             </tr>
+        <tr>
+                <td class="documentation-option-type-click">
+                    <span id='Span219'>filtermode</span>
+                </td>
+                <td>
+                    <span>String</span>
+                </td>
+                <td>
+                    "default"
+                </td>
+            </tr>
+            <tr>
+                <td colspan='3' style='width: 100%'>
+                    <div class="documentation-option-description property-content" style="display: none;">
+                        <p>(requires jqxgrid.filter.js)</p>
+                        <p>
+                            The property specifies the type of rendering of the Filter Menu. Possible values: "default" and "excel". In "excel" mode, the Filter Menu displays a ListBox with Checkboxes with all unique cell values.</p>
+                        <h4>
+                            Code example</h4>
+                        <p>
+                            Set the <code>filtermode</code> property.
+                        </p>
+                        <pre><code>$('#jqxGrid').jqxGrid({ filtermode: 'excel'}); </code></pre>
+                         <p>
+                            Get the <code>filtermode</code> property.
+                        </p>
+                        <pre><code>var filtermode = $('#jqxGrid').jqxGrid('filtermode'); </code></pre>
+                    </div>
+                </td>
+            </tr>
+          <tr>
           <tr>
             <td class="documentation-option-type-click">
                     <span id='Span145'>showemptyrow</span>
@@ -2202,6 +2233,66 @@ $("#jqxGrid").jqxGrid(
                     </div>
                 </td>
             </tr>
+          <tr>
+                <td class="documentation-option-type-click">
+                    <span id='Span217'>pagermode</span>
+                </td>
+                <td>
+                    <span>String</span>
+                </td>
+                <td>
+                    "default"
+                </td>
+            </tr>
+            <tr>
+                <td colspan='3' style='width: 100%'>
+                    <div class="documentation-option-description property-content" style="display: none;">
+                        <p>(requires jqxgrid.pager.js)</p>
+                        <p>
+                            Sets or gets the rendering mode of the pager. Available values - "simple" and "default".</p>
+                        <h4>
+                            Code example</h4>
+                        <p>
+                            Set the <code>pagermode</code> property.
+                        </p>
+                        <pre><code>$('#jqxGrid').jqxGrid({ pagermode: "simple"}); </code></pre>
+                        <p>
+                            Get the <code>pagermode</code> property.
+                        </p>
+                        <pre><code>var pagermode = $('#jqxGrid').jqxGrid('pagermode'); </code></pre>
+                    </div>
+                </td>
+            </tr>
+         <tr>
+                <td class="documentation-option-type-click">
+                    <span id='Span218'>pagerbuttons</span>
+                </td>
+                <td>
+                    <span>Number</span>
+                </td>
+                <td>
+                    5
+                </td>
+            </tr>
+            <tr>
+                <td colspan='3' style='width: 100%'>
+                    <div class="documentation-option-description property-content" style="display: none;">
+                        <p>(requires jqxgrid.pager.js)</p>
+                        <p>
+                            Sets or gets the buttons displayed in the pager when the "pagermode" is set to "simple".</p>
+                        <h4>
+                            Code example</h4>
+                        <p>
+                            Set the <code>pagerbuttons</code> property.
+                        </p>
+                        <pre><code>$('#jqxGrid').jqxGrid({ pagerbuttons: 3}); </code></pre>
+                        <p>
+                            Get the <code>pagerbuttons</code> property.
+                        </p>
+                        <pre><code>var pagerbuttons = $('#jqxGrid').jqxGrid('pagerbuttons'); </code></pre>
+                    </div>
+                </td>
+            </tr>
             <tr>
                 <td class="documentation-option-type-click">
                     <span id='Span10'>rowdetails</span>
@@ -2452,6 +2543,7 @@ $("#jqxgrid").jqxGrid(
                         <br />
                         <pre><code>'click' - Marks the clicked cell as selected and shows the editor. The editor’s value is equal to the cell’s value</code></pre>
                           <pre><code>'selectedcell' - Marks the cell as selected. A second click on the selected cell shows the editor. The editor’s value is equal to the cell’s value</code></pre>
+                          <pre><code>'selectedrow' - A second click on a selected row shows the row editors.</code></pre>
                          <pre><code>'dblclick' - Marks the clicked cell as selected and shows the editor. The editor’s value is equal to the cell’s value</code></pre>
                           <pre><code>'programmatic' - Cell editors are activated and deactivated only through the API(see begincelledit and endcelledit methods)</code></pre>
                        <h4>
@@ -2619,6 +2711,7 @@ Column Properties:
     <li>menu - sets whether the menu button is displayed when the user moves the mouse cursor over the column's header.</li>
     <li>exportable - determines whether the column will be exported when the Grid's export method is called.</li>
     <li>columngroup - determines the name of the column's parent group.</li>
+    <li>enabletooltips - determines whether tooltips are enabled.</li>
     <li>renderer - sets a custom column renderer. This can be used for changing the built-in rendering of the column's header.</li>
     <li>rendered - callback function that is called when the column is rendered. You can use it to set additional settings to the column's header element.
     <pre><code>
@@ -6976,8 +7069,8 @@ $('#jqxGrid').jqxGrid('removefilter', datafield, true);
                                 <ul>
                                     <li>getfilters - returns an array of all filters in the filter object. Each filter in the Array has:
                                         <ul>
-                                            <li>filtervalue - filter's value.</li>
-                                            <li>comparisonoperator - filter's operator. For String filter the value could be: 'EMPTY', 'NOT_EMPTY', 'CONTAINS', 'CONTAINS_CASE_SENSITIVE',
+                                            <li>value - filter's value.</li>
+                                            <li>condition - filter's operator. For String filter the value could be: 'EMPTY', 'NOT_EMPTY', 'CONTAINS', 'CONTAINS_CASE_SENSITIVE',
         'DOES_NOT_CONTAIN', 'DOES_NOT_CONTAIN_CASE_SENSITIVE', 'STARTS_WITH', 'STARTS_WITH_CASE_SENSITIVE',
         'ENDS_WITH', 'ENDS_WITH_CASE_SENSITIVE', 'EQUAL', 'EQUAL_CASE_SENSITIVE', 'NULL', 'NOT_NULL. For Date and Number filter the value could be: 'EQUAL', 'NOT_EQUAL', 'LESS_THAN', 'LESS_THAN_OR_EQUAL', 'GREATER_THAN', 'GREATER_THAN_OR_EQUAL', 'NULL', 'NOT_NULL'. For Boolean filter, the value could be:
                                                 'EQUAL', 'NOT_EQUAL'
@@ -7505,6 +7598,66 @@ var editable = $("#jqxGrid").jqxGrid('endcelledit', 0, "firstname", false);
                     </div>
                 </td>
             </tr>
+
+        <tr>
+                <td class="documentation-option-type-click">
+                    <span id='Span215'>beginrowedit</span>
+                </td>
+                <td>
+                    <span>Method</span>
+                </td>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                <td colspan='3' style='width: 100%'>
+                    <div class="documentation-option-description property-content" style="display: none;">
+                        <p>
+                            Shows the cell editors for an entire row.
+                        </p>
+                        <h4>
+                            Code example</h4>
+                        <p>
+                            Invoke the <code>beginrowedit</code> method.
+                        </p>
+                        <pre><code>
+// @param row index
+$("#jqxGrid").jqxGrid('beginrowedit', 0);
+                        </code></pre>
+                    </div>
+                </td>
+            </tr>
+              <tr>
+                <td class="documentation-option-type-click">
+                    <span id='Span216'>endrowedit</span>
+                </td>
+                <td>
+                    <span>Method</span>
+                </td>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                <td colspan='3' style='width: 100%'>
+                    <div class="documentation-option-description property-content" style="display: none;">
+                        <p>
+                            Hides the edited row's editors and saves or cancels the changes.
+                        </p>
+                        <h4>
+                            Code example</h4>
+                        <p>
+                            Invoke the <code>endrowedit</code> method.
+                        </p>
+                        <pre><code>
+// @param row index
+// @param Boolean. - "true" cancels the changes, "false" confirms the changes.
+$("#jqxGrid").jqxGrid('endrowedit', 0, false);
+                        </code></pre>
+                    </div>
+                </td>
+            </tr>
+
+
              <tr>
                 <td class="documentation-option-type-click">
                     <span id='Span194'>showvalidationpopup</span>

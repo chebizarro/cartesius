@@ -10,15 +10,13 @@
     <script type="text/javascript" src="../../jqwidgets/jqxbuttons.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            var theme = "";
+            var theme = getDemoTheme();
             // Create jqxNumberInput
             $("#numericInput").jqxNumberInput({inputMode: 'simple', rtl: true, width: '250px', height: '25px', theme: theme, spinButtons: true });
             // Create Percentage Input.
             $("#percentageInput").jqxNumberInput({ rtl: true, width: '250px', height: '25px', digits: 3, symbolPosition: 'right', symbol: '%', theme: theme, spinButtons: true });
             // Create Currency Input.
             $("#currencyInput").jqxNumberInput({ rtl: true, width: '250px', height: '25px', symbol: '$', theme: theme, spinButtons: true });
-            // Create Disabled Input.
-            $("#disabledInput").jqxNumberInput({ rtl: true, width: 250, height: 25, disabled: true, theme: theme, spinButtons: true });
         });
     </script>
 </head>
