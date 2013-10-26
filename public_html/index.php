@@ -1,6 +1,6 @@
 <?php
 
-define('ROOT', '/mnt/hgfs/web/cartesius/');
+define('ROOT', '/media/web/');
 
 define('APP', ROOT.'app/');
 define('TEMPLATES', APP.'templates/');
@@ -174,6 +174,18 @@ $app->get('/model/:module/:component(/:params(/:format))', 'authenticate', funct
 	exit;
 });
 
+
+$app->post('/save/:module', 'authenticate', function($module) use ($app) {
+	require_once(MODULES. $module . '/model.php');
+	$request = $app->request();
+    $DATA = json_decode($request->getBody());
+
+	$app->contentType('application/json');
+	echo json_encode($DATA);
+	exit;
+});
+
+
 $app->get('/test', function() use ($app) {
 
 	/*
@@ -214,7 +226,7 @@ $app->get('/test', function() use ($app) {
 
 	//$MODULES = XMLORM::for_table('components')->find_many()->as_xml();
 
-	$app->contentType('application/xml');
+	$app->contentType('application/json');
 	
 	//require_once MODULES . 'geo/layers/model.php';
 	
@@ -233,10 +245,14 @@ $app->get('/test', function() use ($app) {
 	//))
 	
 	$people = XMLORM::for_table('information_schema')->raw_query("SELECT * FROM information_schema.columns WHERE table_name = 'account' ORDER BY ordinal_position ASC")->use_id_column('ordinal_position')->order_by_asc('ordinal_position')->find_many()->as_xml();
-	
-	echo $people->saveXML();
-	//print_r($people);
-
+	/*$people = XMLORM::for_table('account')
+    ->table_alias('p1')
+    ->select('p1.*')
+    ->select('p2.username', 'parent_name')
+    ->join('account', array('p1.parent', '=', 'p2.id'), 'p2')
+    ->find_many();*/
+	//echo $people->saveXML();
+	var_dump($people);
 });
 
 

@@ -65,13 +65,17 @@
 					<div>
 						<label for="projectReviewDate">Date of next review</label>
 						<div id="projectReviewDate">
-							<xsl:attribute name='data-bind'>jqxDateTimeInput: <![CDATA[{width: '200px', height: '25px', value: reviewdate,theme: 'metro'}]]></xsl:attribute>	
+							<xsl:attribute name='data-bind'>jqxDateTimeInput: <![CDATA[{width: '200px', height: '25px', value: review_date,theme: 'metro'}]]></xsl:attribute>	
 						</div>
 					</div>
 					<div>
 						<label for="projectSummary">Summary</label>
 						<textarea class="jqx-input-content-metro jqx-input-metro" id="projectSummary" />
 					</div>
+					<div>
+						<input type="button" value="Next" id='projectInfoNext' />
+					</div>
+
 					
 <!--
 
@@ -89,14 +93,6 @@ Other relevant documents/tools, i.e. security policy, travel guidelines
 			</div>
 	</xsl:template>
 
-	<xsl:template name="edit.project.itinerary">
-			<div class="section">
-                <div id="projectItinerary">
-
-				</div>
-			</div>
-	</xsl:template>
-
 	<xsl:template name="edit.project.team">
 			<div class="section">
 				<div><p>Instructions</p></div>
@@ -108,7 +104,7 @@ Other relevant documents/tools, i.e. security policy, travel guidelines
 							<input type="text" id="newTeam">
 								<xsl:attribute name='data-bind'>jqxInput: <![CDATA[{width: '200px', height: '25px', theme: 'metro'}]]></xsl:attribute>	
 							</input>
-							<input type="button" value="Add team" id='jqxButton' />
+							<input type="button" value="Add team" id='addTeam' />
 						</div>
 						
 						<div data-bind="foreach: teams">
@@ -118,12 +114,23 @@ Other relevant documents/tools, i.e. security policy, travel guidelines
 									<label for="projectSummary">Description</label>
 									<textarea class="jqx-input-content-metro jqx-input-metro" id="projectSummary" />								
 								</div>
-								<div data-bind="foreach: teammember">
+								<div><!-- data-bind="foreach: teammember">-->
 									<div id="teamGrid"></div>
 								</div>
 							</fieldset>
 						</div>
 						
+					</div>
+				</form>
+			</div>
+	</xsl:template>
+
+	<xsl:template name="edit.project.itinerary">
+			<div class="section">
+				<div><p>Instructions</p></div>
+					<form class="cartesius">
+						<div id="projectItinerary">
+
 					</div>
 				</form>
 			</div>

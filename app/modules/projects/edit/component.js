@@ -21,20 +21,24 @@ define(function(require) {
 		    if (!panel) {
 				
 		        vm = new ViewModel(moduleContext);
-		        
 		        panel = new Boiler.ViewTemplate(parent, template);
 				
-				$('#editProjectTabs').jqxTabs({ position: 'top', theme: theme });
+				$('#editProjectTabs').jqxTabs({ position: 'top', theme: theme, disabled: false });
 				
+				// Tab 0 Project Info
+				//Set up author source
 				var source =
 				{
-					datatype: "observablearray",
+					datatype: 'json',
 					datafields: [
 						{ name: 'email' },
 						{ name: 'username' },
+						{ name: 'id' }
 					],
 					id: 'id',
-					localdata: vm.authors
+					url: '/model/people/peopleList/{}/json',
+                    async: false
+					//localdata: vm.authors_select
 				};
 				var dataAdapter = new $.jqx.dataAdapter(source);
 
@@ -43,10 +47,46 @@ define(function(require) {
 					theme: theme,
 					autoDropDownHeight: true,
 					displayMember: 'username',
-					valueMember: 'email',
+					valueMember: 'id',
 					checkboxes: true
 				});
 				
+				//$("#projectAuthors").on('bindingComplete', function (event) {
+					ko.utils.arrayForEach(vm.authors(), function(author) {
+						console.log(author);
+						var item = $("#projectAuthors").jqxDropDownList('getItemByValue', author.id);
+						if(item) {
+							$("#projectAuthors").jqxDropDownList('checkItem', item );
+						}
+					});
+				//});
+				
+				$("#projectAuthors").on('checkChange', function (event) {
+                    if (event.args) {
+                        var item = event.args.item;
+                        if (item) {
+							if (item.checked) {
+								vm.authors.push({id : item.value});
+							} else {
+								vm.authors.remove(function(index) { return index.id == item.value });
+							}
+                        }
+                    }
+                });
+
+				
+				$("#projectInfoNext").jqxButton({ width: '55', theme: theme });
+				$("#projectInfoNext").on('click', function () {
+					if(vm.saveProjectInfo()) {
+						// yay!
+					}
+					
+				});
+
+				// Tab 1 Team info
+
+				
+				// Apply bindings
 				ko.applyBindings(vm, panel.getDomElement());
 
 			
