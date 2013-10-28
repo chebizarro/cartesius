@@ -115,67 +115,6 @@
         }
         
         
-        public function table_schema($id=null) {
-            if (!is_null($id)) {
-                $this->where_id_is($id);
-            }
-            $this->limit(0);
-            $rows = $this->_run_schema();
-
-            if (empty($rows)) {
-                return false;
-            }
-
-			//print_r($rows);
-
-            return $this->_create_schema_instance_from_row($rows[0]);
-        }
-        
-        
-       protected function _create_schema_instance_from_row($row) {
-            $instance = self::for_table($this->_table_name, $this->_connection_name);
-            $instance->use_id_column($this->_instance_id_column);
-            $instance->hydrate($row);
-                        
-            return $instance;
-        }
-
-        
-        protected function _run_schema() {
-            $query = $this->_build_select();
-            $caching_enabled = self::$_config[$this->_connection_name]['caching'];
-
-            if ($caching_enabled) {
-                $cache_key = self::_create_cache_key($query, $this->_values);
-                $cached_result = self::_check_query_cache($cache_key, $this->_connection_name);
-
-                if ($cached_result !== false) {
-                    return $cached_result;
-                }
-            }
-
-            self::_execute($query, $this->_values, $this->_connection_name);
-            $statement = self::get_last_statement();
-
-            $rows = array(array());
-
-			for ($i = 0; $i < $statement->columnCount(); $i++) {
-				$col = $statement->getColumnMeta($i);
-				$rows[0][$col['name']] = $col['flags'];
-			}
-
-            if ($caching_enabled) {
-                self::_cache_query_result($cache_key, $rows, $this->_connection_name);
-            }
-
-            // reset Idiorm after executing the query
-            $this->_values = array();
-            $this->_result_columns = array('*');
-            $this->_using_default_result_columns = true;
-
-            return $rows;
-        }
-
 
         
     }

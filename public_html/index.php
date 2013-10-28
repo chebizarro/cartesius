@@ -1,6 +1,6 @@
 <?php
 
-define('ROOT', '/media/web/');
+define('ROOT', '/opt/lappstack-5.4.19-0/apps/cartesius/htdocs/cartesius/');
 
 define('APP', ROOT.'app/');
 define('TEMPLATES', APP.'templates/');
@@ -9,6 +9,7 @@ define('VENDOR', APP.'vendor/');
 define('LIB', APP.'lib/');
 define('ROUTES', APP.'routes/');
 define('MODULES', APP.'modules/');
+define('CORE', APP.'core/');
 
 require VENDOR.'autoload.php';
 require VENDOR.'slim/extras/Slim/Extras/Log/DateTimeFileWriter.php';
@@ -26,7 +27,7 @@ require LIB.'GoogleOAuth.php';
 
 
 XMLORM::configure('error_mode', PDO::ERRMODE_WARNING);
-XMLORM::configure('pgsql:host=localhost;port=5432;dbname=cartesius;user=cartesius;password=cartesius');
+XMLORM::configure('pgsql:host=127.0.0.1;port=5432;dbname=cartesius;user=postgres;password=postgres');
 XMLORM::configure('return_result_sets', true);
 
 // Start Slim.
@@ -72,7 +73,7 @@ function authenticate(\Slim\Route $route) {
 
 $app->get('/', function() use ($app) {
 	$_SESSION['access_token'] = "wordtothemotherfuckingmasses";
-	$_SESSION['userid'] = 4;
+	$_SESSION['userid'] = 1;
 	
 	$user = \Account::find_one($_SESSION['userid'])->as_xml();
 	
@@ -188,71 +189,20 @@ $app->post('/save/:module', 'authenticate', function($module) use ($app) {
 
 $app->get('/test', function() use ($app) {
 
-	/*
-	class Modules extends XMLModel {
-		public function components() {
-			return $this->has_many('Components','module_id');
-		}
-	}
-
-	class Components extends XMLModel {
-	}
 
 	$app->contentType('application/javascript');
 
-
-	$MODULES = Model::factory('Modules')->find_array();
-	print_r($MODULES);
-
-	echo '\n\n+++++++++++++++++++\n\n';
-
-	$MODULES = Model::factory('Modules')->find_one(1)->as_array();
-	print_r($MODULES);
-
-	//echo '\n\n+++++++++++++++++++\n\n';
-
-	//$COMPONENTS = $MODULES->components()->find_many();
-	//print_r($COMPONENTS);
-
-	echo '\n\n+++++++++++++++++++\n\n';	
-
-	$MODULES = ORM::for_table('components')->join('modules', array('modules.id', '=', 'components.module_id'))->find_many();
-	print_r($MODULES);
-
-	echo '\n\n+++++++++++++++++++\n\n';
-*/
-	//$MODULES = XMLORM::for_table('components')->as_xml();
-	//print_r($MODULES);
-
-	//$MODULES = XMLORM::for_table('components')->find_many()->as_xml();
-
-	$app->contentType('application/json');
-	
-	//require_once MODULES . 'geo/layers/model.php';
-	
-	//$MODULES = \Layer::find_many()->as_json();
-	
-	//echo $MODULES;
-		
-	//$app->view(new Slim\Extras\Views\JSON);
+			
+	$app->view(new Slim\Extras\Views\XSLT);
     
-    //return $app->render('', array("data" => $MODULES));	
-
-	//$people = XMLORM::for_table('account')->table_schema();
-	//$people = XMLORM::for_table('account')->find_one();
-	//XMLORM::configure('id_column_overrides', array(
-    //'information_schema.columns' => 'dtd_identifier'
-	//))
 	
-	$people = XMLORM::for_table('information_schema')->raw_query("SELECT * FROM information_schema.columns WHERE table_name = 'account' ORDER BY ordinal_position ASC")->use_id_column('ordinal_position')->order_by_asc('ordinal_position')->find_many()->as_xml();
-	/*$people = XMLORM::for_table('account')
-    ->table_alias('p1')
-    ->select('p1.*')
-    ->select('p2.username', 'parent_name')
-    ->join('account', array('p1.parent', '=', 'p2.id'), 'p2')
-    ->find_many();*/
+	$people = XMLORM::for_table('information_schema')->raw_query("SELECT * FROM information_schema.columns WHERE table_name = 'project'")->use_id_column('ordinal_position')->order_by_asc('ordinal_position')->find_many()->as_xml();
+
+	//echo CORE;
+
+    return $app->render('../core/model.xsl', array("data" => $people));	
+
 	//echo $people->saveXML();
-	var_dump($people);
 });
 
 
