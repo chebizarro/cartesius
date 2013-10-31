@@ -31,8 +31,9 @@
 		&lt;script type="text/javascript" charset="utf-8" src="http://cdnjs.cloudflare.com/ajax/libs/json2/20110223/json2.js"&gt;&lt;/script&gt;
 		&lt;script type="text/javascript" charset="utf-8" src="http://explorercanvas.googlecode.com/svn/trunk/excanvas.js"&gt;&lt;/script&gt;
 		&lt;![endif]--&gt;</xsl:text>
-		
+
         <!-- we use jquery and underscore as 2 utilities in the BoilerplateJS core -->
+        <script src="./lib/breeze/Scripts/q.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="./lib/jquery/jquery-1.10.2.js" type="text/javascript" charset="utf-8"></script>
         <script src="./lib/jquery/jquery-migrate-1.2.1.js" type="text/javascript" charset="utf-8"></script>
         <script src="./lib/underscore/underscore-1.3.3.js" type="text/javascript" charset="utf-8"></script>

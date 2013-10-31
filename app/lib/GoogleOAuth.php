@@ -2,7 +2,7 @@
 
 namespace Slim\Extras\Middleware;
 
-require MODULES.'cartesius/auth/model.php';
+//require MODULES.'cartesius/auth/model.php';
 
 use \Google_Client;
 use \Google_PlusService;

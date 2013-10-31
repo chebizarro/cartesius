@@ -30,6 +30,24 @@ XMLORM::configure('error_mode', PDO::ERRMODE_WARNING);
 XMLORM::configure('pgsql:host=127.0.0.1;port=5432;dbname=cartesius;user=postgres;password=postgres');
 XMLORM::configure('return_result_sets', true);
 
+
+function build_models() {
+	$sql = "SELECT table_name FROM information_schema.tables WHERE table_type = 'BASE TABLE' AND table_schema NOT IN ('pg_catalog', 'information_schema');";
+	$tables = XMLORM::for_table('information_schema')->raw_query($sql)->use_id_column('table_name')->find_many()->as_array();
+	foreach($tables as $key => $value) {
+		$model_name = preg_replace('/(?:^|_)(.?)/e',"strtoupper('$1')",$key);
+		$file_name = MODELS.$model_name.".php";
+		if(file_exists($file_name)) {
+			require_once($file_name);
+		} else {
+			file_put_contents($file_name, "<?php\n\n\nclass ".$model_name." extends XMLModel\n{\n\n}\n");
+			require_once($file_name);
+		}
+	}
+}
+
+build_models();
+
 // Start Slim.
 $app = new \Slim\Slim(array(
    'debug' => true,
@@ -103,7 +121,7 @@ $app->get('/login', function() use ($app) {
 });
 
 $app->get('/modules/modules', 'authenticate', function() use ($app) {
-	require_once(MODULES.'Modules.php');
+	#require_once(MODULES.'Modules.php');
 
 	$app->view(new Slim\Extras\Views\XSLT);
 	$app->contentType('application/javascript');
@@ -131,7 +149,6 @@ $app->get('/view/:module/:component/:view(/:model)', 'authenticate', function($m
     $app->contentType('text/html');
     
 	if(isset($model)) {
-		require_once(MODULES.$module.'/'.$component.'/'.ucfirst($model).'.php');
 		$MOD = Model::factory(ucfirst($model))->find_many();
 		$a = array($model => $MOD);
 	} else {
@@ -150,8 +167,6 @@ $app->get('/viewmodel/:module/:component', 'authenticate', function($module, $co
 $app->get('/prefs/:module/:component', 'authenticate', function($module, $component) use ($app) {
 	$app->response->headers->set('Content-Type', 'application/json');
 	
-	require_once(MODULES.'cartesius/preferences/model.php');
-
 	$USERPREFS = \Preferences::where('key', $module .'.' . $component)->where('user_id', $_SESSION['userid'])->find_one();
 	
 	if($USERPREFS == null) {
@@ -166,7 +181,6 @@ $app->get('/prefs/:module/:component', 'authenticate', function($module, $compon
 
 
 $app->get('/model/:module/:component(/:params(/:format))', 'authenticate', function($module, $component, $params = null, $format = 'json') use ($app) {
-	require_once(MODULES. $module . '/' . $component . '/model.php');
 	
 	$MODEL = new $component();
 	$DATA = $MODEL->getData($format);
@@ -177,7 +191,6 @@ $app->get('/model/:module/:component(/:params(/:format))', 'authenticate', funct
 
 
 $app->post('/save/:module', 'authenticate', function($module) use ($app) {
-	require_once(MODULES. $module . '/model.php');
 	$request = $app->request();
     $DATA = json_decode($request->getBody());
 
@@ -186,26 +199,135 @@ $app->post('/save/:module', 'authenticate', function($module) use ($app) {
 	exit;
 });
 
+$app->get('/data/Metadata', function() use ($app) {
+	
+	$app->contentType('application/javascript');
+	
+	//$tsql = "SELECT table_name FROM information_schema.tables WHERE table_type = 'BASE TABLE' AND table_schema NOT IN ('pg_catalog', 'information_schema');";
+
+	$metadata = array("dataServices" => [
+					array(	"serviceName" => "breeze/cartesius/",
+							"hasServerMetadata" => true,
+							"jsonResultsAdapter" => "webApi_default",
+							"useJsonp" => false ) ],
+						"structuralTypes" => []);
+
+	foreach(get_declared_classes() as $model ) {
+		if ( is_subclass_of($model, 'XMLModel') ){
+			$met = XMLModel::factory($model)->create()->metadata();
+			array_push($metadata["structuralTypes"], $met);
+		}
+	}
+	
+	echo json_encode($metadata, JSON_PRETTY_PRINT);
+});
+
+
+$app->get('/data/:model(/:orderby)', function($model, $orderby = null) use ($app) {
+
+	//$allvars = $app->request->get();
+	//print_r($allvars);
+	
+	//$inlinecount=allpages
+	//$filter=(startswith(CompanyName,'S') eq true) and (substringof('er', City) eq true)
+	//$orderby=UnitPrice desc,ProductName
+	
+	$app->contentType('application/json');
+
+	$data = XMLModel::factory($model);
+
+	$filter = $app->request->get('$filter');
+
+	if($filter) {
+		preg_match('/(.*?)\((.*?)\)\s([^\s]*)\s([^\s]*)/', $filter, $match);
+
+		if(sizeof($match) > 0) {
+			preg_match("/(.*),'(.*)'/", $match[2], $condition);
+			switch ($match[1])
+			{
+				case "startswith":
+					$condition[2] = $condition[2] . "%";
+					break;
+				case "endswith":
+					$condition[2] = "%" . $condition[2];
+					break;				
+				case "contains":
+				case "substringof":
+					$condition[2] = "%" . $condition[2] . "%";
+					break;
+			}
+			if ($match[4] == "true") {
+				$data = $data->where_like($condition[1], $condition[2]);
+			} else {
+				$data = $data->where_not_like($condition[1], $condition[2]);				
+			}
+		} else {
+			preg_match('/(.*)\s(.*)\s(.*)/', $filter, $match);
+			$column = $match[1];
+			$condition = $match[2];
+			$value = $match[3];
+			
+			switch ($condition)
+			{
+				case "gt":
+					$data = $data->where_gt($column, $value);
+					break;
+				case "lt":
+					$data = $data->where_lt($column, $value);
+					break;				
+				case "eq":
+					$data = $data->where_equal($column, $value);				
+					break;
+				case "ge":
+					$data = $data->where_gte($column, $value);
+					break;
+				case "le":
+					$data = $data->where_lte($column, $value);
+					break;
+				case "ne":
+					$data = $data->where_not_equal($column, $value);
+					break;	
+			}
+		}
+	}
+	
+	$top = $app->request->get('$top');
+	if ($top) {
+		$data = $data->limit($top);
+	}
+	
+	$skip = $app->request->get('$skip');
+	if ($skip) {
+		$data = $data->offset($skip);
+	} 
+/*
+	$orderby = $app->request->get('$orderby');
+	$orderbyArray = explode(" ", $orderby);
+	
+	if (sizeof($orderbyArray) > 1) {
+		$data = $data->order_by_desc($orderbyArray[0]);	
+	} else {
+		$data = $data->order_by_asc($orderbyArray[0]);	
+	}
+*/
+	echo $data->find_many()->as_json();
+});
+
+
+$app->get('/phpinfo', function() use ($app) {
+	phpinfo();
+});
 
 $app->get('/test', function() use ($app) {
 
-
 	$app->contentType('application/javascript');
-
-			
-	$app->view(new Slim\Extras\Views\XSLT);
-    
 	
-	$people = XMLORM::for_table('information_schema')->raw_query("SELECT * FROM information_schema.columns WHERE table_name = 'project'")->use_id_column('ordinal_position')->order_by_asc('ordinal_position')->find_many()->as_xml();
-
-	//echo CORE;
-
-    return $app->render('../core/model.xsl', array("data" => $people));	
-
+	//$people = XMLORM::for_table('information_schema')->raw_query("SELECT * FROM information_schema.columns WHERE table_name = 'project'")->use_id_column('ordinal_position')->order_by_asc('ordinal_position')->find_many()->as_xml();
+	//$people = \Account::find_many()->as_xml();
 	//echo $people->saveXML();
+	build_models();
 });
 
 
 
-// run
 $app->run();

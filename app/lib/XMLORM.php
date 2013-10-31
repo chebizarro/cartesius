@@ -115,8 +115,6 @@
         }
         
         
-
-        
     }
 
 
@@ -158,4 +156,5 @@
 				$value->array_to_xml($node, $this->xml, null);
 			}
 		}
+				
     }

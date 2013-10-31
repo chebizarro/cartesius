@@ -142,6 +142,12 @@
         public function create($data=null) {
             return $this->_create_model_instance(parent::create($data));
         }
+        
+        
+        public function metadata($id=null) {
+            return $this->_create_model_instance(parent::metadata());
+        }
+
     }
 
     /**
@@ -153,7 +159,9 @@
      *
      */
     class XMLModel extends Model {
-
+		
+		protected $showmetadata = true;
+		
         /**
          * Factory method used to acquire instances of the given class.
          * The class name should be supplied as a string, and the class
@@ -179,8 +187,7 @@
             $wrapper->use_id_column(self::_get_id_column_name($class_name));
             return $wrapper;
         }
-
-
+		
         public function as_json() {
             $args = func_get_args();
             return call_user_func_array(array($this->orm, 'as_json'), $args);
@@ -207,5 +214,29 @@
                 return call_user_func_array(array($model, $method), $parameters);
             }
         }
+
+        public function metadata() {
+			if ($this->showmetadata) {
+				$metadata = array(	"shortName" => get_class($this),
+									"namespace" => "XMLPARIS.Model",
+									"isComplexType" => true,
+									"dataProperties" => []
+								);
+				
+				$sql = 'SELECT column_name AS name, is_nullable AS "isNullable", udt_name AS "dataType" FROM information_schema.columns WHERE table_name = \'';
+				$db = $this->orm->get_db();
+				$result = $db->query($sql . $this->_get_table_name(get_class($this)) ."'")->fetchAll(PDO::FETCH_ASSOC);
+				
+				foreach ($result as $row) {
+					$row["isNullable"] = ($row["isNullable"] == "YES" ? true : false);
+					
+					array_push($metadata["dataProperties"], $row);
+				}			
+
+				
+				return $metadata;
+			}
+		}
+
 
     }

@@ -14,8 +14,15 @@ require.config({
         i18n : '/lib/require/i18n',
         path : '/lib/require/path',
         // namespace that aggregate core classes that are in frequent use
-        Boiler : './core/_boiler_'
-    }
+        Boiler : './core/_boiler_',
+        Q : '/lib/breeze/Scripts/q',
+        breeze: '/lib/breeze/Scripts/breeze'
+    },
+    shim: {
+        'breeze': { deps: ['Q'], 'exports': 'breeze' }
+    },
+    priority: [ 'Q', 'breeze' ]
+
 });
 
 /*
