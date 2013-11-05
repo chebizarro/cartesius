@@ -12,6 +12,8 @@ define(function(require) {
         initialize : function() {
 
             var globalContext = new Boiler.Context();
+            
+            
             //globalContext.addSettings(settings);
 
 

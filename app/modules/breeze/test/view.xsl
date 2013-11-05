@@ -5,20 +5,7 @@
 
 
 	<xsl:template match ="/">
-		<div>
-			<p data-bind="visible: !results">Fetching data ... </p>        
-			<ul data-bind="foreach: results, visible: results" style="display:none">
-			  <li>
-				  <!--
-				 <img>
-					 <xsl:attribute name='data-bind'>attr: <![CDATA[{src: image}]]></xsl:attribute>	
-				</img>-->
-				<span data-bind="text:username"></span>
-				 @
-				<span data-bind="text:email"></span>
-			  </li>
-			</ul>
-		</div>		
+		<xsl:call-template name="edit.project" />
 	</xsl:template>
 
 
@@ -33,10 +20,10 @@
 					<li><img style='float: left;' width='16' height='16' src="{$cs-images-icons}documents.png" />Documents</li>
 				</ul>
 				<xsl:call-template name="edit.project.info" />
-				<xsl:call-template name="edit.project.team" />
+				<!--<xsl:call-template name="edit.project.team" />
 				<xsl:call-template name="edit.project.itinerary" />
 				<xsl:call-template name="edit.project.risk.assessment" />
-				<!--<xsl:call-template name="edit.project.security.plan" />-->
+				<xsl:call-template name="edit.project.security.plan" />-->
 				<xsl:call-template name="edit.project.documents" />
 			</div>
 			<div id='projectProgress'>
@@ -59,7 +46,7 @@
 					<div>
 						<label for="projectTitle">Project title</label>
 						<input type="text" id="projectTitle">
-							<xsl:attribute name='data-bind'>jqxInput: <![CDATA[{width: '200px', height: '25px', value: title, theme: 'metro'}]]></xsl:attribute>	
+							<xsl:attribute name='data-bind'><![CDATA[{width: '200px', height: '25px', value: title, theme: 'metro'}]]></xsl:attribute>	
 						</input>
 						<!--<div>Explanation</div>-->
 					</div>

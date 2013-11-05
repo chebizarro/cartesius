@@ -6,7 +6,7 @@ define(function(require) {
         ViewModel = require('/viewmodel/breeze/test');
 
 
-	require('/lib/breeze/Scripts/breeze.min.js');
+	require('/lib/breeze/Scripts/breeze.debug.js');
 
     require('/lib/jqwidgets/jqwidgets/jqxtabs.js');
     require('/lib/jqwidgets/jqwidgets/jqxbuttons.js');
@@ -26,17 +26,68 @@ define(function(require) {
 			
 				panel = new Boiler.ViewTemplate(parent, template);
 
+				$("#projectInfoNext").jqxButton({ width: '55', theme: theme });
+				$("#projectInfoNext").on('click', function () {
+						saveChanges();
+					});
+
+
 				var manager = new breeze.EntityManager('/data/');
 
+				
 				var query = new breeze.EntityQuery()
-					.from("Account");
-					
-				manager.executeQuery(query).then(function(data){
-					ko.applyBindings(data, panel.getDomElement());
-				}).fail(function(e) {
-					alert(e);  
-				});
-							
+					.from("Project");
+				
+				    if (manager.metadataStore.isEmpty()) {
+						return manager.fetchMetadata()
+								.then(function (rawMetadata) {
+									return executeQuery();
+						}).fail(function(e) {
+									console.log(e);
+								});
+					} else {
+						return executeQuery();
+					}
+				
+				
+				
+				function executeQuery() {
+				
+					manager.executeQuery(query).then(function(data){
+						if(data.results.length > 0) {
+							ko.applyBindings(data, panel.getDomElement());
+						} else {
+							console.log("No results");
+							var newProj = manager.createEntity('Project');
+							console.log(newProj);
+							ko.applyBindings(newProj, panel.getDomElement());
+						}
+					}).fail(function(e) {
+						console.log(e);
+						  
+					});
+				}
+				
+				var saveSucceeded = function() {
+					console.log("Save succeeded");
+				}
+
+				var saveFailed = function() {
+					console.log("Save failed");
+				}
+				
+				function saveChanges() {
+					if (manager.hasChanges()) {
+						manager.saveChanges()
+							.then(saveSucceeded)
+							.fail(saveFailed);
+					} else {
+						console.log("Nothing to save");
+					}
+				};
+				
+				
+				
 		    }
 		    panel.show();
 		};
