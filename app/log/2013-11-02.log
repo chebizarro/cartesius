@@ -1,0 +1,63 @@
+ERROR - 2013-11-02T20:59:49-07:00 - exception 'ErrorException' with message 'PDOStatement::execute(): SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation &quot;projects&quot; does not exist
+LINE 1: SELECT * FROM &quot;projects&quot;
+                      ^' in /media/shared/projects/Cartesius/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php:413
+Stack trace:
+#0 [internal function]: Slim\Slim::handleErrors(2, 'PDOStatement::e...', '/media/shared/p...', 413, Array)
+#1 /media/shared/projects/Cartesius/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(413): PDOStatement->execute(Array)
+#2 /media/shared/projects/Cartesius/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(1604): ORM::_execute('SELECT * FROM "...', Array, 'default')
+#3 /media/shared/projects/Cartesius/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(612): ORM->_run()
+#4 /media/shared/projects/Cartesius/web/cartesius/app/lib/XMLORM.php(49): ORM->_find_many()
+#5 /media/shared/projects/Cartesius/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(599): XMLORM->find_result_set()
+#6 /media/shared/projects/Cartesius/web/cartesius/public_html/index.php(324): ORM->find_many()
+#7 [internal function]: {closure}('Projects')
+#8 /media/shared/projects/Cartesius/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#9 /media/shared/projects/Cartesius/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#10 /media/shared/projects/Cartesius/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#11 /media/shared/projects/Cartesius/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#12 /media/shared/projects/Cartesius/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#13 /media/shared/projects/Cartesius/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Middleware\SessionCookie->call()
+#14 /media/shared/projects/Cartesius/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#15 /media/shared/projects/Cartesius/web/cartesius/public_html/index.php(344): Slim\Slim->run()
+#16 {main}
+ERROR - 2013-11-02T21:16:47-07:00 - exception 'ErrorException' with message 'PDOStatement::execute(): SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation &quot;save_change&quot; does not exist
+LINE 1: SELECT * FROM &quot;save_change&quot;
+                      ^' in /media/shared/projects/Cartesius/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php:413
+Stack trace:
+#0 [internal function]: Slim\Slim::handleErrors(2, 'PDOStatement::e...', '/media/shared/p...', 413, Array)
+#1 /media/shared/projects/Cartesius/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(413): PDOStatement->execute(Array)
+#2 /media/shared/projects/Cartesius/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(1604): ORM::_execute('SELECT * FROM "...', Array, 'default')
+#3 /media/shared/projects/Cartesius/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(612): ORM->_run()
+#4 /media/shared/projects/Cartesius/web/cartesius/app/lib/XMLORM.php(49): ORM->_find_many()
+#5 /media/shared/projects/Cartesius/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(599): XMLORM->find_result_set()
+#6 /media/shared/projects/Cartesius/web/cartesius/public_html/index.php(331): ORM->find_many()
+#7 [internal function]: {closure}('SaveChanges')
+#8 /media/shared/projects/Cartesius/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#9 /media/shared/projects/Cartesius/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#10 /media/shared/projects/Cartesius/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#11 /media/shared/projects/Cartesius/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#12 /media/shared/projects/Cartesius/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#13 /media/shared/projects/Cartesius/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Middleware\SessionCookie->call()
+#14 /media/shared/projects/Cartesius/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#15 /media/shared/projects/Cartesius/web/cartesius/public_html/index.php(351): Slim\Slim->run()
+#16 {main}
+ERROR - 2013-11-02T22:08:52-07:00 - exception 'ErrorException' with message 'PDOStatement::execute(): SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation &quot;save_changes&quot; does not exist
+LINE 1: SELECT * FROM &quot;save_changes&quot;
+                      ^' in /media/shared/projects/Cartesius/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php:413
+Stack trace:
+#0 [internal function]: Slim\Slim::handleErrors(2, 'PDOStatement::e...', '/media/shared/p...', 413, Array)
+#1 /media/shared/projects/Cartesius/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(413): PDOStatement->execute(Array)
+#2 /media/shared/projects/Cartesius/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(1604): ORM::_execute('SELECT * FROM "...', Array, 'default')
+#3 /media/shared/projects/Cartesius/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(612): ORM->_run()
+#4 /media/shared/projects/Cartesius/web/cartesius/app/lib/XMLORM.php(49): ORM->_find_many()
+#5 /media/shared/projects/Cartesius/web/cartesius/app/vendor/j4mie/idiorm/idiorm.php(599): XMLORM->find_result_set()
+#6 /media/shared/projects/Cartesius/web/cartesius/public_html/index.php(336): ORM->find_many()
+#7 [internal function]: {closure}('SaveChanges')
+#8 /media/shared/projects/Cartesius/web/cartesius/app/vendor/slim/slim/Slim/Route.php(436): call_user_func_array(Object(Closure), Array)
+#9 /media/shared/projects/Cartesius/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1302): Slim\Route->dispatch()
+#10 /media/shared/projects/Cartesius/web/cartesius/app/vendor/slim/slim/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#11 /media/shared/projects/Cartesius/web/cartesius/app/vendor/slim/slim/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#12 /media/shared/projects/Cartesius/web/cartesius/app/vendor/slim/slim/Slim/Middleware/SessionCookie.php(117): Slim\Middleware\MethodOverride->call()
+#13 /media/shared/projects/Cartesius/web/cartesius/app/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Middleware\SessionCookie->call()
+#14 /media/shared/projects/Cartesius/web/cartesius/app/vendor/slim/slim/Slim/Slim.php(1251): Slim\Middleware\PrettyExceptions->call()
+#15 /media/shared/projects/Cartesius/web/cartesius/public_html/index.php(356): Slim\Slim->run()
+#16 {main}

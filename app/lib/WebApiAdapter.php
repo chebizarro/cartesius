@@ -8,19 +8,33 @@ class WebApiAdapter {
 
 	public static function configure($connections) {
 		self::$connections = $connections;
+		
+		foreach($connections as $key => $value) {
+			XMLORM::configure('error_mode', PDO::ERRMODE_WARNING, $key);
+			XMLORM::configure($value, null, $key);
+			XMLORM::configure('return_result_sets', true, $key);
+		}
+
 	}
 
 	public static function load_models($basepath) {
 		$sql = "SELECT table_name FROM information_schema.tables WHERE table_type = 'BASE TABLE' AND table_schema NOT IN ('pg_catalog', 'information_schema');";
 
-		foreach(self::$connections as $connection) {
-			$tables = XMLORM::for_table('information_schema', $connection)->raw_query($sql)->use_id_column('table_name')->find_many()->as_array();
+		foreach(self::$connections as $connection => $connstr) {
+			$db = XMLORM::get_db($connection);
+			$tables = $db->query($sql)->fetchAll(PDO::FETCH_ASSOC);			
+			
 			foreach($tables as $key => $value) {
-				$model_name = preg_replace('/(?:^|_)(.?)/e',"strtoupper('$1')",$key);
-				$file_name = $basepath.$connection.'/'.$model_name.".php";
+				$model_name = self::_table_name_to_class_name($value['table_name']);
+				$dir = $basepath.$connection.'/';
+				$file_name = $dir.$model_name.".php";
+								
 				if(file_exists($file_name)) {
 					require_once($file_name);
 				} else {
+					if(!is_dir($dir)) {
+						mkdir($dir);
+					}
 					file_put_contents($file_name, "<?php\n\n\nclass ".$model_name." extends XMLModel\n{\n\n}\n");
 					require_once($file_name);
 				}
@@ -29,31 +43,46 @@ class WebApiAdapter {
 		}
 	}
 
-
-	public static function show_metadata() {
-		
-		$metadata = array("dataServices" => [
-						array(	"serviceName" => "/data/",
-								"hasServerMetadata" => true,
-								"jsonResultsAdapter" => "webApi_default",
-								"useJsonp" => false ) ],
-								"structuralTypes" => []);
-
-		$resourceEntityTypeMap = [];
-
-		foreach(get_declared_classes() as $model) {
-			if (is_subclass_of($model, 'XMLModel')){
-				$met = self::get_metadata($model);
-				array_push($metadata["structuralTypes"], $met);
-				$resourceEntityTypeMap[$met["defaultResourceName"]] = $met["shortName"] . ":#" . $met["namespace"];
-			}
-		}
-		
-		$metadata["resourceEntityTypeMap"] = $resourceEntityTypeMap;
-		
-		return $metadata;
+	protected static function _class_name_to_table_name($class_name) {
+		return strtolower(preg_replace(
+			array('/\\\\/', '/(?<=[a-z])([A-Z])/', '/__/'),
+			array('_', '_$1', '_'),
+			ltrim($class_name, '\\')
+		));
+	}
+	
+	protected static function _table_name_to_class_name($table_name) {
+		return preg_replace('/(?:^|_)(.?)/e',"strtoupper('$1')",$table_name);
 	}
 
+	public static function show_metadata($datapath) {
+		$metadatafile = $datapath . "metadata.js";
+		if (file_exists($metadatafile)) {
+			$metadata = json_decode(file_get_contents($metadatafile));
+		} else {
+			$metadata = array("dataServices" => [
+							array(	"serviceName" => "/data/",
+									"hasServerMetadata" => true,
+									"jsonResultsAdapter" => "webApi_default",
+									"useJsonp" => false ) ],
+									"structuralTypes" => []);
+
+			$resourceEntityTypeMap = [];
+
+			foreach(get_declared_classes() as $model) {
+				if (is_subclass_of($model, 'XMLModel')){
+					$met = self::get_metadata($model);
+					array_push($metadata["structuralTypes"], $met);
+					$resourceEntityTypeMap[$met["defaultResourceName"]] = $met["shortName"] . ":#" . $met["namespace"];
+				}
+			}
+			
+			$metadata["resourceEntityTypeMap"] = $resourceEntityTypeMap;
+			
+			file_put_contents($metadatafile, json_encode($metadata));
+		}
+		return $metadata;
+	}
 
 	private static function get_metadata($model) {
 				
@@ -64,14 +93,15 @@ class WebApiAdapter {
 							"dataProperties" => []
 						);
 
-		$tableName = preg_replace('/(?:^|_)(.?)/e',"strtoupper('$1')",$key);
-
+		$tableName = self::_class_name_to_table_name($model);
+				
 		$sql = 'SELECT column_name AS name, is_nullable AS "isNullable", udt_name AS "dataType", column_default AS "defaultValue", character_maximum_length as "maxLength" FROM information_schema.columns WHERE table_name = \'' . $tableName  ."' ORDER BY ordinal_position";
 		$keySql = 'SELECT column_name FROM information_schema.key_column_usage WHERE table_name = \''  . $tableName  ."'";
-		
+				
 		$db = XMLORM::get_db(self::$models[$model]);
 		$result = $db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 		$keyResult = $db->query($keySql)->fetchAll(PDO::FETCH_ASSOC);
+		
 		
 		$key = $keyResult[0]["column_name"];
 		
@@ -119,14 +149,14 @@ class WebApiAdapter {
 				
 				if($row["table_name"] != $tableName) {
 					$nav["name"] = $row["table_name"];
-					$nav["entityTypeName"] = preg_replace('/(?:^|_)(.?)/e',"strtoupper('$1')",$row["table_name"]).":#XMLPARIS.Model";
+					$nav["entityTypeName"] = self::_table_name_to_class_name($row["table_name"]).":#XMLPARIS.Model";
 					$nav["isScalar"] = true;
 					$nav["associationName"] = $row["constraint_name"];
 					$nav["foreignKeyNames"] = [$row["foreign_column_name"]];
 					
 				} else {
 					$nav["name"] = $row["foreign_table_name"];
-					$nav["entityTypeName"] = preg_replace('/(?:^|_)(.?)/e',"strtoupper('$1')",$row["foreign_table_name"]).":#XMLPARIS.Model";
+					$nav["entityTypeName"] = self::_table_name_to_class_name($row["foreign_table_name"]).":#XMLPARIS.Model";
 					$nav["isScalar"] = false;						
 					$nav["associationName"] = $row["constraint_name"];
 					$nav["invForeignKeyNames"] = [$row["column_name"]];
@@ -202,7 +232,7 @@ class WebApiAdapter {
 
 		$data = XMLModel::factory($model, self::$models[$model]);
 
-		$filter = $app->request->get('$filter');
+		$filter = isset($vars['$filter']) ? $vars['$filter'] : null;
 
 		if($filter) {
 			preg_match('/(.*?)\((.*?)\)\s([^\s]*)\s([^\s]*)/', $filter, $match);
@@ -257,15 +287,9 @@ class WebApiAdapter {
 			}
 		}
 		
-		$top = $app->request->get('$top');
-		if ($top) {
-			$data = $data->limit($top);
-		}
-		
-		$skip = $app->request->get('$skip');
-		if ($skip) {
-			$data = $data->offset($skip);
-		} 
+		$data = isset($vars['$top']) ? $data->limit($vars['$top']) : $data;
+		$data = isset($vars['$skip']) ? $data->offset($vars['$skip']) : $data;
+
 	/*
 		$orderby = $app->request->get('$orderby');
 		$orderbyArray = explode(" ", $orderby);

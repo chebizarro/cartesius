@@ -55,7 +55,7 @@ define(function(require) {
 				
 					manager.executeQuery(query).then(function(data){
 						if(data.results.length > 0) {
-							ko.applyBindings(data, panel.getDomElement());
+							ko.applyBindings(data[0], panel.getDomElement());
 						} else {
 							console.log("No results");
 							var newProj = manager.createEntity('Project');
