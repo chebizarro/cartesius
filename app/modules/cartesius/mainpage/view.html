@@ -1,0 +1,16 @@
+<div id="vsplitter" data-bind="kendoSplitter: { orientation: 'vertical', height: '100%' }" style="height:100%;">
+	<div data-bind="kendoSplitterPane: { collapsible: true , min: 38, max: 38, size: 38}" style="overflow: visible; z-index: 1;">
+		<div id='header' data-bind="compose:'/component/cartesius/mainmenu'"></div>
+	</div>
+	
+	<div data-bind="kendoSplitter: { orientation: 'horizontal' }">
+		<div data-bind="kendoSplitterPane: { max: 250, min: 250, size: 250, collapsible: true }">
+			<div id="workbench" data-bind="compose:'/component/cartesius/workbench'"></div>
+		</div>
+		<div data-bind="kendoSplitterPane: { }">
+			<div id="workspace" class="appcontent" data-bind="router: { transition:'entrance' }" style="height: 100%;"></div>
+		</div>
+	</div>
+	
+</div>
+

@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title id='Description'>In this demo is simulated the touch-device behavior of the jqxTree
+    </title>
+    <link rel="stylesheet" href="../jqwidgets/styles/jqx.base.css" type="text/css" />
+    <link rel="stylesheet" href="../jqwidgets/styles/jqx.metrodark.css" type="text/css" />
+    <script type="text/javascript" src="../scripts/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="../jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="../jqwidgets/jqxbuttons.js"></script>
+    <script type="text/javascript" src="../jqwidgets/jqxscrollbar.js"></script>
+    <script type="text/javascript" src="../jqwidgets/jqxpanel.js"></script>
+    <script type="text/javascript" src="../jqwidgets/jqxtree.js"></script>
+    <script type="text/javascript" src="simulator.js"></script>
+    <style type="text/css">
+        .jqx-fill-state-normal, .jqx-widget, .jqx-tree-item {
+            font-size: 16px !important;
+            line-height: 34px !important;
+        }
+        html, body
+        {
+            height: 100%;
+            width: 100%;
+            margin: 0px;
+            padding: 0px;
+            overflow: hidden;
+        }
+    </style>
+    <script type="text/javascript" src="simulator.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            prepareDemo("tree");
+         
+            var source = [
+                { label: "Mail", expanded: true, items: [
+                    { label: "Calendar" },
+                    { label: "Contacts", selected: true }
+                ]
+                },
+                { label: "Inbox", expanded: true, items: [
+                   { label: "Admin" },
+                   { label: "Corporate" },
+                   { label: "Finance" },
+                   { label: "Support" },
+                   { label: "Drafts" },
+                   { label: "Other" },
+                ]
+                },
+                { label: "Notes" },
+                { label: "Settings" },
+                { label: "Favorites" },
+             ];
+
+            // create jqxTree
+            $('#tree').jqxTree({ source: source, width: '100%', height: '100%', theme: 'metrodark' });
+            initDemo("tree");
+        });
+    </script>
+</head>
+<body class='default'>
+   <div id="demoContainer" style="margin-left: 220px; width: 383px; height: 731px; overflow: hidden; background-image: url(../images/galaxys4.png);">
+        <div id="container" style="margin-left: 25px; height: 587px; width: 328px; margin-top: 78px;">
+              <div id='tree'>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

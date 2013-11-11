@@ -1,0 +1,121 @@
+<div id='editProjectTabs'>
+	
+	<div data-bind="kendoTabStrip: {}">
+		<ul>
+			<li class="k-state-active" data-bind="kendoTab: {dataImageUrlField: '/images/icons/projects.png'}">Project info</li>
+			<li>Teams</li>
+			<li>Itinerary</li>
+			<li>Risk Assessment</li>
+			<li>Documents</li>
+		</ul>
+
+		<div class="section" style="padding: 10px;">
+			<div>
+				<p>Blah blah Add a project blah blah</p>
+			</div>
+			<form class="cartesius">
+				<div id="projectInfo">
+					<div>
+						<label for="projectTitle">Project title</label>
+						<input type="text" id="projectTitle" data-bind="{value: data.title}" />
+						<!--<div>Explanation</div>-->
+					</div>
+					<div>
+						<label for="projectAuthors">Project authors	</label>
+						<input id="projectAuthors" data-bind="kendoMultiSelect: { dataTextField: 'username', data: listPeopleDataSource, dataValueField: 'id' }" />
+					</div>
+					<div>
+						<label for="projectDate">Date</label>
+						<input id="projectDate" data-bind="kendoDatePicker: { value: data.date }" />
+					</div>
+					<div>
+						<label for="projectReviewDate">Date of next review</label>
+						<input id="projectReviewDate" data-bind="kendoDatePicker: { value: data.review_date }" />
+					</div>
+					<div>
+						<label for="projectSummary">Summary</label>
+						<textarea id="projectSummary" data-bind="{value: data.summary}" />
+					</div>
+					<div>
+						<input type="button" value="Next" id='projectInfoNext' />
+					</div>
+				</div>
+			</form>
+		</div>
+
+		<div class="section">
+			<div><p>Instructions</p></div>
+			<form class="cartesius">
+				<div id="projectTeam">
+					<div>
+						<label for="newTeam">Team name</label>
+						<input type="text" id="newTeam"></input>
+						<input type="button" value="Add team" id='addTeam' />
+					</div>
+					
+					<div>
+						<fieldset>
+							<legend/>
+							<div>
+								<label for="projectSummary">Description</label>
+								<textarea id="projectSummary" />								
+							</div>
+							<div>
+								<div id="teamGrid"></div>
+							</div>
+						</fieldset>
+					</div>
+					
+				</div>
+			</form>
+		</div>
+
+		<div class="section">
+			<div><p>Instructions</p></div>
+				<form class="cartesius">
+					<div id="projectItinerary">
+
+				</div>
+			</form>
+		</div>
+
+		<div class="section">
+			<div id="projectRiskAssessment">
+
+
+
+			</div>
+		</div>
+
+		<div class="section">
+			<div id="projectSecurityPlan">
+
+
+			</div>
+		</div>
+
+		<div class="section">
+			<div id="projectDocuments">
+
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<div id='projectProgress'>
+
+</div>
+
+
+<!--
+
+Brief summary of the Plan: main threats, main risk reduction measures, main advice
+
+Relating to the entire NRO or a specific part of the country/countries or a specific activity/campaign?
+Security authority, responsibility, task division
+Person responsible for updating the plan
+Target group – for who is the plan written?
+Briefing procedures for staff, visitors, etc.
+Other relevant documents/tools, i.e. security policy, travel guidelines
+-->

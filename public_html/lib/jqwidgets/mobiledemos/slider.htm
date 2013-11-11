@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title id='Description'>In this demo is simulated the touch-device behavior of the jqxSlider.
+    </title>
+    <link rel="stylesheet" href="../jqwidgets/styles/jqx.base.css" type="text/css" />
+    <link rel="stylesheet" href="../jqwidgets/styles/jqx.metrodark.css" type="text/css" />
+    <script type="text/javascript" src="../scripts/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="../jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="../jqwidgets/jqxdata.js"></script>
+    <script type="text/javascript" src="../jqwidgets/jqxslider.js"></script>
+    <script type="text/javascript" src="../jqwidgets/jqxbuttons.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            prepareDemo("slider");
+
+            $('#redLevel').jqxSlider({ sliderButtonSize: 20, min: 0, max: 255, ticksFrequency: 25.5, value: 0, step: 25.5, theme: "metrodark" });
+            $('#greenLevel').jqxSlider({ sliderButtonSize: 20, min: 0, max: 255, ticksFrequency: 25.5, value: 0, step: 25.5, theme: "metrodark" });
+            $('#blueLevel').jqxSlider({ sliderButtonSize: 20, min: 0, max: 255, ticksFrequency: 25.5, value: 255, step: 25.5, theme: "metrodark" });
+            $('#redLevel').on('change', function (event) {
+                setColor();
+            });
+            $('#greenLevel').on('change', function (event) {
+                setColor();
+            });
+            $('#blueLevel').on('change', function (event) {
+                setColor();
+            });
+
+            setColor();
+
+            initDemo("slider");
+        });
+        function setColor() {
+            var red = fixHex(Math.round($('#redLevel').jqxSlider('value')).toString(16)),
+                green = fixHex(Math.round($('#greenLevel').jqxSlider('value')).toString(16)),
+                blue = fixHex(Math.round($('#blueLevel').jqxSlider('value')).toString(16));
+            $('#colorBlock').css('background-color', '#' + red + green + blue);
+            $('#colorLabel').text(('#' + red + green + blue).toUpperCase());
+            var color = getTextElement({ r: parseInt(red, 16), g: parseInt(green, 16), b: parseInt(blue, 16) });
+            $('#colorLabel').css('color', color);
+        }
+
+        function fixHex(hex) {
+            return (hex.length < 2) ? '0' + hex : hex;
+        }
+
+        function getTextElement(color) {
+            var nThreshold = 105;
+            var bgDelta = (color.r * 0.299) + (color.g * 0.587) + (color.b * 0.114);
+            var foreColor = (255 - bgDelta < nThreshold) ? 'Black' : 'White';
+            return foreColor;
+        }
+    </script>
+    <style type="text/css">
+        .jqx-fill-state-normal, .jqx-fill-state-hover, .jqx-widget-header, .jqx-widget-content, .jqx-widget {
+            font-size: 16px !important;
+            line-height: 34px !important;
+        }
+
+        .jqx-slider-slider {
+            width: 25px;
+            height: 25px;
+            margin-top: -10px;
+            -moz-border-radius: 100%;
+            -webkit-border-radius: 100%;
+            border-radius: 100%;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+            margin: 0px;
+            padding: 0px;
+            overflow: hidden;
+        }
+
+        .colorBlock {
+            border: 1px solid #aaa;
+            width: 80%;
+            height: 200px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            border-radius: 5px;
+            margin-left: 10%;
+            margin-top: 50px;
+        }
+
+        .colorLabel {
+            padding: 6px;
+            font-size: 16px;
+        }
+    </style>
+    <script type="text/javascript" src="simulator.js"></script>
+</head>
+<body>
+    <div id="demoContainer" style="margin-left: 220px; width: 383px; height: 731px; overflow: hidden; background-image: url(../images/galaxys4.png);">
+        <div id="container" style="background: black; margin-left: 25px; height: 587px; width: 329px; margin-top: 78px;">
+            <div style="margin: 20px; padding-top: 20px; position: relative;">
+                <div style="font-size: 16px; color: #fff; margin-top: 50px; font-style: italic;">Red</div>
+                <div id='redLevel'>
+                </div>
+                <div style="font-size: 16px; color: #fff;  margin-top: 20px; font-style: italic;">Green</div>
+                <div id='greenLevel'>
+                </div>
+                <div style="font-size: 16px; color: #fff;  margin-top: 20px; font-style: italic;">Blue</div>
+                <div id='blueLevel'>
+                </div>
+                <div class="colorBlock jqx-rc-all" id="colorBlock">
+                    <div class="colorLabel" id="colorLabel">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

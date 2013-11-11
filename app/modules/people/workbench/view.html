@@ -1,0 +1,8 @@
+<div data-bind="kendoListView: { data: listPeopleDataSource, template: 'PeopleListTmpl', useKOTemplates: true }"> </div>
+
+<script id="PeopleListTmpl" type="text/html">
+    <div style="padding: 5px">
+        <img data-bind="attr: { src: image + '?sz=24'}" />
+        <span data-bind="text: username" /></span>
+    </div>
+</script>

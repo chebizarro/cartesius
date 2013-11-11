@@ -1,0 +1,11 @@
+<div data-bind="kendoGrid: {
+		data: listPeopleDataSource,
+        columns: [
+          { field: 'username', title: 'Name'},
+          { field: 'email', title: 'Email'},
+          { field: 'image', title: 'Image' }
+        ],
+        pageable: { pageSize: 10 },
+        sortable: true
+    }">
+</div>

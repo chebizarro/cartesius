@@ -1,0 +1,11 @@
+<ul data-bind="kendoPanelBar: {}">
+<!-- ko foreach: modules -->
+	<!-- ko if: workbench -->
+    <li data-bind="kendoPanelItem: { expanded: true }">
+        <span><!--ko text: workbench.title--><!--/ko--></span>
+		<div data-bind='compose: workbench.path'>
+		</div>
+    </li>
+	<!-- /ko -->
+<!-- /ko -->
+</ul>
