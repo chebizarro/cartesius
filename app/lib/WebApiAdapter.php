@@ -22,6 +22,7 @@ class WebApiAdapter {
 			ORM\ORM::configure('error_mode', PDO::ERRMODE_WARNING, $key);
 			ORM\ORM::configure($value, null, $key);
 			ORM\ORM::configure('return_result_sets', true, $key);
+			ORM\ORM::configure('logging', true, $key);
 		}
 
 		self::load_models();
@@ -274,21 +275,101 @@ class WebApiAdapter {
 		$model = "WebApi\ORM\\" . self::_table_name_to_class_name($connection) . "\\" . $model;
 		
 		$data = ORM\Model::factory($model, $connection);
-
-		//$data = isset($vars['$filter']) ? self::filter($vars['$filter'], $data) : $data;
+		// $select
+		$data = isset($vars['$filter']) ? self::filter($vars['$filter'], $data) : $data;
 		$data = isset($vars['$top']) ? self::top($vars['$top'], $data) : $data;
 		$data = isset($vars['$skip']) ? self::skip($vars['$skip'], $data) : $data;
 		$data = isset($vars['$orderby']) ? self::orderby($vars['$orderby'], $data) : $data;
 		
 		$data = $data->find_many();
+		echo ORM\ORM::get_last_query($connection);
 		return $data->as_json();
+	}
+
+	private static function condition($condition) {
+		switch ($condition)
+		{
+			case "T_GT":
+				return ">";
+			case "T_LT":
+				return "<";
+			case "T_EQ":
+				return "=";
+			case "T_GE":
+				return ">=";
+			case "T_LE":
+				return "<=";
+			case "T_NE":
+				return "!=";
+		}
+
 	}
 
 	private static function filter($filter, $data) {
 		
-		$query = \WebApi\QueryLexer::run($filter);
+		$query = QueryLexer::run($filter);
 		
-		preg_match('/(.*?)\((.*?)\)\s([^\s]*)\s([^\s]*)/', $filter, $match);
+		$column = $query[0]["token"];
+		$column_name = trim($query[0]["match"]);
+		$condition = $query[1]["token"];
+		$value = trim($query[2]["match"]);
+		
+		if($query) {
+			switch ($column)
+			{
+				case "T_COLUMN":
+					$value = ($query[2]["token"] == "T_INT_VALUE") ? intval($value) : $value;
+					//echo is_int($value);
+					switch ($condition)
+					{
+						case "T_GT":
+							$data = $data->where_gt($column_name, $value);
+							break;
+						case "T_LT":
+							$data = $data->where_lt($column_name, $value);
+							break;				
+						case "T_EQ":
+							$data = $data->where_equal($column_name, $value);				
+							break;
+						case "T_GE":
+							$data = $data->where_gte($column_name, $value);
+							break;
+						case "T_LE":
+							$data = $data->where_lte($column_name, $value);
+							break;
+						case "T_NE":
+							$data = $data->where_not_equal($column_name, $value);
+							break;	
+					}
+					break;
+				case "T_BLOCK":
+					$query = QueryLexer::run(preg_replace('/\(([^+]*)\)/', '${1}', $query[1]["match"]));
+					return self::filter($query, $data);
+					//break;
+				
+				case "T_LENGTH":
+					$column_name = preg_replace('/\(([^()]*)\)/', '("${1}")', $query[1]["match"]);
+					//$data = $data->select('*');
+					//$data = $data->select_expr('length'.$column_name);
+					$data = $data->where_raw('length'.$column_name.self::condition($query[2]["token"]).trim($query[3]["match"]));
+					break;
+				case "T_TO_UPPER":
+					break;
+				
+				case "T_SUBSTRING_OF":
+					break;
+
+				case "T_STARTSWITH":
+					break;
+
+				case "T_NOT":
+					break;
+				
+			}
+			
+		}
+		
+		/*preg_match('/(.*?)\((.*?)\)\s([^\s]*)\s([^\s]*)/', $filter, $match);
 
 		if(sizeof($match) > 0) {
 			preg_match("/(.*),'(.*)'/", $match[2], $condition);
@@ -312,32 +393,8 @@ class WebApiAdapter {
 			}
 		} else {
 			preg_match('/(.*)\s(.*)\s(.*)/', $filter, $match);
-			$column = $match[1];
-			$condition = $match[2];
-			$value = $match[3];
-			
-			switch ($condition)
-			{
-				case "gt":
-					$data = $data->where_gt($column, $value);
-					break;
-				case "lt":
-					$data = $data->where_lt($column, $value);
-					break;				
-				case "eq":
-					$data = $data->where_equal($column, $value);				
-					break;
-				case "ge":
-					$data = $data->where_gte($column, $value);
-					break;
-				case "le":
-					$data = $data->where_lte($column, $value);
-					break;
-				case "ne":
-					$data = $data->where_not_equal($column, $value);
-					break;	
-			}
-		}
+
+		}*/
 
 		return $data;
 		
@@ -367,17 +424,17 @@ class WebApiAdapter {
 
 	private static function top($top, $data) {
 		// sanitize
-		if(is_int($top)) {
+		//if(is_int($top)) {
 			$data = $data->limit($top);			
-		}
+		//}
 		return $data;
 	}
 
 	private static function skip($skip, $data) {
 		// sanitize
-		if(is_int($skip)) {
+		//if(is_int($skip)) {
 			$data = $data->offset($top);			
-		}
+		//}
 		return $data;
 	}
 

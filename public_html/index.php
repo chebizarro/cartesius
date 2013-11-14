@@ -218,10 +218,11 @@ $app->get('/xmltest', function() use ($app) {
 
 	$app->contentType('application/javascript');
 
-	$people =  \Model::factory("Account", "cartesius")->find_many();
-	print_r($people->as_array());
-		//echo $people->as_xml()->saveXml();
+	//$people =  \WebApi\ORM\Model::factory("\WebApi\ORM\Cartesius\Account", "cartesius")->where("username","Chris Daley")->where("email","cdaley@greenpeace.org")->find_many();
+	//print_r($people->as_array());
+	//echo $people->as_xml()->saveXml();
 	//build_models();
+	//echo \WebApi\ORM\ORM::get_last_query("cartesius");
 });
 
 

@@ -137,7 +137,6 @@
             foreach($data as $key => $value) {
 				array_push($json, $value->as_array());
 			}
-			
 			return json_encode($json);
             
         }

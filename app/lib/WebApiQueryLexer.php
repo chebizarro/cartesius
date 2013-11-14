@@ -12,6 +12,7 @@ class QueryLexer {
 		"/(^tolower)/" => "T_TO_LOWER",
 		"/(^substringof)/" => "T_SUBSTRING_OF",
 		"/(^startswith)/" => "T_STARTSWITH",
+		"/(^endswith)/" => "T_ENDSWITH",
 		"/(^not )/" => "T_NOT",
 		"/(\(([^()]|(?R))*\))/" => "T_BLOCK",
 		"/( and )/" => "T_AND",
@@ -28,7 +29,7 @@ class QueryLexer {
 		"/( null)/" => "T_NULL",
 		"/( [0-9]+m)/" => "T_REAL_VALUE",
 		"/( [0-9]+)/" => "T_INT_VALUE",
-		"/( '[a-zA-Z]+')/" => "T_STR_VALUE",
+		"/( '[a-zA-Z0-9-]+')/" => "T_STR_VALUE",
 		"/( datetime'[A-Z0-9:.-]+')/" => "T_DATETIME_VALUE",
 	);
 
