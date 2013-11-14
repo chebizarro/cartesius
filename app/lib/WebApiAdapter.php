@@ -46,8 +46,11 @@ class WebApiAdapter {
 					if(!is_dir($dir)) {
 						mkdir($dir);
 					}
-					
-					file_put_contents($file_name, "<?php\n\nnamespace WebApi\ORM\\".$dbname.";\n\nclass $model_name extends \WebApi\ORM\Model\n{\n\n}\n");
+					$keySql = 'SELECT column_name FROM information_schema.key_column_usage WHERE table_name = \''  . $value['table_name']  ."'";
+					$keyResult = $db->query($keySql)->fetchAll(PDO::FETCH_ASSOC);
+					$key = $keyResult[0]["column_name"];
+					$idcolumn = ($key != "id") ? "\n\tpublic static \$_id_column = '" . $key . "';\n" : "\n";
+					file_put_contents($file_name, "<?php\n\nnamespace WebApi\ORM\\".$dbname.";\n\nclass $model_name extends \WebApi\ORM\Model\n{\n" . $idcolumn . "\n}\n");
 					require_once($file_name);
 				}
 			}
@@ -278,11 +281,12 @@ class WebApiAdapter {
 		$data = isset($vars['$orderby']) ? self::orderby($vars['$orderby'], $data) : $data;
 		
 		$data = $data->find_many();
-		var_dump($data);
 		return $data->as_json();
 	}
 
 	private static function filter($filter, $data) {
+		
+		$query = \WebApi\QueryLexer::run($filter);
 		
 		preg_match('/(.*?)\((.*?)\)\s([^\s]*)\s([^\s]*)/', $filter, $match);
 
