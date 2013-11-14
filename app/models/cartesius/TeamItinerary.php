@@ -1,7 +1,8 @@
 <?php
 
+namespace WebApi\ORM\Cartesius;
 
-class TeamItinerary extends XMLModel
+class TeamItinerary extends \WebApi\ORM\Model
 {
 
 }

@@ -2,12 +2,14 @@
 
     /**
      *
-     * XMLORM subclass of Idiorm
+     * ORM subclass of Idiorm
      *
      *
      */
+     
+	namespace WebApi\ORM;
 
-    class XMLORM extends ORM {
+    class ORM extends \ORM {
         
         protected $xml = null;
     
@@ -43,10 +45,10 @@
          * Tell the ORM that you are expecting multiple results
          * from your query, and execute it. Will return a result set object
          * containing instances of the ORM class.
-         * @return \XMLResultSet
+         * @return \ResultSet
          */
         public function find_result_set() {
-            return new XMLResultSet($this->_find_many());
+            return new ResultSet($this->_find_many());
         }
 
         public function as_json() {
@@ -111,7 +113,7 @@
         {
             $method = strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $name));
 
-            return call_user_func_array(array('XMLORM', $method), $arguments);
+            return call_user_func_array(array('ORM', $method), $arguments);
         }
         
         
@@ -122,7 +124,7 @@
      * A result set class for working with collections of model instances
      */
      
-    class XMLResultSet extends IdiormResultSet {
+    class ResultSet extends \IdiormResultSet {
 
 		protected $xml = null;
 

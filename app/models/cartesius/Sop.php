@@ -1,7 +1,8 @@
 <?php
 
+namespace WebApi\ORM\Cartesius;
 
-class Sop extends XMLModel
+class Sop extends \WebApi\ORM\Model
 {
 
 }

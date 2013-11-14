@@ -1,7 +1,8 @@
 <?php
 
+namespace WebApi\ORM\Cartesius;
 
-class TeamRole extends XMLModel
+class TeamRole extends \WebApi\ORM\Model
 {
 
 }

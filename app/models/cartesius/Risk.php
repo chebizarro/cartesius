@@ -1,7 +1,8 @@
 <?php
 
+namespace WebApi\ORM\Cartesius;
 
-class Risk extends XMLModel
+class Risk extends \WebApi\ORM\Model
 {
 
 }

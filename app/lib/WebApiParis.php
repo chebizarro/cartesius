@@ -49,7 +49,12 @@
      * directly. It is used internally by the Model base
      * class.
      */
-    class XMLORMWrapper extends XMLORM {
+     
+	namespace WebApi\ORM;
+
+
+     
+    class ORMWrapper extends ORM {
 
         /**
          * The wrapped find_one and find_many classes will
@@ -158,7 +163,7 @@
      * }
      *
      */
-    class XMLModel extends Model {
+    class Model extends \Model {
 		
 		protected $showmetadata = true;
 		
@@ -179,13 +184,21 @@
                $connection_name = self::_get_static_property(
                    $class_name,
                    '_connection_name',
-                   XMLORMWrapper::DEFAULT_CONNECTION
+                   ORMWrapper::DEFAULT_CONNECTION
                );
             }
-            $wrapper = XMLORMWrapper::for_table($table_name, $connection_name);
+            $wrapper = ORMWrapper::for_table($table_name, $connection_name);
             $wrapper->set_class_name($class_name);
             $wrapper->use_id_column(self::_get_id_column_name($class_name));
             return $wrapper;
+        }
+		
+		 protected static function _get_table_name($class_name) {
+            $specified_table_name = self::_get_static_property($class_name, '_table');
+            if (is_null($specified_table_name)) {
+                return self::_class_name_to_table_name(end(explode("\\", $class_name)));
+            }
+            return $specified_table_name;
         }
 		
         public function as_json() {

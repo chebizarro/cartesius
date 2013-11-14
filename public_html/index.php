@@ -22,15 +22,24 @@ require VENDOR.'google-api-php-client/src/contrib/Google_Oauth2Service.php';
 
 require LIB.'XSLT.php';
 require LIB.'JSON.php';
-require LIB.'XMLORM.php';
-require LIB.'XMLPARIS.php';
+require LIB.'WebApiORM.php';
+require LIB.'WebApiParis.php';
 require LIB.'WebApiAdapter.php';
+require LIB.'WebApiQueryLexer.php';
 require LIB.'GoogleOAuth.php';
 
-$connections = array('cartesius' =>'pgsql:host=127.0.0.1;port=5432;dbname=cartesius;user=postgres;password=postgres');
 
-WebApiAdapter::configure($connections);
-WebApiAdapter::load_models(MODELS);
+\WebApi\WebApiAdapter::configure(array(
+	'connections' => array(
+		'cartesius' => 'pgsql:host=127.0.0.1;port=5432;dbname=cartesius;user=postgres;password=postgres',
+		'northwind' => 'pgsql:host=127.0.0.1;port=5432;dbname=northwind;user=postgres;password=postgres',
+		'todos' => 'pgsql:host=127.0.0.1;port=5432;dbname=todos;user=postgres;password=postgres'
+	),
+	'modelpath' => MODELS,
+	'metadatapath' => DATA,
+	'endpoint' => 'webapi'
+));
+
 
 // Start Slim.
 $app = new \Slim\Slim(array(
@@ -157,28 +166,105 @@ $app->get('/model/:module/:component(/:params(/:format))', 'authenticate', funct
 });
 
 
-$app->get('/data/Lookups', function() use ($app) {
+/// WebApi Calls ///
+
+
+$app->get('/webapi/:connection/Lookups', function($connection) use ($app) {
 
 });
 
-$app->post('/data/SaveChanges', function() use ($app) {
+$app->post('/webapi/:connection/purge', function($connection) use ($app) {
+	//implement?
+	$app->contentType('application/text');
+	echo "purge";
+});
+
+$app->post('/webapi/:connection/reset', function($connection) use ($app) {
+	//implement?
+	$app->contentType('application/text');
+	echo "reset";
+});
+
+$app->get('/webapi/:connection/Metadata', function($connection) use ($app) {
+	$metadata = \WebApi\WebApiAdapter::show_metadata($connection);
+
+	if($metadata) {
+		$app->contentType('application/json');	
+		echo $metadata;
+	} else {
+		$app->halt(404);
+	}
+});
+
+$app->post('/webapi/:connection/SaveChanges', function($connection) use ($app) {
 	$request = $app->request();
     $DATA = json_decode($request->getBody());
 	$app->contentType('application/json');
-	echo WebApiAdapter::save_changes($DATA);
+	echo \WebApi\WebApiAdapter::save_changes($connection, $DATA);
 	exit;
 });
 
-$app->get('/data/Metadata', function() use ($app) {
+
+
+$app->get('/webapi/:connection/:model', function($connection, $model) use ($app) {
 	$app->contentType('application/json');
-	echo json_encode(WebApiAdapter::show_metadata(DATA),JSON_PRETTY_PRINT);
+	$vars = $app->request->get();
+	echo \WebApi\WebApiAdapter::data($connection, $model, $vars);
 });
 
 
-$app->get('/data/:model', function($model) use ($app) {
-	$app->contentType('application/json');
-	$vars = $app->request->get();
-	echo WebApiAdapter::data($model, $vars);
+
+$app->get('/xmltest', function() use ($app) {
+
+	$app->contentType('application/javascript');
+
+	$people =  \Model::factory("Account", "cartesius")->find_many();
+	print_r($people->as_array());
+		//echo $people->as_xml()->saveXml();
+	//build_models();
+});
+
+
+$app->get('/test', function() use ($app) {
+
+ 	$app->response->headers->set('Content-Type', 'text/html');
+	$res = $app->response();
+	$res['X-SendFile'] = ROOT . 'public_html/DocCode/DocCode/index.html';
+
+});
+
+
+$app->get('/regextest', function() use ($app) {
+
+ 	$app->response->headers->set('Content-Type', 'application/javascript');
+
+	$reg = Array(
+		//"EmployeeID eq 1",
+		//"IsArchived eq false",
+		//"Freight gt 100m",
+		"OrderDate ge datetime'1997-12-31T17:00:00.000Z'",
+		//"Region ne null",
+		"(IsArchived eq false) and (IsDone eq false)",
+		"(startswith(CompanyName,'S') eq true) and (substringof('er', City) eq true)",
+		"(City eq 'London') or (City eq 'Paris')",
+		"(Freight gt 100) and (OrderDate gt datetime'1998-03-31T17:00:00.000Z')",
+		"(Freight gt 100) or (OrderDate gt datetime'1998-03-31T17:00:00.000Z') ",
+		"((OrderDate ge datetime'1995-12-31T17:00:00.000Z') and (OrderDate lt datetime'1996-12-31T17:00:00.000Z')) and (Freight gt 100)",
+		//"length(CompanyName) gt 30",
+		"toupper(substring(CompanyName,1,2)) eq 'OM' ",
+		//"substringof('market',CompanyName) eq true",
+		//"startswith(ProductName,'C') eq true",
+		//"not (Freight gt 100)"
+	);
+
+	foreach($reg as $key) {
+		try {
+			print_r(\WebApi\QueryLexer::run($key));
+		} catch (\Exception $e) {
+			//echo $e;
+		}
+	}
+
 });
 
 

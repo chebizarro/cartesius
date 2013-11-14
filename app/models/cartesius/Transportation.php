@@ -1,7 +1,8 @@
 <?php
 
+namespace WebApi\ORM\Cartesius;
 
-class Transportation extends XMLModel
+class Transportation extends \WebApi\ORM\Model
 {
 
 }

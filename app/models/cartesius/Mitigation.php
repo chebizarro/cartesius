@@ -1,7 +1,8 @@
 <?php
 
+namespace WebApi\ORM\Cartesius;
 
-class Mitigation extends XMLModel
+class Mitigation extends \WebApi\ORM\Model
 {
 
 }

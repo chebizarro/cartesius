@@ -1,7 +1,8 @@
 <?php
 
+namespace WebApi\ORM\Cartesius;
 
-class Event extends XMLModel
+class Event extends \WebApi\ORM\Model
 {
 
 }

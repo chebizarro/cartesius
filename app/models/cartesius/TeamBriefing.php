@@ -1,7 +1,8 @@
 <?php
 
+namespace WebApi\ORM\Cartesius;
 
-class TeamBriefing extends XMLModel
+class TeamBriefing extends \WebApi\ORM\Model
 {
 
 }

@@ -1,7 +1,8 @@
 <?php
 
+namespace WebApi\ORM\Cartesius;
 
-class Contact extends XMLModel
+class Contact extends \WebApi\ORM\Model
 {
 
 }

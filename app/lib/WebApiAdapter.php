@@ -1,32 +1,43 @@
 <?php
 
+namespace WebApi;
+
+use \PDO;
+
+
 class WebApiAdapter {
 
-	protected static $connections = null;
+	protected static $connections;
+	protected static $modelpath;
+	protected static $metadatapath;
+	protected static $endpoint;
 	
-	protected static $models = array();
-
-	public static function configure($connections) {
-		self::$connections = $connections;
+	public static function configure($config) {
+		self::$connections = isset($config['connections']) ? $config['connections'] : null;
+		self::$modelpath = isset($config['modelpath']) ? $config['modelpath'] : '/models/';
+		self::$metadatapath = isset($config['metadatapath']) ? $config['metadatapath'] : '/data/';
+		self::$endpoint = isset($config['endpoint']) ? $config['endpoint'] : 'webapi';
 		
-		foreach($connections as $key => $value) {
-			XMLORM::configure('error_mode', PDO::ERRMODE_WARNING, $key);
-			XMLORM::configure($value, null, $key);
-			XMLORM::configure('return_result_sets', true, $key);
+		foreach(self::$connections as $key => $value) {
+			ORM\ORM::configure('error_mode', PDO::ERRMODE_WARNING, $key);
+			ORM\ORM::configure($value, null, $key);
+			ORM\ORM::configure('return_result_sets', true, $key);
 		}
 
+		self::load_models();
 	}
 
-	public static function load_models($basepath) {
+	protected static function load_models() {
 		$sql = "SELECT table_name FROM information_schema.tables WHERE table_type = 'BASE TABLE' AND table_schema NOT IN ('pg_catalog', 'information_schema');";
 
 		foreach(self::$connections as $connection => $connstr) {
-			$db = XMLORM::get_db($connection);
+			$db = ORM\ORM::get_db($connection);
 			$tables = $db->query($sql)->fetchAll(PDO::FETCH_ASSOC);			
 			
 			foreach($tables as $key => $value) {
 				$model_name = self::_table_name_to_class_name($value['table_name']);
-				$dir = $basepath.$connection.'/';
+				$dbname = self::_table_name_to_class_name($connection);
+				$dir = self::$modelpath.$connection.'/';
 				$file_name = $dir.$model_name.".php";
 								
 				if(file_exists($file_name)) {
@@ -35,15 +46,17 @@ class WebApiAdapter {
 					if(!is_dir($dir)) {
 						mkdir($dir);
 					}
-					file_put_contents($file_name, "<?php\n\n\nclass ".$model_name." extends XMLModel\n{\n\n}\n");
+					
+					file_put_contents($file_name, "<?php\n\nnamespace WebApi\ORM\\".$dbname.";\n\nclass $model_name extends \WebApi\ORM\Model\n{\n\n}\n");
 					require_once($file_name);
 				}
-				self::$models[$model_name] = $connection;
 			}
+			self::load_metadata($connection);
 		}
 	}
 
 	protected static function _class_name_to_table_name($class_name) {
+		$class_name = end(explode("\\", $class_name));
 		return strtolower(preg_replace(
 			array('/\\\\/', '/(?<=[a-z])([A-Z])/', '/__/'),
 			array('_', '_$1', '_'),
@@ -55,13 +68,12 @@ class WebApiAdapter {
 		return preg_replace('/(?:^|_)(.?)/e',"strtoupper('$1')",$table_name);
 	}
 
-	public static function show_metadata($datapath) {
-		$metadatafile = $datapath . "metadata.js";
-		if (file_exists($metadatafile)) {
-			$metadata = json_decode(file_get_contents($metadatafile));
-		} else {
+	public static function load_metadata($connection) {
+		$metadatafile = self::$metadatapath . $connection .".metadata.js";
+		$ns_class_name = 'WebApi\ORM\\'.self::_table_name_to_class_name($connection);
+		if (!file_exists($metadatafile)) {
 			$metadata = array("dataServices" => [
-							array(	"serviceName" => "/data/",
+							array(	"serviceName" => "/".self::$endpoint."/".$connection."/",
 									"hasServerMetadata" => true,
 									"jsonResultsAdapter" => "webApi_default",
 									"useJsonp" => false ) ],
@@ -70,10 +82,13 @@ class WebApiAdapter {
 			$resourceEntityTypeMap = [];
 
 			foreach(get_declared_classes() as $model) {
-				if (is_subclass_of($model, 'XMLModel')){
-					$met = self::get_metadata($model);
-					array_push($metadata["structuralTypes"], $met);
-					$resourceEntityTypeMap[$met["defaultResourceName"]] = $met["shortName"] . ":#" . $met["namespace"];
+				if (is_subclass_of($model, '\WebApi\ORM\Model')){
+					$class_ns = new \ReflectionClass($model);
+					if($class_ns->getNamespaceName() == $ns_class_name) { 
+						$met = self::get_metadata($connection, $model);
+						array_push($metadata["structuralTypes"], $met);
+						$resourceEntityTypeMap[$met["defaultResourceName"]] = $met["shortName"] . ":#" . $met["namespace"];
+					}
 				}
 			}
 			
@@ -81,7 +96,14 @@ class WebApiAdapter {
 			
 			file_put_contents($metadatafile, json_encode($metadata, JSON_PRETTY_PRINT));
 		}
-		return $metadata;
+	}
+
+	public static function show_metadata($connection) {
+		$metadatafile = self::$metadatapath . $connection .".metadata.js";
+		if (file_exists($metadatafile)) {
+			return file_get_contents($metadatafile);
+		}
+		return null;
 	}
 
 	private static function _match_type($type) {
@@ -110,21 +132,24 @@ class WebApiAdapter {
 		}
 	}
 
-	private static function get_metadata($model) {
-				
+	private static function get_metadata($connection, $model) {		
+		$namespace = "WebApi.ORM.". self::_table_name_to_class_name($connection) . ".Model";
+		
+		$tableName = self::_class_name_to_table_name($model);
+		
+		$model = end(explode("\\", $model));
+		
 		$metadata = array(	"shortName" => $model,
-							"namespace" => "XMLPARIS.Model",
+							"namespace" => $namespace,
 							"autoGeneratedKeyType" => "Identity",
 							"defaultResourceName" => $model,
 							"dataProperties" => []
 						);
-
-		$tableName = self::_class_name_to_table_name($model);
 				
 		$sql = 'SELECT column_name AS name, is_nullable AS "isNullable", udt_name AS "dataType", column_default AS "defaultValue", character_maximum_length as "maxLength" FROM information_schema.columns WHERE table_name = \'' . $tableName  ."' ORDER BY ordinal_position";
 		$keySql = 'SELECT column_name FROM information_schema.key_column_usage WHERE table_name = \''  . $tableName  ."'";
 				
-		$db = XMLORM::get_db(self::$models[$model]);
+		$db = ORM\ORM::get_db($connection);
 		$result = $db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 		$keyResult = $db->query($keySql)->fetchAll(PDO::FETCH_ASSOC);
 		
@@ -177,14 +202,14 @@ class WebApiAdapter {
 				
 				if($row["table_name"] != $tableName) {
 					$nav["name"] = $row["table_name"];
-					$nav["entityTypeName"] = self::_table_name_to_class_name($row["table_name"]).":#XMLPARIS.Model";
+					$nav["entityTypeName"] = self::_table_name_to_class_name($row["table_name"]).":#" . $namespace;
 					$nav["isScalar"] = true;
 					$nav["associationName"] = $row["constraint_name"];
 					$nav["foreignKeyNames"] = [$row["foreign_column_name"]];
 					
 				} else {
 					$nav["name"] = $row["foreign_table_name"];
-					$nav["entityTypeName"] = self::_table_name_to_class_name($row["foreign_table_name"]).":#XMLPARIS.Model";
+					$nav["entityTypeName"] = self::_table_name_to_class_name($row["foreign_table_name"]).":#" . $namespace;
 					$nav["isScalar"] = false;						
 					$nav["associationName"] = $row["constraint_name"];
 					$nav["invForeignKeyNames"] = [$row["column_name"]];
@@ -196,7 +221,7 @@ class WebApiAdapter {
 	}
 
 
-	public static function save_changes($data) {
+	public static function save_changes($connection, $data) {
 		
 	/*
 	{
@@ -226,7 +251,7 @@ class WebApiAdapter {
 		foreach ($data->entities as $entity) {
 			$aspect = $entity->entityAspect;
 			if($aspect->entityState == "Added") {
-				$model = XMLModel::factory($aspect->defaultResourceName, self::$models[$aspect->defaultResourceName])->create();
+				$model = ORM\Model::factory($aspect->defaultResourceName, self::$models[$aspect->defaultResourceName])->create();
 				$keyVar = $aspect->autoGeneratedKey->propertyName;
 				foreach($entity as $key => $value) {
 					if (($key !== $keyVar) && ($key !== "entityAspect")) {
@@ -242,94 +267,114 @@ class WebApiAdapter {
 	}
 
 
-	function data($model, $vars) {
-		//$allvars = $app->request->get();
-		//print_r($allvars);
+	public static function data($connection, $model, $vars) {		
+		$model = "WebApi\ORM\\" . self::_table_name_to_class_name($connection) . "\\" . $model;
 		
-		//$inlinecount=allpages
-		//$filter=(startswith(CompanyName,'S') eq true) and (substringof('er', City) eq true)
-		//$orderby=UnitPrice desc,ProductName
+		$data = ORM\Model::factory($model, $connection);
+
+		//$data = isset($vars['$filter']) ? self::filter($vars['$filter'], $data) : $data;
+		$data = isset($vars['$top']) ? self::top($vars['$top'], $data) : $data;
+		$data = isset($vars['$skip']) ? self::skip($vars['$skip'], $data) : $data;
+		$data = isset($vars['$orderby']) ? self::orderby($vars['$orderby'], $data) : $data;
 		
-	/*
-		if(mb_substr($model, -3) == "ies") {
-			$model = mb_substr($model, 0, (mb_strlen($model)-3)) . "y";
-		} else {
-			$model = mb_substr($model, 0, (mb_strlen($model)-1));
-		}
-	*/
+		$data = $data->find_many();
+		var_dump($data);
+		return $data->as_json();
+	}
 
-		$data = XMLModel::factory($model, self::$models[$model]);
+	private static function filter($filter, $data) {
+		
+		preg_match('/(.*?)\((.*?)\)\s([^\s]*)\s([^\s]*)/', $filter, $match);
 
-		$filter = isset($vars['$filter']) ? $vars['$filter'] : null;
-
-		if($filter) {
-			preg_match('/(.*?)\((.*?)\)\s([^\s]*)\s([^\s]*)/', $filter, $match);
-
-			if(sizeof($match) > 0) {
-				preg_match("/(.*),'(.*)'/", $match[2], $condition);
-				switch ($match[1])
-				{
-					case "startswith":
-						$condition[2] = $condition[2] . "%";
-						break;
-					case "endswith":
-						$condition[2] = "%" . $condition[2];
-						break;				
-					case "contains":
-					case "substringof":
-						$condition[2] = "%" . $condition[2] . "%";
-						break;
-				}
-				if ($match[4] == "true") {
-					$data = $data->where_like($condition[1], $condition[2]);
-				} else {
-					$data = $data->where_not_like($condition[1], $condition[2]);				
-				}
+		if(sizeof($match) > 0) {
+			preg_match("/(.*),'(.*)'/", $match[2], $condition);
+			switch ($match[1])
+			{
+				case "startswith":
+					$condition[2] = $condition[2] . "%";
+					break;
+				case "endswith":
+					$condition[2] = "%" . $condition[2];
+					break;				
+				case "contains":
+				case "substringof":
+					$condition[2] = "%" . $condition[2] . "%";
+					break;
+			}
+			if ($match[4] == "true") {
+				$data = $data->where_like($condition[1], $condition[2]);
 			} else {
-				preg_match('/(.*)\s(.*)\s(.*)/', $filter, $match);
-				$column = $match[1];
-				$condition = $match[2];
-				$value = $match[3];
-				
-				switch ($condition)
-				{
-					case "gt":
-						$data = $data->where_gt($column, $value);
-						break;
-					case "lt":
-						$data = $data->where_lt($column, $value);
-						break;				
-					case "eq":
-						$data = $data->where_equal($column, $value);				
-						break;
-					case "ge":
-						$data = $data->where_gte($column, $value);
-						break;
-					case "le":
-						$data = $data->where_lte($column, $value);
-						break;
-					case "ne":
-						$data = $data->where_not_equal($column, $value);
-						break;	
-				}
+				$data = $data->where_not_like($condition[1], $condition[2]);				
+			}
+		} else {
+			preg_match('/(.*)\s(.*)\s(.*)/', $filter, $match);
+			$column = $match[1];
+			$condition = $match[2];
+			$value = $match[3];
+			
+			switch ($condition)
+			{
+				case "gt":
+					$data = $data->where_gt($column, $value);
+					break;
+				case "lt":
+					$data = $data->where_lt($column, $value);
+					break;				
+				case "eq":
+					$data = $data->where_equal($column, $value);				
+					break;
+				case "ge":
+					$data = $data->where_gte($column, $value);
+					break;
+				case "le":
+					$data = $data->where_lte($column, $value);
+					break;
+				case "ne":
+					$data = $data->where_not_equal($column, $value);
+					break;	
 			}
 		}
-		
-		$data = isset($vars['$top']) ? $data->limit($vars['$top']) : $data;
-		$data = isset($vars['$skip']) ? $data->offset($vars['$skip']) : $data;
 
-	/*
-		$orderby = $app->request->get('$orderby');
-		$orderbyArray = explode(" ", $orderby);
+		return $data;
 		
-		if (sizeof($orderbyArray) > 1) {
-			$data = $data->order_by_desc($orderbyArray[0]);	
+	}
+
+	private static function orderby($orderby, $data) {
+		if(strpos($orderby, ",")){
+			$orderbyArray = explode(",", $orderby);
+			foreach($orderbyArray as $order) {
+				$data = self::orderby($order, $data);
+			}
 		} else {
-			$data = $data->order_by_asc($orderbyArray[0]);	
+			if(strpos($orderby, " ")) {
+				$orderbyArray = explode(" ", $orderby);
+				if($orderbyArray[1] == "desc") {
+					$data = $data->order_by_desc($orderbyArray[0]);
+				} else {
+					$data = $data->order_by_asc($orderbyArray[0]);
+				}
+				return $data;
+			} else {
+				$data = $data->order_by_asc($orderby);
+			}
+		}		
+		return $data;
+	}
+
+	private static function top($top, $data) {
+		// sanitize
+		if(is_int($top)) {
+			$data = $data->limit($top);			
 		}
-	*/
-		return $data->find_many()->as_json();
-		
+		return $data;
+	}
+
+	private static function skip($skip, $data) {
+		// sanitize
+		if(is_int($skip)) {
+			$data = $data->offset($top);			
+		}
+		return $data;
 	}
 
 }

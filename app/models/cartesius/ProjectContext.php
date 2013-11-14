@@ -1,7 +1,8 @@
 <?php
 
+namespace WebApi\ORM\Cartesius;
 
-class ProjectContext extends XMLModel
+class ProjectContext extends \WebApi\ORM\Model
 {
 
 }
