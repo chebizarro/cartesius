@@ -135,7 +135,7 @@ class WebApiAdapter {
 	}
 
 	private static function get_metadata($connection, $model) {		
-		$namespace = "WebApi.ORM.". self::_table_name_to_class_name($connection) . ".Model";
+		$namespace = "WebApi.ORM.". self::_table_name_to_class_name($connection);
 		
 		$tableName = self::_class_name_to_table_name($model);
 		
@@ -271,16 +271,26 @@ class WebApiAdapter {
 
 	public static function data($connection, $model, $vars) {		
 		$model = "WebApi\ORM\\" . self::_table_name_to_class_name($connection) . "\\" . $model;
-		
+
 		$data = ORM\Model::factory($model, $connection);
 		// $select
-		$data = isset($vars['$filter']) ? self::filter($vars['$filter'], $data) : $data;
+		
+		if(isset($vars['$filter'])) {
+			$filter = $vars['$filter'];
+			try {
+				$query = QueryLexer::run($filter);
+				$data = self::filter($query, $data);
+			} catch (\Exception $e) {
+				echo $e;
+			}
+		}
+		
 		$data = isset($vars['$top']) ? self::top($vars['$top'], $data) : $data;
 		$data = isset($vars['$skip']) ? self::skip($vars['$skip'], $data) : $data;
 		$data = isset($vars['$orderby']) ? self::orderby($vars['$orderby'], $data) : $data;
 		
 		$data = $data->find_many();
-		//echo ORM\ORM::get_last_query($connection);
+		//echo "\n\n".$filter."\n" . ORM\ORM::get_last_query($connection) . "\n\n";
 		return $data->as_json();
 	}
 
@@ -295,83 +305,140 @@ class WebApiAdapter {
 			case "T_NE": return "!=";
 		}
 	}
+	
+	private static function filter($query, $data) {
 
-	private static function filter($filter, $data) {
-		
-		$query = QueryLexer::run($filter);
-		$column = $query[0]["token"];
-		$column_name = trim($query[0]["match"]);
-		$condition = $query[1]["token"];
-		$value = trim($query[2]["match"]);
-		
-		if($query) {
-			switch ($column)
-			{
-				case "T_COLUMN":
-					$value = ($query[2]["token"] == "T_INT_VALUE") ? intval($value) : $value;
-					switch ($condition)
-					{
-						case "T_GT": return $data->where_gt($column_name, $value);
-						case "T_LT": return $data->where_lt($column_name, $value);
-						case "T_EQ": return $data->where_equal($column_name, $value);
-						case "T_GE": return $data->where_gte($column_name, $value);
-						case "T_LE": return $data->where_lte($column_name, $value);
-						case "T_NE": return $data->where_not_equal($column_name, $value);
-					}
-					break;
-
-				case "T_BLOCK":
-					//$query = preg_replace('/\(([^+]*)\)/', '${1}', $query[0]["match"]);
-					//return self::filter($query[0]["match"], $data);
-					break;
-				case "T_LENGTH":
-					$column_name = preg_replace('/\(([^()]*)\)/', '("${1}")', $query[1]["match"]);
-					return $data->where_raw('length'.$column_name.self::condition($query[2]["token"]).trim($query[3]["match"]));
-
-				case "T_TO_UPPER":
-					break;
-				
-				case "T_SUBSTRING_OF":
-					break;
-
-				case "T_STARTSWITH":
-					break;
-
-				case "T_NOT":
-					break;
-				
-			}
+		$token = $query[0]["token"];
 			
+		switch ($token)
+		{
+			case "T_COLUMN": return self::filter_column($query, $data);
+			case "T_BLOCK": return self::filter_block($query, $data);
+			case "T_LENGTH": return self::filter_length($query, $data);
+			case "T_SUBSTRING_OF": return self::filter_substring_of($query, $data);
+			case "T_STARTS_WITH": return self::filter_starts_with($query, $data);
+			case "T_NOT": return self::filter_not($query, $data);
+			//case "T_TO_UPPER": return self::filter_function("T_TO_UPPER",$query, $data);
+			//case "T_SUBSTRING": return self::filter_function("T_SUBSTRING",$query, $data);
+			default: return $data;	
 		}
 		
-		/*preg_match('/(.*?)\((.*?)\)\s([^\s]*)\s([^\s]*)/', $filter, $match);
-
-		if(sizeof($match) > 0) {
-			preg_match("/(.*),'(.*)'/", $match[2], $condition);
-			switch ($match[1])
-			{
-				case "startswith":
-					$condition[2] = $condition[2] . "%";
-					break;
-				case "endswith":
-					$condition[2] = "%" . $condition[2];
-					break;				
-				case "contains":
-				case "substringof":
-					$condition[2] = "%" . $condition[2] . "%";
-					break;
-			}
-			if ($match[4] == "true") {
-				$data = $data->where_like($condition[1], $condition[2]);
-			} else {
-				$data = $data->where_not_like($condition[1], $condition[2]);				
-			}
-		} else {
-			preg_match('/(.*)\s(.*)\s(.*)/', $filter, $match);
-
-		}*/
-		
 	}
+
+	private static function filter_column($query, $data) {
+		
+		$column_name = $query[0]["match"];
+		$condition = $query[1]["token"];
+		$value = $query[2]["match"];
+
+		switch ($condition)
+		{
+			case "T_GT": return $data->where_gt($column_name, $value);
+			case "T_LT": return $data->where_lt($column_name, $value);
+			case "T_EQ": return $data->where_equal($column_name, $value);
+			case "T_GE": return $data->where_gte($column_name, $value);
+			case "T_LE": return $data->where_lte($column_name, $value);
+			case "T_NE": return $data->where_not_equal($column_name, $value);
+			default : return $data;
+		}
+
+	}
+
+	private static function filter_block($query, $data) {
+		$token = $query[0]["match"][0]["token"];
+	
+		$operator = $query[1]["token"];
+		$left = $query[0]["match"];
+		$right = $query[2]["match"];
+		switch ($token) {
+			case "T_COLUMN" :
+				if($operator == "T_AND") {
+					$data = self::filter($left, $data);
+					$data = self::filter($right, $data);
+				} elseif ($operator == "T_OR") {
+					$data = $data->where_raw(
+						'("'.$left[0]['match'].'"'.self::condition($left[1]['token'])."'".$left[2]['match']."'".
+						" OR ".
+						'"'.$right[0]['match'].'"'.self::condition($right[1]['token'])."'".$right[2]['match']."')"
+					);
+				}
+				return $data;
+			case "T_BLOCK" :
+				$operator = $query[1]["token"];
+				if(!is_array($operator)) {
+					if($operator == "T_AND" || $operator == "T_OR") {
+						$data = self::filter($left, $data);
+						$data = self::filter($right, $data);
+					}
+				} else {
+					
+				}
+			case "T_STARTS_WITH" :
+				if($operator == "T_AND") {
+					$data = self::filter($left, $data);
+					$data = self::filter($right, $data);
+					return $data;
+				}
+
+		}
+		
+		return $data;
+	}
+
+	private static function filter_length($query, $data) {
+		$column_name = $query[1]["match"][0]["match"];
+		return $data->where_raw('length("'.$column_name.'")'.self::condition($query[2]["token"]).trim($query[3]["match"]));
+	}
+
+	private static function filter_to_upper($query) {
+		//print_r($query);
+		//return $data;
+		
+		$function = "upper(";
+		
+		if($query[1]["token"][0]["token"] != "T_COLUMN") {
+			$function .= self::filter($query[1]["match"]).")";
+		} else {
+			$function .= '"'.$query[1]["match"][0]["match"].")";
+		}
+		
+		$function .= self::condition($query[2]["token"]) . $query[3]["match"];
+		
+		return $function;
+	}
+
+	private static function filter_function($function, $query, $data) {
+		
+		switch ($function) {
+			case "T_TO_UPPER":
+				$string = self::filter_to_upper($query);
+				break;
+		}
+		
+		return $data->where_raw($string);
+	}
+
+	private static function filter_substring_of($query, $data) {
+		$column_name = $query[1]["match"][0]["match"][1]["match"];
+		$value = '%' . $query[1]["match"][0]["match"][0]["match"] . '%';
+		$condition = $query[3]["token"];		
+		return ($condition == "T_TRUE") ? $data->where_like($column_name, $value) : $data->where_not_like($column_name, $value);
+	}
+
+	private static function filter_starts_with($query, $data) {
+		$column_name = $query[1]["match"][0]["match"];
+		$value = $query[1]["match"][1]["match"][0]["match"] . '%';
+		$condition = $query[3]["token"];		
+		return ($condition == "T_TRUE") ? $data->where_like($column_name, $value) : $data->where_not_like($column_name, $value);
+	}
+
+	private static function filter_not($query, $data) {
+		$column_name = '"'.$query[1]["match"][0]["match"].'"';
+		$condition = self::condition($query[1]["match"][1]["token"]);		
+		$value = "'".$query[1]["match"][2]["match"]."'";
+		return $data->where_raw('NOT ('.$column_name.$condition.$value.')');
+	}
+
 
 	private static function orderby($orderby, $data) {
 		if(strpos($orderby, ",")){

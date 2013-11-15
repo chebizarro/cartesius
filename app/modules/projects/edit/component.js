@@ -12,7 +12,7 @@ define(['plugins/router', 'durandal/app'], function (router, app) {
 				
 				var query = new breeze.EntityQuery()
 					.from("Project")
-					.where("id","eq",project.id)
+					.where("title","eq","te''st")
 					.expand("ProjectRisk.Risk");
 					
 				app.dataservice.executeQuery(query).then(function(data){

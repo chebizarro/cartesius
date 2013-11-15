@@ -133,11 +133,18 @@
             
             $data = $this->get_results();
             $json = array();
+            $i = 1;
+            //print_r($data);
             
             foreach($data as $key => $value) {
-				array_push($json, $value->as_array());
+				//str_replace("\\",".",get_class($value));
+				$row = $value->as_array();
+				$new_array = array_merge(array('$id'=>$i, '$type'=>str_replace("\\",".",get_class($value))),$row);
+				
+				array_push($json, $new_array);
+				$i++;
 			}
-			return json_encode($json);
+			return json_encode($json, JSON_PRETTY_PRINT);
             
         }
 

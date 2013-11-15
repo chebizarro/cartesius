@@ -240,17 +240,17 @@ $app->get('/regextest', function() use ($app) {
  	$app->response->headers->set('Content-Type', 'application/javascript');
 
 	$reg = Array(
-		"EmployeeID eq 1",
-		"IsArchived eq false",
-		"Freight gt 100m",
-		"OrderDate ge datetime'1997-12-31T17:00:00.000Z'",
-		"Region ne null",
-		"(IsArchived eq false) and (IsDone eq false)",
-		"(startswith(CompanyName,'S') eq true) and (substringof('er', City) eq true)",
-		"(City eq 'London') or (City eq 'Paris')",
-		"(Freight gt 100) and (OrderDate gt datetime'1998-03-31T17:00:00.000Z')",
-		"(Freight gt 100) or (OrderDate gt datetime'1998-03-31T17:00:00.000Z')",
-		"((OrderDate ge datetime'1995-12-31T17:00:00.000Z') and (OrderDate lt datetime'1996-12-31T17:00:00.000Z')) and (Freight gt 100)",
+		//"EmployeeID eq 1",
+		//"IsArchived eq false",
+		//"Freight gt 100m",
+		//"OrderDate ge datetime'1997-12-31T17:00:00.000Z'",
+		//"Region ne null",
+		//"(IsArchived eq false) and (IsDone eq false)",
+		//"(startswith(CompanyName,'S') eq true) and (substringof('er', City) eq true)",
+		//"(City eq 'London') or (City eq 'Paris')",
+		//"(Freight gt 100) and (OrderDate gt datetime'1998-03-31T17:00:00.000Z')",
+		//"(Freight gt 100) or (OrderDate gt datetime'1998-03-31T17:00:00.000Z')",
+		//"((OrderDate ge datetime'1995-12-31T17:00:00.000Z') and (OrderDate lt datetime'1996-12-31T17:00:00.000Z')) and (Freight gt 100)",
 		"length(CompanyName) gt 30",
 		"toupper(substring(CompanyName,1,2)) eq 'OM'",
 		"substringof('market',CompanyName) eq true",
@@ -266,7 +266,29 @@ $app->get('/regextest', function() use ($app) {
 		}
 	}
 
+	//echo \WebApi\WebApiAdapter::data('northwind', $model, $vars);
 });
 
+$app->get('/filtertest', function() use ($app) {
+ 	$app->response->headers->set('Content-Type', 'application/javascript');
+
+	//echo \WebApi\WebApiAdapter::data('northwind', 'employees' ,array('$filter' => 'EmployeeID eq 1'));
+	echo \WebApi\WebApiAdapter::data('todos', 'todos', array('$filter' => 'IsArchived eq false'));
+	//echo \WebApi\WebApiAdapter::data('northwind','orders',array('$filter' => "Freight gt 100m"));
+	echo \WebApi\WebApiAdapter::data('northwind','orders',array('$filter' => "OrderDate ge datetime'1998-04-28T17:00:00.000Z'"));
+	//echo \WebApi\WebApiAdapter::data('northwind','employees',array('$filter' => "Region ne null"));
+	echo \WebApi\WebApiAdapter::data('todos','todos',array('$filter' => "(IsArchived eq false) and (IsDone eq false)"));
+	echo \WebApi\WebApiAdapter::data('northwind','suppliers',array('$filter' => "(startswith(CompanyName,'S') eq true) and (substringof('er', City) eq true)"));
+	echo \WebApi\WebApiAdapter::data('northwind','suppliers',array('$filter' => "(City eq 'London') or (City eq 'Paris')"));
+	echo \WebApi\WebApiAdapter::data('northwind','orders',array('$filter' => "(Freight gt 100) and (OrderDate gt datetime'1998-03-31T17:00:00.000Z')"));
+	echo \WebApi\WebApiAdapter::data('northwind','orders',array('$filter' => "(Freight gt 100) or (OrderDate gt datetime'1998-03-31T17:00:00.000Z')"));
+	echo \WebApi\WebApiAdapter::data('northwind','orders',array('$filter' => "((OrderDate ge datetime'1995-12-31T17:00:00.000Z') and (OrderDate lt datetime'1996-12-31T17:00:00.000Z')) and (Freight gt 100)"));
+	echo \WebApi\WebApiAdapter::data('northwind','suppliers',array('$filter' => "length(CompanyName) gt 30"));
+	//echo \WebApi\WebApiAdapter::data('northwind','suppliers',array('$filter' => "toupper(substring(CompanyName,1,2)) eq 'OM'"));
+	echo \WebApi\WebApiAdapter::data('northwind','suppliers',array('$filter' => "substringof('market',CompanyName) eq true"));
+	echo \WebApi\WebApiAdapter::data('northwind','products',array('$filter' => "startswith(ProductName,'C') eq true"));
+	echo \WebApi\WebApiAdapter::data('northwind','orders',array('$filter' => "not (Freight gt 100)"));
+
+});
 
 $app->run();
