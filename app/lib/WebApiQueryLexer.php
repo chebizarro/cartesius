@@ -38,8 +38,6 @@ class QueryLexer {
 		$source = trim($source);
 		$offset = 0;
 		while($offset < strlen($source)) {
-			//echo $source . "\n";
-
 			$result = self::_match($source, $offset);
 
 			if($result === false) {

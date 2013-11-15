@@ -113,26 +113,24 @@ class WebApiAdapter {
 	private static function _match_type($type) {
 		switch ($type)
 		{
-			case "int":
-			case "int4":
-			case "int8":
-				return "Int32";
+			case "int": return "Byte";			
+			case "int2": return "Int16";
+			case "int4": return "Int32";
+			case "int8": return "Int64";
 			case "varchar":
 			case "text":
 			case "char":
-				return "String";
-			case "bool":
-				return "Boolean";
+			case "bpchar": return "String";
+			case "bool": return "Boolean";
 			case "date":
 			case "timetz":
-			case "timestamptz":
-				return "DateTime";
+			case "timestamptz": return "DateTime";
 			case "decimal":
 			case "float4":
-			case "float8":
-				return "Decimal";
-			default:
-				return $type;
+			case "float8": return "Decimal";
+			case "bytea": return "Binary";
+			case "null": return "Null";
+			default: return $type;
 		}
 	}
 
@@ -282,33 +280,25 @@ class WebApiAdapter {
 		$data = isset($vars['$orderby']) ? self::orderby($vars['$orderby'], $data) : $data;
 		
 		$data = $data->find_many();
-		echo ORM\ORM::get_last_query($connection);
+		//echo ORM\ORM::get_last_query($connection);
 		return $data->as_json();
 	}
 
 	private static function condition($condition) {
 		switch ($condition)
 		{
-			case "T_GT":
-				return ">";
-			case "T_LT":
-				return "<";
-			case "T_EQ":
-				return "=";
-			case "T_GE":
-				return ">=";
-			case "T_LE":
-				return "<=";
-			case "T_NE":
-				return "!=";
+			case "T_GT": return ">";
+			case "T_LT": return "<";
+			case "T_EQ": return "=";
+			case "T_GE": return ">=";
+			case "T_LE": return "<=";
+			case "T_NE": return "!=";
 		}
-
 	}
 
 	private static function filter($filter, $data) {
 		
 		$query = QueryLexer::run($filter);
-		
 		$column = $query[0]["token"];
 		$column_name = trim($query[0]["match"]);
 		$condition = $query[1]["token"];
@@ -319,40 +309,25 @@ class WebApiAdapter {
 			{
 				case "T_COLUMN":
 					$value = ($query[2]["token"] == "T_INT_VALUE") ? intval($value) : $value;
-					//echo is_int($value);
 					switch ($condition)
 					{
-						case "T_GT":
-							$data = $data->where_gt($column_name, $value);
-							break;
-						case "T_LT":
-							$data = $data->where_lt($column_name, $value);
-							break;				
-						case "T_EQ":
-							$data = $data->where_equal($column_name, $value);				
-							break;
-						case "T_GE":
-							$data = $data->where_gte($column_name, $value);
-							break;
-						case "T_LE":
-							$data = $data->where_lte($column_name, $value);
-							break;
-						case "T_NE":
-							$data = $data->where_not_equal($column_name, $value);
-							break;	
+						case "T_GT": return $data->where_gt($column_name, $value);
+						case "T_LT": return $data->where_lt($column_name, $value);
+						case "T_EQ": return $data->where_equal($column_name, $value);
+						case "T_GE": return $data->where_gte($column_name, $value);
+						case "T_LE": return $data->where_lte($column_name, $value);
+						case "T_NE": return $data->where_not_equal($column_name, $value);
 					}
 					break;
+
 				case "T_BLOCK":
-					$query = QueryLexer::run(preg_replace('/\(([^+]*)\)/', '${1}', $query[1]["match"]));
-					return self::filter($query, $data);
-					//break;
-				
+					//$query = preg_replace('/\(([^+]*)\)/', '${1}', $query[0]["match"]);
+					//return self::filter($query[0]["match"], $data);
+					break;
 				case "T_LENGTH":
 					$column_name = preg_replace('/\(([^()]*)\)/', '("${1}")', $query[1]["match"]);
-					//$data = $data->select('*');
-					//$data = $data->select_expr('length'.$column_name);
-					$data = $data->where_raw('length'.$column_name.self::condition($query[2]["token"]).trim($query[3]["match"]));
-					break;
+					return $data->where_raw('length'.$column_name.self::condition($query[2]["token"]).trim($query[3]["match"]));
+
 				case "T_TO_UPPER":
 					break;
 				
@@ -395,8 +370,6 @@ class WebApiAdapter {
 			preg_match('/(.*)\s(.*)\s(.*)/', $filter, $match);
 
 		}*/
-
-		return $data;
 		
 	}
 
@@ -423,19 +396,11 @@ class WebApiAdapter {
 	}
 
 	private static function top($top, $data) {
-		// sanitize
-		//if(is_int($top)) {
-			$data = $data->limit($top);			
-		//}
-		return $data;
+		return $data->limit(intval($top));
 	}
 
 	private static function skip($skip, $data) {
-		// sanitize
-		//if(is_int($skip)) {
-			$data = $data->offset($top);			
-		//}
-		return $data;
+		return $data->offset(intval($skip));
 	}
 
 }
