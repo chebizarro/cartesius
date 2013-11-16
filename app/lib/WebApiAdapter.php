@@ -11,217 +11,62 @@ class WebApiAdapter {
 	protected static $modelpath;
 	protected static $metadatapath;
 	protected static $endpoint;
+	protected static $metadata;
 	
 	public static function configure($config) {
 		self::$connections = isset($config['connections']) ? $config['connections'] : null;
 		self::$modelpath = isset($config['modelpath']) ? $config['modelpath'] : '/models/';
 		self::$metadatapath = isset($config['metadatapath']) ? $config['metadatapath'] : '/data/';
 		self::$endpoint = isset($config['endpoint']) ? $config['endpoint'] : 'webapi';
-		
+		self::$metadata = [];
+
 		foreach(self::$connections as $key => $value) {
 			ORM\ORM::configure('error_mode', PDO::ERRMODE_WARNING, $key);
 			ORM\ORM::configure($value, null, $key);
 			ORM\ORM::configure('return_result_sets', true, $key);
 			ORM\ORM::configure('logging', true, $key);
-		}
-
-		self::load_models();
-	}
-
-	protected static function load_models() {
-		$sql = "SELECT table_name FROM information_schema.tables WHERE table_type = 'BASE TABLE' AND table_schema NOT IN ('pg_catalog', 'information_schema');";
-
-		foreach(self::$connections as $connection => $connstr) {
-			$db = ORM\ORM::get_db($connection);
-			$tables = $db->query($sql)->fetchAll(PDO::FETCH_ASSOC);			
 			
-			foreach($tables as $key => $value) {
-				$model_name = self::_table_name_to_class_name($value['table_name']);
-				$dbname = self::_table_name_to_class_name($connection);
-				$dir = self::$modelpath.$connection.'/';
-				$file_name = $dir.$model_name.".php";
-								
-				if(file_exists($file_name)) {
-					require_once($file_name);
-				} else {
-					if(!is_dir($dir)) {
-						mkdir($dir);
-					}
-					$keySql = 'SELECT column_name FROM information_schema.key_column_usage WHERE table_name = \''  . $value['table_name']  ."'";
-					$keyResult = $db->query($keySql)->fetchAll(PDO::FETCH_ASSOC);
-					$key = $keyResult[0]["column_name"];
-					$idcolumn = ($key != "id") ? "\n\tpublic static \$_id_column = '" . $key . "';\n" : "\n";
-					file_put_contents($file_name, "<?php\n\nnamespace WebApi\ORM\\".$dbname.";\n\nclass $model_name extends \WebApi\ORM\Model\n{\n" . $idcolumn . "\n}\n");
-					require_once($file_name);
-				}
-			}
-			self::load_metadata($connection);
+			self::load_metadata($key);
+			self::load_models($key);
+		}		
+	}
+
+	public static function load_metadata($connection) {
+		$metadatafile = self::$metadatapath."{$connection}.metadata.serial";
+		if (!file_exists($metadatafile)) {
+			self::$metadata[$connection] = new WebApiMetaData($connection, self::$endpoint);
+			file_put_contents($metadatafile, serialize(self::$metadata[$connection]));
+		} else {
+			self::$metadata[$connection] = unserialize(file_get_contents($metadatafile));
 		}
 	}
 
-	protected static function _class_name_to_table_name($class_name) {
-		$class_name = end(explode("\\", $class_name));
-		return strtolower(preg_replace(
-			array('/\\\\/', '/(?<=[a-z])([A-Z])/', '/__/'),
-			array('_', '_$1', '_'),
-			ltrim($class_name, '\\')
-		));
+	protected static function load_models($connection) {
+		$dir = self::$modelpath.$connection.'/';
+		
+		foreach(self::$metadata[$connection]->resourceEntityTypeMap as $model_name => $model_value) {
+			$file_name = "{$dir}{$model_name}.php";
+			if(!file_exists($file_name)) {
+				if(!is_dir($dir)) {
+					mkdir($dir);
+				}
+				file_put_contents($file_name, self::$metadata[$connection]->get_model($model_name));
+			}
+			require_once($file_name);
+		}	
 	}
 	
 	protected static function _table_name_to_class_name($table_name) {
 		return preg_replace('/(?:^|_)(.?)/e',"strtoupper('$1')",$table_name);
 	}
 
-	public static function load_metadata($connection) {
-		$metadatafile = self::$metadatapath . $connection .".metadata.js";
-		$ns_class_name = 'WebApi\ORM\\'.self::_table_name_to_class_name($connection);
-		if (!file_exists($metadatafile)) {
-			$metadata = array("dataServices" => [
-							array(	"serviceName" => "/".self::$endpoint."/".$connection."/",
-									"hasServerMetadata" => true,
-									"jsonResultsAdapter" => "webApi_default",
-									"useJsonp" => false ) ],
-									"structuralTypes" => []);
-
-			$resourceEntityTypeMap = [];
-
-			foreach(get_declared_classes() as $model) {
-				if (is_subclass_of($model, '\WebApi\ORM\Model')){
-					$class_ns = new \ReflectionClass($model);
-					if($class_ns->getNamespaceName() == $ns_class_name) { 
-						$met = self::get_metadata($connection, $model);
-						array_push($metadata["structuralTypes"], $met);
-						$resourceEntityTypeMap[$met["defaultResourceName"]] = $met["shortName"] . ":#" . $met["namespace"];
-					}
-				}
-			}
-			
-			$metadata["resourceEntityTypeMap"] = $resourceEntityTypeMap;
-			
-			file_put_contents($metadatafile, json_encode($metadata, JSON_PRETTY_PRINT));
+	public static function show_metadata($connection, $format = "JSON") {		
+		if($format == "JSON") {
+			return json_encode(self::$metadata[$connection], JSON_PRETTY_PRINT);
+		} else {
+			//other formats? XML?
 		}
 	}
-
-	public static function show_metadata($connection) {
-		$metadatafile = self::$metadatapath . $connection .".metadata.js";
-		if (file_exists($metadatafile)) {
-			return file_get_contents($metadatafile);
-		}
-		return null;
-	}
-
-	private static function _match_type($type) {
-		switch ($type)
-		{
-			case "int": return "Byte";			
-			case "int2": return "Int16";
-			case "int4": return "Int32";
-			case "int8": return "Int64";
-			case "varchar":
-			case "text":
-			case "char":
-			case "bpchar": return "String";
-			case "bool": return "Boolean";
-			case "date":
-			case "timetz":
-			case "timestamptz": return "DateTime";
-			case "decimal":
-			case "float4":
-			case "float8": return "Decimal";
-			case "bytea": return "Binary";
-			case "null": return "Null";
-			default: return $type;
-		}
-	}
-
-	private static function get_metadata($connection, $model) {		
-		$namespace = "WebApi.ORM.". self::_table_name_to_class_name($connection);
-		
-		$tableName = self::_class_name_to_table_name($model);
-		
-		$model = end(explode("\\", $model));
-		
-		$metadata = array(	"shortName" => $model,
-							"namespace" => $namespace,
-							"autoGeneratedKeyType" => "Identity",
-							"defaultResourceName" => $model,
-							"dataProperties" => []
-						);
-				
-		$sql = 'SELECT column_name AS name, is_nullable AS "isNullable", udt_name AS "dataType", column_default AS "defaultValue", character_maximum_length as "maxLength" FROM information_schema.columns WHERE table_name = \'' . $tableName  ."' ORDER BY ordinal_position";
-		$keySql = 'SELECT column_name FROM information_schema.key_column_usage WHERE table_name = \''  . $tableName  ."'";
-				
-		$db = ORM\ORM::get_db($connection);
-		$result = $db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
-		$keyResult = $db->query($keySql)->fetchAll(PDO::FETCH_ASSOC);
-		
-		
-		$key = $keyResult[0]["column_name"];
-		
-		foreach ($result as $row) {
-			$row["isNullable"] = ($row["isNullable"] == "YES" ? true : false);
-			
-			if($row["defaultValue"] == null) {
-				unset($row["defaultValue"]);
-			}
-			
-			if ($row["name"] == $key) {
-				$row["isPartOfKey"] = true;
-				unset($row["defaultValue"]);
-			}
-			
-			if ($row["maxLength"] == null) {
-				unset($row["maxLength"]);
-			}
-			
-			$row["dataType"] = self::_match_type($row["dataType"]);
-			
-			array_push($metadata["dataProperties"], $row);
-		}			
-
-		$fkeySql = "SELECT
-					tc.table_name, kcu.column_name,
-					ccu.table_name AS foreign_table_name,
-					ccu.column_name AS foreign_column_name,
-					tc.constraint_name
-					FROM
-					information_schema.table_constraints AS tc
-					JOIN information_schema.key_column_usage
-					AS kcu ON tc.constraint_name = kcu.constraint_name
-					JOIN information_schema.constraint_column_usage 
-					AS ccu ON ccu.constraint_name = tc.constraint_name
-					WHERE constraint_type = 'FOREIGN KEY'
-					AND (ccu.table_name = '$tableName' OR tc.table_name = '$tableName');";
-		
-		$fkeyResult = $db->query($fkeySql)->fetchAll(PDO::FETCH_ASSOC);
-
-		if(sizeof($fkeyResult) > 0) {
-			
-			$metadata["navigationProperties"] = [];
-
-			foreach ($fkeyResult as $row) {
-				$nav = [];
-				
-				if($row["table_name"] != $tableName) {
-					$nav["name"] = $row["table_name"];
-					$nav["entityTypeName"] = self::_table_name_to_class_name($row["table_name"]).":#" . $namespace;
-					$nav["isScalar"] = true;
-					$nav["associationName"] = $row["constraint_name"];
-					$nav["foreignKeyNames"] = [$row["foreign_column_name"]];
-					
-				} else {
-					$nav["name"] = $row["foreign_table_name"];
-					$nav["entityTypeName"] = self::_table_name_to_class_name($row["foreign_table_name"]).":#" . $namespace;
-					$nav["isScalar"] = false;						
-					$nav["associationName"] = $row["constraint_name"];
-					$nav["invForeignKeyNames"] = [$row["column_name"]];
-				}
-				array_push($metadata["navigationProperties"], $nav);
-			}				
-		}
-		return $metadata;
-	}
-
 
 	public static function save_changes($connection, $data) {
 		
@@ -269,11 +114,12 @@ class WebApiAdapter {
 	}
 
 
-	public static function data($connection, $model, $vars) {		
-		$model = "WebApi\ORM\\" . self::_table_name_to_class_name($connection) . "\\" . $model;
+	public static function get_data($connection, $model, $vars) {		
+		$model_name = "WebApi\ORM\\".self::_table_name_to_class_name($connection)."\\{$model}";
+		$data = ORM\Model::factory($model_name, $connection);
 
-		$data = ORM\Model::factory($model, $connection);
-		// $select
+		$data = isset($vars['$select']) ? self::select($vars['$select'], $data) : $data;
+
 		
 		if(isset($vars['$filter'])) {
 			$filter = $vars['$filter'];
@@ -284,42 +130,54 @@ class WebApiAdapter {
 				echo $e;
 			}
 		}
-		
+
 		$data = isset($vars['$top']) ? self::top($vars['$top'], $data) : $data;
 		$data = isset($vars['$skip']) ? self::skip($vars['$skip'], $data) : $data;
 		$data = isset($vars['$orderby']) ? self::orderby($vars['$orderby'], $data) : $data;
+		$data = isset($vars['$expand']) ? self::orderby($vars['$expand'], $data) : $data;
 		
 		$data = $data->find_many();
-		//echo "\n\n".$filter."\n" . ORM\ORM::get_last_query($connection) . "\n\n";
+
+		
+		
 		return $data->as_json();
 	}
 
 	private static function condition($condition) {
 		switch ($condition)
 		{
-			case "T_GT": return ">";
-			case "T_LT": return "<";
-			case "T_EQ": return "=";
-			case "T_GE": return ">=";
-			case "T_LE": return "<=";
-			case "T_NE": return "!=";
+			case T_GT: return ">";
+			case T_LT: return "<";
+			case T_EQ: return "=";
+			case T_GE: return ">=";
+			case T_LE: return "<=";
+			case T_NE: return "!=";
 		}
 	}
 	
+	private static function select($select, $data) {
+		foreach(str_getcsv($select) as $column_name) {
+			$data = $data->select($column_name);
+		}
+		echo $data->id();
+		$data = ($data->get("_id_column")) ? $data->select($data->get("_id_column")) : $data;
+		return $data;
+	}
+
 	private static function filter($query, $data) {
 
 		$token = $query[0]["token"];
 			
 		switch ($token)
 		{
-			case "T_COLUMN": return self::filter_column($query, $data);
-			case "T_BLOCK": return self::filter_block($query, $data);
-			case "T_LENGTH": return self::filter_length($query, $data);
-			case "T_SUBSTRING_OF": return self::filter_substring_of($query, $data);
-			case "T_STARTS_WITH": return self::filter_starts_with($query, $data);
-			case "T_NOT": return self::filter_not($query, $data);
-			//case "T_TO_UPPER": return self::filter_function("T_TO_UPPER",$query, $data);
-			//case "T_SUBSTRING": return self::filter_function("T_SUBSTRING",$query, $data);
+			case T_COLUMN: return self::filter_column($query, $data);
+			case T_BLOCK: return self::filter_block($query, $data);
+			case T_LENGTH: return self::filter_length($query, $data);
+			case T_SUBSTRING_OF: return self::filter_substring_of($query, $data);
+			case T_STARTS_WITH: return self::filter_starts_with($query, $data);
+			case T_NOT: return self::filter_not($query, $data);
+			//case T_TO_UPPER: return self::filter_function(T_TO_UPPER,$query, $data);
+			//case T_SUBSTRING: return self::filter_function(T_SUBSTRING,$query, $data);
 			default: return $data;	
 		}
 		
@@ -333,12 +191,12 @@ class WebApiAdapter {
 
 		switch ($condition)
 		{
-			case "T_GT": return $data->where_gt($column_name, $value);
-			case "T_LT": return $data->where_lt($column_name, $value);
-			case "T_EQ": return $data->where_equal($column_name, $value);
-			case "T_GE": return $data->where_gte($column_name, $value);
-			case "T_LE": return $data->where_lte($column_name, $value);
-			case "T_NE": return $data->where_not_equal($column_name, $value);
+			case T_GT: return $data->where_gt($column_name, $value);
+			case T_LT: return $data->where_lt($column_name, $value);
+			case T_EQ: return $data->where_equal($column_name, $value);
+			case T_GE: return $data->where_gte($column_name, $value);
+			case T_LE: return $data->where_lte($column_name, $value);
+			case T_NE: return $data->where_not_equal($column_name, $value);
 			default : return $data;
 		}
 
@@ -351,11 +209,11 @@ class WebApiAdapter {
 		$left = $query[0]["match"];
 		$right = $query[2]["match"];
 		switch ($token) {
-			case "T_COLUMN" :
-				if($operator == "T_AND") {
+			case T_COLUMN :
+				if($operator == T_AND) {
 					$data = self::filter($left, $data);
 					$data = self::filter($right, $data);
-				} elseif ($operator == "T_OR") {
+				} elseif ($operator == T_OR) {
 					$data = $data->where_raw(
 						'("'.$left[0]['match'].'"'.self::condition($left[1]['token'])."'".$left[2]['match']."'".
 						" OR ".
@@ -363,18 +221,18 @@ class WebApiAdapter {
 					);
 				}
 				return $data;
-			case "T_BLOCK" :
+			case T_BLOCK :
 				$operator = $query[1]["token"];
 				if(!is_array($operator)) {
-					if($operator == "T_AND" || $operator == "T_OR") {
+					if($operator == T_AND || $operator == T_OR) {
 						$data = self::filter($left, $data);
 						$data = self::filter($right, $data);
 					}
 				} else {
 					
 				}
-			case "T_STARTS_WITH" :
-				if($operator == "T_AND") {
+			case T_STARTS_WITH :
+				if($operator == T_AND) {
 					$data = self::filter($left, $data);
 					$data = self::filter($right, $data);
 					return $data;
@@ -396,7 +254,7 @@ class WebApiAdapter {
 		
 		$function = "upper(";
 		
-		if($query[1]["token"][0]["token"] != "T_COLUMN") {
+		if($query[1]["token"][0]["token"] != T_COLUMN) {
 			$function .= self::filter($query[1]["match"]).")";
 		} else {
 			$function .= '"'.$query[1]["match"][0]["match"].")";
@@ -408,13 +266,11 @@ class WebApiAdapter {
 	}
 
 	private static function filter_function($function, $query, $data) {
-		
 		switch ($function) {
-			case "T_TO_UPPER":
+			case T_TO_UPPER:
 				$string = self::filter_to_upper($query);
 				break;
 		}
-		
 		return $data->where_raw($string);
 	}
 
@@ -422,14 +278,14 @@ class WebApiAdapter {
 		$column_name = $query[1]["match"][0]["match"][1]["match"];
 		$value = '%' . $query[1]["match"][0]["match"][0]["match"] . '%';
 		$condition = $query[3]["token"];		
-		return ($condition == "T_TRUE") ? $data->where_like($column_name, $value) : $data->where_not_like($column_name, $value);
+		return ($condition == T_TRUE) ? $data->where_like($column_name, $value) : $data->where_not_like($column_name, $value);
 	}
 
 	private static function filter_starts_with($query, $data) {
 		$column_name = $query[1]["match"][0]["match"];
 		$value = $query[1]["match"][1]["match"][0]["match"] . '%';
 		$condition = $query[3]["token"];		
-		return ($condition == "T_TRUE") ? $data->where_like($column_name, $value) : $data->where_not_like($column_name, $value);
+		return ($condition == T_TRUE) ? $data->where_like($column_name, $value) : $data->where_not_like($column_name, $value);
 	}
 
 	private static function filter_not($query, $data) {
@@ -468,6 +324,12 @@ class WebApiAdapter {
 
 	private static function skip($skip, $data) {
 		return $data->offset(intval($skip));
+	}
+
+	private static function expand($expand, $data) {
+		
+		
+		//return $data->offset(intval($skip));
 	}
 
 }
