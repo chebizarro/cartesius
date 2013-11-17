@@ -25,6 +25,7 @@ class WebApiAdapter {
 			ORM\ORM::configure($value, null, $key);
 			ORM\ORM::configure('return_result_sets', true, $key);
 			ORM\ORM::configure('logging', true, $key);
+			ORM\ORM::configure('caching', true, $key);
 			
 			self::load_metadata($key);
 			self::load_models($key);
@@ -334,23 +335,26 @@ class WebApiAdapter {
 		return $data->offset(intval($skip));
 	}
 
-
 	private static function expand($expand, $data) {
-		$to_expand = str_getcsv($expand);
 		$stack = [];
+		$to_expand = [];
 		
-		//$starttime = microtime(true);
-		//echo $starttime. "\n";
+		$expand = str_getcsv($expand);
+		foreach($expand as $expander) {
+			$strpos = (strpos($expander, ".") > 0) ? strpos($expander, ".") : strpos($expander, "/");
+			if($strpos>0) {
+				$to_expand[] = self::_class_name_to_table_name(substr($expander, 0, $strpos));
+				$to_expand[] = self::_class_name_to_table_name(substr($expander, $strpos+1));
+			} else {
+				$to_expand[] = self::_class_name_to_table_name($expander);
+			}
+		}
+
 		$result = self::recurse_expand($data, $to_expand, $stack);
-		//$endtime = microtime(true);
-		//echo $endtime. "\n";
-		//$totaltime = $endtime-$starttime;
-		//echo "Time: {$totaltime}\n";
 		return $result;
 	}
 	
 	private static function recurse_expand($object, $expand, &$stack) {
-
 		$ref = 0;
 		$result = [];
 				
@@ -366,29 +370,35 @@ class WebApiAdapter {
 				}
 			}
 			
-			if($ref == 0) {
-				$stack[] = $cereal;
+			if($ref === 0) {
+				$stack[] = $cereal;				
 				$object_name = get_class($row);
 				$row_array["\$id"] = count($stack);
 				$row_array["\$type"] = str_replace("\\",".",$object_name);
+				$object_name = self::_class_name_to_table_name($object_name);
 
+				(in_array($object_name, $expand)) ? null : $expand[] = $object_name; 
+								
 				if($expand) {
-					foreach($expand as $expander) {			
-						$expanded_name = self::_class_name_to_table_name($expander);
-						if(method_exists($row, $expanded_name)) {					
-							$expanded = $row->{$expanded_name}()->find_many();							
-							$row_array[$expanded_name] = self::recurse_expand($expanded, array($object_name), $stack);
+					foreach($expand as $expander) {
+						
+						$expander = self::_class_name_to_table_name($expander);
+
+						if(method_exists($row, $expander)) {
+							$expanded = $row->{$expander}()->find_many();
+							if($expanded->count() > 0) {
+								$row_array[$expander] = self::recurse_expand($expanded, $expand, $stack);
+							}
 						}
-						$result[] = $row_array;
 					}
-				} else {
-					$result[] = $row_array;
 				}
+				$result[] = $row_array;
+				
 			} else {
 				$result[] = array("\$ref" => $ref);
 			}
 			$ref = 0;
-		}		
+		}
 		return $result;
 	}
 

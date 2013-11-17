@@ -170,9 +170,7 @@
          * responsible for returning instances of the correct class when
          * its find_one or find_many methods are called.
          */
-         
-         public $ref;
-         
+                  
         public static function factory($class_name, $connection_name = null) {
             $class_name = self::$auto_prefix_models . $class_name;
             $table_name = self::_get_table_name($class_name);
