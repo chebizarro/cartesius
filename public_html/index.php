@@ -290,6 +290,26 @@ $app->get('/filtertest', function() use ($app) {
 	echo \WebApi\WebApiAdapter::get_data('northwind','products',array('$filter' => "startswith(ProductName,'C') eq true"));
 	echo \WebApi\WebApiAdapter::get_data('northwind','orders',array('$filter' => "not (Freight gt 100)"));
 	echo \WebApi\WebApiAdapter::get_data('northwind','customers',array('$filter' => "(startswith(CompanyName,'S')eq true) and (substringof('er',City) eq true)", '$select' => "CompanyName,City"));
+	//echo \WebApi\WebApiAdapter::get_data('northwind','products',array('$expand' => "Category,Supplier"));
+	echo \WebApi\WebApiAdapter::get_data('cartesius','account',array('$expand' => "ProjectAuthor"));
+});
+
+$app->get('/expandtest', function() use ($app) {
+	$app->response->headers->set('Content-Type', 'application/javascript');
+	$starttime = microtime(true);
+	echo $starttime. "\n";
+	
+	//echo \WebApi\WebApiAdapter::get_data('cartesius','account',array('$expand' => "ProjectAuthor"));
+	//echo \WebApi\WebApiAdapter::get_data('cartesius','project',array('$expand' => "ProjectAuthor"));
+	$response = \WebApi\WebApiAdapter::get_data('northwind','orders',array('$expand' => "Customers,Shippers"));
+	//echo \WebApi\WebApiAdapter::get_data('northwind','products',array('$orderby' => 'ProductName','$skip'=>10,'$expand'=>'Categories'));
+	
+	$endtime = microtime(true);
+	echo $endtime. "\n";
+	$totaltime = $endtime-$starttime;
+	echo "Time: {$totaltime}\n";
+	
+	echo $response;
 
 });
 

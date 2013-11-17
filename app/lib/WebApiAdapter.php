@@ -56,6 +56,15 @@ class WebApiAdapter {
 		}	
 	}
 	
+	protected static function _class_name_to_table_name($class_name) {
+		$class_name = end(explode("\\", $class_name));
+		return strtolower(preg_replace(
+			array('/\\\\/', '/(?<=[a-z])([A-Z])/', '/__/'),
+			array('_', '_$1', '_'),
+			ltrim($class_name, '\\')
+		));
+	}
+	
 	protected static function _table_name_to_class_name($table_name) {
 		return preg_replace('/(?:^|_)(.?)/e',"strtoupper('$1')",$table_name);
 	}
@@ -114,8 +123,8 @@ class WebApiAdapter {
 	}
 
 
-	public static function get_data($connection, $model, $vars) {		
-		$model_name = "WebApi\ORM\\".self::_table_name_to_class_name($connection)."\\{$model}";
+	public static function get_data($connection, $model, $vars) {
+		$model_name = "WebApi\ORM\\".self::_table_name_to_class_name($connection)."\\".self::_table_name_to_class_name($model);
 		$data = ORM\Model::factory($model_name, $connection);
 
 		$data = isset($vars['$select']) ? self::select($vars['$select'], $data) : $data;
@@ -134,13 +143,13 @@ class WebApiAdapter {
 		$data = isset($vars['$top']) ? self::top($vars['$top'], $data) : $data;
 		$data = isset($vars['$skip']) ? self::skip($vars['$skip'], $data) : $data;
 		$data = isset($vars['$orderby']) ? self::orderby($vars['$orderby'], $data) : $data;
-		$data = isset($vars['$expand']) ? self::orderby($vars['$expand'], $data) : $data;
 		
 		$data = $data->find_many();
 
+		$data = isset($vars['$expand']) ? json_encode(self::expand($vars['$expand'], $data), JSON_PRETTY_PRINT) : $data->as_json();
 		
-		
-		return $data->as_json();
+		return $data;
+		//return $data->as_json();
 	}
 
 	private static function condition($condition) {
@@ -159,8 +168,7 @@ class WebApiAdapter {
 		foreach(str_getcsv($select) as $column_name) {
 			$data = $data->select($column_name);
 		}
-		echo $data->id();
-		$data = ($data->get("_id_column")) ? $data->select($data->get("_id_column")) : $data;
+		//$data = ($data->get("_id_column")) ? $data->select($data->get("_id_column")) : $data;
 		return $data;
 	}
 
@@ -326,10 +334,62 @@ class WebApiAdapter {
 		return $data->offset(intval($skip));
 	}
 
+
 	private static function expand($expand, $data) {
+		$to_expand = str_getcsv($expand);
+		$stack = [];
 		
-		
-		//return $data->offset(intval($skip));
+		//$starttime = microtime(true);
+		//echo $starttime. "\n";
+		$result = self::recurse_expand($data, $to_expand, $stack);
+		//$endtime = microtime(true);
+		//echo $endtime. "\n";
+		//$totaltime = $endtime-$starttime;
+		//echo "Time: {$totaltime}\n";
+		return $result;
+	}
+	
+	private static function recurse_expand($object, $expand, &$stack) {
+
+		$ref = 0;
+		$result = [];
+				
+		foreach ($object as $row) {
+
+			$row_array = $row->as_array();
+			$cereal = serialize($row_array);
+			
+			foreach($stack as $key => $val) {
+				if($val === $cereal) {
+					$ref = $key+1;
+					break;
+				}
+			}
+			
+			if($ref == 0) {
+				$stack[] = $cereal;
+				$object_name = get_class($row);
+				$row_array["\$id"] = count($stack);
+				$row_array["\$type"] = str_replace("\\",".",$object_name);
+
+				if($expand) {
+					foreach($expand as $expander) {			
+						$expanded_name = self::_class_name_to_table_name($expander);
+						if(method_exists($row, $expanded_name)) {					
+							$expanded = $row->{$expanded_name}()->find_many();							
+							$row_array[$expanded_name] = self::recurse_expand($expanded, array($object_name), $stack);
+						}
+						$result[] = $row_array;
+					}
+				} else {
+					$result[] = $row_array;
+				}
+			} else {
+				$result[] = array("\$ref" => $ref);
+			}
+			$ref = 0;
+		}		
+		return $result;
 	}
 
 }

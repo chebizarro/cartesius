@@ -28,6 +28,7 @@ const T_INT_VALUE		= 23;
 const T_STR_VALUE		= 24;
 const T_DATETIME_VALUE	= 25;
 const T_PARAM			= 26;
+const T_GUID_VALUE		= 27;
 
 class QueryLexer {
 
@@ -59,6 +60,7 @@ class QueryLexer {
 		"/( [0-9]+)/" => T_INT_VALUE,
 		"/( '[a-zA-Z0-9-('*)]+')$/" => T_STR_VALUE,
 		"/( datetime'[A-Z0-9:.-]+')/" => T_DATETIME_VALUE,
+		"/( guid'[a-z0-9-]+')/" => T_GUID_VALUE,
 		"/(^[0-9]+m)/" => T_REAL_VALUE,
 		"/(^[0-9]+)/" => T_INT_VALUE,
 		"/(^'[a-zA-Z0-9-('*)]+')$/" => T_STR_VALUE,
@@ -84,6 +86,9 @@ class QueryLexer {
 					break;
 				case T_DATETIME_VALUE:
 					$result["match"] = preg_replace("/ datetime'([A-Z0-9:.-]+)'/", '${1}', $result['match']);
+					break;
+				case T_GUID_VALUE:
+					$result["match"] = preg_replace("/ guid'([a-z0-9-]+)'/", '${1}', $result['match']);
 					break;
 				case T_STR_VALUE:
 					$result["match"] = trim(preg_replace("/'([a-zA-Z0-9':.-]+)'/", '${1}', $result['match']));

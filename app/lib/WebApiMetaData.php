@@ -127,17 +127,21 @@ class WebApiStructuralType {
 			foreach ($properties as $row) {
 				$nav = [];
 				
-				if($row["table_name"] != $this->table_name) {
-					$nav["name"] = $row["table_name"];
-					$nav["entityTypeName"] = $this->_underscore_to_pascal_case($row["table_name"]).":#" . $this->namespace;
-					$nav["isScalar"] = true;
-					$nav["associationName"] = $row["constraint_name"];
-					$nav["foreignKeyNames"] = [$row["foreign_column_name"]];
-					
-				} else {
+				if($row["table_name"] == $this->table_name) {
 					$nav["name"] = $row["foreign_table_name"];
 					$nav["entityTypeName"] = $this->_underscore_to_pascal_case($row["foreign_table_name"]).":#" . $this->namespace;
-					$nav["isScalar"] = false;						
+					$nav["isScalar"] = false;
+					$nav["associationName"] = $row["constraint_name"];
+					if($row["column_name"] != $this->primary_key) { 
+						$nav["foreignKeyNames"] = [$row["column_name"],$row["foreign_column_name"]];
+					} else {
+						$nav["foreignKeyNames"] = [$row["foreign_column_name"]];
+					}
+					
+				} else {
+					$nav["name"] = $row["table_name"];
+					$nav["entityTypeName"] = $this->_underscore_to_pascal_case($row["table_name"]).":#" . $this->namespace;
+					$nav["isScalar"] = true;						
 					$nav["associationName"] = $row["constraint_name"];
 					$nav["invForeignKeyNames"] = [$row["column_name"]];
 				}
@@ -179,8 +183,10 @@ class WebApiStructuralType {
 	public function get_model() {
 		$model = "<?php\n\nnamespace WebApi\ORM\\{$this->dbnamespace};\n\nclass {$this->shortName} extends \WebApi\ORM\Model\n{\n";
 		if($this->primary_key) {
-			$model .= ($this->primary_key != "id") ? "\n\tpublic static \$_id_column = '{$this->primary_key}';\n" : "\n";
+			$model .= ($this->primary_key != "id") ? "\tpublic static \$_id_column = '{$this->primary_key}';\n" : "\n";
 		}
+		
+		$model .= "\tpublic static \$_connection_name = '{$this->connection}';\n";
 		
 		if(property_exists($this,"navigationProperties")) {
 			foreach($this->navigationProperties as $nav_property) {
@@ -188,9 +194,10 @@ class WebApiStructuralType {
 				$model .= "\n\tpublic function {$nav_property['name']}() {\n";
 				$model .= "\t\treturn \$this->";
 				if($nav_property["isScalar"]) {
-					$model .=  "belongs_to('{$foreign_table}');\n";
+					$model .=  "has_many('WebApi\ORM\\{$this->dbnamespace}\\{$foreign_table}', '{$nav_property['invForeignKeyNames'][0]}');\n";
 				} else {
-					$model .=  "has_many('{$foreign_table}');\n";
+					$fkname = (isset($nav_property['foreignKeyNames'][1])) ? ",'{$nav_property['foreignKeyNames'][1]}'":"";
+					$model .=  "belongs_to('WebApi\ORM\\{$this->dbnamespace}\\{$foreign_table}','{$nav_property['foreignKeyNames'][0]}'{$fkname});\n";
 				}
 				$model .= "\t}\n";
 			}

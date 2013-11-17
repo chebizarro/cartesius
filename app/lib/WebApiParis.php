@@ -147,11 +147,7 @@
         public function create($data=null) {
             return $this->_create_model_instance(parent::create($data));
         }
-        
-        
-        public function metadata($id=null) {
-            return $this->_create_model_instance(parent::metadata());
-        }
+         
 
     }
 
@@ -164,9 +160,7 @@
      *
      */
     class Model extends \Model {
-		
-		protected $showmetadata = true;
-		
+				
         /**
          * Factory method used to acquire instances of the given class.
          * The class name should be supplied as a string, and the class
@@ -176,6 +170,9 @@
          * responsible for returning instances of the correct class when
          * its find_one or find_many methods are called.
          */
+         
+         public $ref;
+         
         public static function factory($class_name, $connection_name = null) {
             $class_name = self::$auto_prefix_models . $class_name;
             $table_name = self::_get_table_name($class_name);
@@ -193,6 +190,50 @@
             return $wrapper;
         }
 		
+		        /**
+         * Internal method to construct the queries for both the has_one and
+         * has_many methods. These two types of association are identical; the
+         * only difference is whether find_one or find_many is used to complete
+         * the method chain.
+         */
+        protected function _has_one_or_many($associated_class_name, $foreign_key_name=null, $foreign_key_name_in_current_models_table=null, $connection_name=null) {
+            $base_table_name = self::_get_table_name(get_class($this));
+            $foreign_key_name = self::_build_foreign_key_name($foreign_key_name, $base_table_name);
+            
+            $where_value = ''; //Value of foreign_table.{$foreign_key_name} we're 
+                               //looking for. Where foreign_table is the actual 
+                               //database table in the associated model.
+            
+            if(is_null($foreign_key_name_in_current_models_table)) {
+                //Match foreign_table.{$foreign_key_name} with the value of 
+                //{$this->_table}.{$this->id()}
+                $where_value = $this->id(); 
+            } else {
+                //Match foreign_table.{$foreign_key_name} with the value of 
+                //{$this->_table}.{$foreign_key_name_in_current_models_table}
+                $where_value = $this->$foreign_key_name_in_current_models_table;
+            }
+            
+            return self::factory($associated_class_name, $connection_name)->where($foreign_key_name, $where_value);
+        }
+
+        /**
+         * Helper method to manage one-to-one relations where the foreign
+         * key is on the associated table.
+         */
+        protected function has_one($associated_class_name, $foreign_key_name=null, $foreign_key_name_in_current_models_table=null, $connection_name=null) {
+            return $this->_has_one_or_many($associated_class_name, $foreign_key_name, $foreign_key_name_in_current_models_table, $connection_name);
+        }
+
+        /**
+         * Helper method to manage one-to-many relations where the foreign
+         * key is on the associated table.
+         */
+        protected function has_many($associated_class_name, $foreign_key_name=null, $foreign_key_name_in_current_models_table=null, $connection_name=null) {
+            return $this->_has_one_or_many($associated_class_name, $foreign_key_name, $foreign_key_name_in_current_models_table, $connection_name);
+        }
+		
+		
 		 protected static function _get_table_name($class_name) {
             $specified_table_name = self::_get_static_property($class_name, '_table');
             if (is_null($specified_table_name)) {
@@ -200,6 +241,31 @@
             }
             return $specified_table_name;
         }
+        
+                /**
+         * Helper method to manage one-to-one and one-to-many relations where
+         * the foreign key is on the base table.
+         */
+        protected function belongs_to($associated_class_name, $foreign_key_name=null, $foreign_key_name_in_associated_models_table=null, $connection_name=null) {
+            $associated_table_name = self::_get_table_name(self::$auto_prefix_models . $associated_class_name);
+            $foreign_key_name = self::_build_foreign_key_name($foreign_key_name, $associated_table_name);
+            $associated_object_id = $this->$foreign_key_name;
+            
+            $desired_record = null;
+            
+            if( is_null($foreign_key_name_in_associated_models_table) ) {
+                //"{$associated_table_name}.primary_key = {$associated_object_id}"
+                //NOTE: primary_key is a placeholder for the actual primary key column's name
+                //in $associated_table_name
+                $desired_record = self::factory($associated_class_name, $connection_name)->where_id_is($associated_object_id);
+            } else {
+                //"{$associated_table_name}.{$foreign_key_name_in_associated_models_table} = {$associated_object_id}"
+                $desired_record = self::factory($associated_class_name, $connection_name)->where($foreign_key_name_in_associated_models_table, $associated_object_id);
+            }
+            
+            return $desired_record;
+        }
+        
 		
         public function as_json() {
             $args = func_get_args();
