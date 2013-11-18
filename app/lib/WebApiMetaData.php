@@ -218,6 +218,16 @@ class WebApiStructuralType {
 		}
 		return null;
 	}
+
+	public function get_data_property($property) {
+		foreach ($this->dataProperties as $navproperty) {
+			if ($navproperty["name"] == $property) {
+				return $navproperty;
+			}
+		}
+		return null;
+	}
+
 	
 	public function get_primary_key() {
 		return $this->primary_key;

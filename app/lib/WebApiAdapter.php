@@ -135,7 +135,7 @@ class WebApiAdapter {
 
 		$data = $data->table_alias('p1');
 
-		$data = isset($vars['$select']) ? self::select($vars['$select'], $data) : $data;
+		$data = isset($vars['$select']) ? self::select($vars['$select'], $data) : $data->select('p1.*');
 		
 		if(isset($vars['$filter'])) {
 			$filter = $vars['$filter'];
@@ -161,11 +161,30 @@ class WebApiAdapter {
 		return $data;
 	}
 	
+	
+	private static function check_type($column, $struct_type) {
+		$type = $struct_type->get_data_property($column);
+		return ($type) ? $type["dataType"] : null;
+	} 
+	
 	private static function select($select, $data) {
-		foreach(str_getcsv($select) as $column_name) {
-			$data = $data->select($column_name);
-		}
-		//$data = ($data->get("_id_column")) ? $data->select($data->get("_id_column")) : $data;
+		$is_key = 0;
+		$struct_type = self::_get_structural_type($data);			
+		$columns = str_getcsv($select);
+		$pkey = $struct_type->get_primary_key();
+				
+		foreach($columns as $column_name) {
+			$column_name = self::filter_join($column_name, $data);
+			
+			if (self::check_type($column_name, $struct_type) == "Binary") {
+				$data = $data->select_expr("encode(\"{$column_name}\", 'escape')", $column_name);
+			} else {
+				$data = $data->select($column_name);
+			}
+			
+			$is_key = ($column_name == $pkey) ? 1 : 0;
+		}		
+		$data = ($is_key == 0) ? $data->select($pkey) : $data;
 		return $data;
 	}
 
@@ -307,8 +326,7 @@ class WebApiAdapter {
 					$pkey = $nav_property["foreignKeyNames"][1];
 				}
 				$column = $p.".".$column;
-				$data = $data->select('p1.*')
-								->join($jointable , array("{$p}.{$fcolumn}", "=", "p1.{$pkey}"), $p);
+				$data = $data->join($jointable , array("{$p}.{$fcolumn}", "=", "p1.{$pkey}"), $p);
 			} else {
 				return null;
 			}
