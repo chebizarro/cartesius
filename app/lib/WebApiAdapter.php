@@ -4,7 +4,6 @@ namespace WebApi;
 
 use \PDO;
 
-
 class WebApiAdapter {
 
 	protected static $connections;
@@ -125,11 +124,10 @@ class WebApiAdapter {
 
 
 	public static function get_data($connection, $model, $vars) {
-		$model_name = "WebApi\ORM\\".self::_table_name_to_class_name($connection)."\\".self::_table_name_to_class_name($model);
+		$model_name = __NAMESPACE__."\ORM\\".self::_table_name_to_class_name($connection)."\\".self::_table_name_to_class_name($model);
 		$data = ORM\Model::factory($model_name, $connection);
 
 		$data = isset($vars['$select']) ? self::select($vars['$select'], $data) : $data;
-
 		
 		if(isset($vars['$filter'])) {
 			$filter = $vars['$filter'];
@@ -150,19 +148,6 @@ class WebApiAdapter {
 		$data = isset($vars['$expand']) ? json_encode(self::expand($vars['$expand'], $data), JSON_PRETTY_PRINT) : $data->as_json();
 		
 		return $data;
-		//return $data->as_json();
-	}
-
-	private static function condition($condition) {
-		switch ($condition)
-		{
-			case T_GT: return ">";
-			case T_LT: return "<";
-			case T_EQ: return "=";
-			case T_GE: return ">=";
-			case T_LE: return "<=";
-			case T_NE: return "!=";
-		}
 	}
 	
 	private static function select($select, $data) {
@@ -174,9 +159,7 @@ class WebApiAdapter {
 	}
 
 	private static function filter($query, $data) {
-
 		$token = $query[0]["token"];
-			
 		switch ($token)
 		{
 			case T_COLUMN: return self::filter_column($query, $data);
@@ -189,15 +172,12 @@ class WebApiAdapter {
 			//case T_SUBSTRING: return self::filter_function(T_SUBSTRING,$query, $data);
 			default: return $data;	
 		}
-		
 	}
 
 	private static function filter_column($query, $data) {
-		
 		$column_name = $query[0]["match"];
 		$condition = $query[1]["token"];
 		$value = $query[2]["match"];
-
 		switch ($condition)
 		{
 			case T_GT: return $data->where_gt($column_name, $value);
@@ -208,7 +188,6 @@ class WebApiAdapter {
 			case T_NE: return $data->where_not_equal($column_name, $value);
 			default : return $data;
 		}
-
 	}
 
 	private static function filter_block($query, $data) {
@@ -224,9 +203,9 @@ class WebApiAdapter {
 					$data = self::filter($right, $data);
 				} elseif ($operator == T_OR) {
 					$data = $data->where_raw(
-						'("'.$left[0]['match'].'"'.self::condition($left[1]['token'])."'".$left[2]['match']."'".
+						'("'.$left[0]['match'].'"'.$left[1]['match']."'".$left[2]['match']."'".
 						" OR ".
-						'"'.$right[0]['match'].'"'.self::condition($right[1]['token'])."'".$right[2]['match']."')"
+						'"'.$right[0]['match'].'"'.$right[1]['match']."'".$right[2]['match']."')"
 					);
 				}
 				return $data;
@@ -240,21 +219,16 @@ class WebApiAdapter {
 				} else {
 					
 				}
+				return $data;
 			case T_STARTS_WITH :
 				if($operator == T_AND) {
 					$data = self::filter($left, $data);
 					$data = self::filter($right, $data);
 					return $data;
 				}
-
 		}
 		
 		return $data;
-	}
-
-	private static function filter_length($query, $data) {
-		$column_name = $query[1]["match"][0]["match"];
-		return $data->where_raw('length("'.$column_name.'")'.self::condition($query[2]["token"]).trim($query[3]["match"]));
 	}
 
 	private static function filter_to_upper($query) {
@@ -269,7 +243,7 @@ class WebApiAdapter {
 			$function .= '"'.$query[1]["match"][0]["match"].")";
 		}
 		
-		$function .= self::condition($query[2]["token"]) . $query[3]["match"];
+		$function .= $query[2]["match"] . $query[3]["match"];
 		
 		return $function;
 	}
@@ -281,6 +255,11 @@ class WebApiAdapter {
 				break;
 		}
 		return $data->where_raw($string);
+	}
+
+	private static function filter_length($query, $data) {
+		$column_name = $query[1]["match"][0]["match"];
+		return $data->where_raw('length("'.$column_name.'")'.$query[2]["match"].trim($query[3]["match"]));
 	}
 
 	private static function filter_substring_of($query, $data) {
@@ -299,11 +278,10 @@ class WebApiAdapter {
 
 	private static function filter_not($query, $data) {
 		$column_name = '"'.$query[1]["match"][0]["match"].'"';
-		$condition = self::condition($query[1]["match"][1]["token"]);		
+		$condition = $query[1]["match"][1]["match"];		
 		$value = "'".$query[1]["match"][2]["match"]."'";
 		return $data->where_raw('NOT ('.$column_name.$condition.$value.')');
 	}
-
 
 	private static function orderby($orderby, $data) {
 		if(strpos($orderby, ",")){
@@ -337,8 +315,6 @@ class WebApiAdapter {
 
 	private static function expand($expand, $data) {
 		$stack = [];
-		$to_expand = [];
-		
 		$expand = str_getcsv($expand);
 		foreach($expand as $expander) {
 			$strpos = (strpos($expander, ".") > 0) ? strpos($expander, ".") : strpos($expander, "/");
@@ -349,7 +325,6 @@ class WebApiAdapter {
 				$to_expand[] = self::_class_name_to_table_name($expander);
 			}
 		}
-
 		$result = self::recurse_expand($data, $to_expand, $stack);
 		return $result;
 	}
@@ -357,33 +332,24 @@ class WebApiAdapter {
 	private static function recurse_expand($object, $expand, &$stack) {
 		$ref = 0;
 		$result = [];
-				
 		foreach ($object as $row) {
-
 			$row_array = $row->as_array();
 			$cereal = serialize($row_array);
-			
 			foreach($stack as $key => $val) {
 				if($val === $cereal) {
 					$ref = $key+1;
 					break;
 				}
 			}
-			
 			if($ref === 0) {
-				$stack[] = $cereal;				
+				$stack[] = $cereal;
 				$object_name = get_class($row);
-				$row_array["\$id"] = count($stack);
-				$row_array["\$type"] = str_replace("\\",".",$object_name);
+				$row_array = array_merge(array('$id'=>count($stack), '$type'=>str_replace("\\",".",$object_name)),$row_array);
 				$object_name = self::_class_name_to_table_name($object_name);
-
 				(in_array($object_name, $expand)) ? null : $expand[] = $object_name; 
-								
 				if($expand) {
 					foreach($expand as $expander) {
-						
 						$expander = self::_class_name_to_table_name($expander);
-
 						if(method_exists($row, $expander)) {
 							$expanded = $row->{$expander}()->find_many();
 							if($expanded->count() > 0) {
@@ -393,7 +359,6 @@ class WebApiAdapter {
 					}
 				}
 				$result[] = $row_array;
-				
 			} else {
 				$result[] = array("\$ref" => $ref);
 			}

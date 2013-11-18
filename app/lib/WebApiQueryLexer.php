@@ -111,6 +111,13 @@ class QueryLexer {
 				case T_NULL:
 					$result["match"] = trim($result['match']);
 					break;
+				case T_GT: $result["match"] = ">"; break;
+				case T_LT: $result["match"] = "<"; break;
+				case T_EQ: $result["match"] = "="; break;
+				case T_GE: $result["match"] = ">="; break;
+				case T_LE: $result["match"] = "<="; break;
+				case T_NE: $result["match"] = "!="; break;
+
 			}
 			$tokens[] = $result;
 		}

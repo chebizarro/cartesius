@@ -160,7 +160,7 @@
      *
      */
     class Model extends \Model {
-				
+	
         /**
          * Factory method used to acquire instances of the given class.
          * The class name should be supplied as a string, and the class
@@ -169,7 +169,7 @@
          * which allows a database query to be built. The wrapped ORM object is
          * responsible for returning instances of the correct class when
          * its find_one or find_many methods are called.
-         */
+         */	  
                   
         public static function factory($class_name, $connection_name = null) {
             $class_name = self::$auto_prefix_models . $class_name;
