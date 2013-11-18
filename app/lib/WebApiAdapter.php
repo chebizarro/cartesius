@@ -12,6 +12,8 @@ class WebApiAdapter {
 	protected static $endpoint;
 	protected static $metadata;
 	
+	protected static $joincount = 1;
+	
 	public static function configure($config) {
 		self::$connections = isset($config['connections']) ? $config['connections'] : null;
 		self::$modelpath = isset($config['modelpath']) ? $config['modelpath'] : '/models/';
@@ -55,6 +57,10 @@ class WebApiAdapter {
 			require_once($file_name);
 		}	
 	}
+	
+	protected static function _base_class_name($class_name) {
+		return end(explode("\\", $class_name));
+	} 
 	
 	protected static function _class_name_to_table_name($class_name) {
 		$class_name = end(explode("\\", $class_name));
@@ -127,6 +133,8 @@ class WebApiAdapter {
 		$model_name = __NAMESPACE__."\ORM\\".self::_table_name_to_class_name($connection)."\\".self::_table_name_to_class_name($model);
 		$data = ORM\Model::factory($model_name, $connection);
 
+		$data = $data->table_alias('p1');
+
 		$data = isset($vars['$select']) ? self::select($vars['$select'], $data) : $data;
 		
 		if(isset($vars['$filter'])) {
@@ -144,7 +152,10 @@ class WebApiAdapter {
 		$data = isset($vars['$orderby']) ? self::orderby($vars['$orderby'], $data) : $data;
 		
 		$data = $data->find_many();
-
+		
+		print_r($vars);
+		echo ORM\ORM::get_last_query() . "\n";
+		
 		$data = isset($vars['$expand']) ? json_encode(self::expand($vars['$expand'], $data), JSON_PRETTY_PRINT) : $data->as_json();
 		
 		return $data;
@@ -175,7 +186,7 @@ class WebApiAdapter {
 	}
 
 	private static function filter_column($query, $data) {
-		$column_name = $query[0]["match"];
+		$column_name = self::filter_join($query[0]["match"], $data);
 		$condition = $query[1]["token"];
 		$value = $query[2]["match"];
 		switch ($condition)
@@ -269,8 +280,45 @@ class WebApiAdapter {
 		return ($condition == T_TRUE) ? $data->where_like($column_name, $value) : $data->where_not_like($column_name, $value);
 	}
 
+	private static function _get_structural_type($data) {
+		$base_model = self::_base_class_name($data->get_class_name());
+		$metadata = self::$metadata[$data->get_connection()];
+		return $metadata->get_structural_type($base_model);
+	}
+	
+	
+	private static function filter_join($column, &$data) {
+		$strpos = (strpos($column, ".") > 0) ? strpos($column, ".") : strpos($column, "/");
+
+		if($strpos>0) {
+			$jointable = self::_class_name_to_table_name(substr($column, 0, $strpos));
+			$column = substr($column, $strpos+1);
+			$struct_type = self::_get_structural_type($data);			
+			$nav_property = $struct_type->get_navigation_property($jointable);
+			
+			if($nav_property) {
+				$p = "p" . ++self::$joincount;
+				
+				if($nav_property["isScalar"]) {
+					$fcolumn = $nav_property["invForeignKeyNames"][0];
+					$pkey = $struct_type->get_primary_key();
+				} else {
+					$fcolumn = $nav_property["foreignKeyNames"][0];
+					$pkey = $nav_property["foreignKeyNames"][1];
+				}
+				$column = $p.".".$column;
+				$data = $data->select('p1.*')
+								->join($jointable , array("{$p}.{$fcolumn}", "=", "p1.{$pkey}"), $p);
+			} else {
+				return null;
+			}
+		}
+		
+		return $column;
+	}
+
 	private static function filter_starts_with($query, $data) {
-		$column_name = $query[1]["match"][0]["match"];
+		$column_name = self::filter_join($query[1]["match"][0]["match"], $data);		
 		$value = $query[1]["match"][1]["match"][0]["match"] . '%';
 		$condition = $query[3]["token"];		
 		return ($condition == T_TRUE) ? $data->where_like($column_name, $value) : $data->where_not_like($column_name, $value);
@@ -292,6 +340,7 @@ class WebApiAdapter {
 		} else {
 			if(strpos($orderby, " ")) {
 				$orderbyArray = explode(" ", $orderby);
+				$orderbyArray[0] = self::filter_join($orderbyArray[0], $data);
 				if($orderbyArray[1] == "desc") {
 					$data = $data->order_by_desc($orderbyArray[0]);
 				} else {
@@ -299,6 +348,7 @@ class WebApiAdapter {
 				}
 				return $data;
 			} else {
+				$orderby = self::filter_join($orderby, $data);		
 				$data = $data->order_by_asc($orderby);
 			}
 		}		

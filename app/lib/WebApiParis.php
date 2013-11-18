@@ -70,6 +70,14 @@
             $this->_class_name = $class_name;
         }
 
+		public function get_class_name() {
+			return $this->_class_name;
+		}
+		
+		public function get_connection() {
+			return $this->_connection_name;
+		}
+
         /**
          * Add a custom filter to the method chain specified on the
          * model class. This allows custom queries to be added

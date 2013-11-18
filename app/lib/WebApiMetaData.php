@@ -57,6 +57,10 @@ class WebApiMetaData implements \JsonSerializable {
 		return $this->entity_map[$model_name]->get_model();
 	}
 
+	public function get_structural_type($model_name) {
+		return $this->entity_map[$model_name];
+	}
+
 }
 
 
@@ -204,6 +208,19 @@ class WebApiStructuralType {
 		}
 		$model .= "}\n";
 		return $model;
+	}
+	
+	public function get_navigation_property($property) {
+		foreach ($this->navigationProperties as $navproperty) {
+			if ($navproperty["name"] == $property) {
+				return $navproperty;
+			}
+		}
+		return null;
+	}
+	
+	public function get_primary_key() {
+		return $this->primary_key;
 	}
 
 }
