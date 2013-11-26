@@ -9,7 +9,7 @@ define(['plugins/router', 'durandal/app'], function (router, app) {
 		
 		activate : function () {
 			self = this;
-						
+									
 			self.listProjectsDataSource = function (widget, options) {
 				widget.setDataSource(new kendo.data.extensions.BreezeDataSource({
 					entityManager: app.dataservice,
@@ -21,6 +21,29 @@ define(['plugins/router', 'durandal/app'], function (router, app) {
 					})
 				);
 			};
+			
+			self.editProject = function(e) {
+				alert(e);
+			}
+
+			self.projectGrid = {
+				columns: [
+					{ field: 'title', title: 'Name'},
+					{ command: [{ name: 'edit',
+							click: function(e) {
+								var tr = $(e.target).closest("tr");
+								var data = this.dataItem(tr);
+								router.navigate('#/component/projects/edit?id='+data.id);
+								return false;
+							}
+						}]
+					}
+				],
+				pageable: { pageSize: 10 },
+				sortable: true,
+				data: self.listProjectsDataSource
+			};
+			
                 
 		},
 	

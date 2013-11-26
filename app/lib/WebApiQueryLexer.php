@@ -13,7 +13,7 @@ const T_STARTS_WITH		= 8;
 const T_ENDS_WITH		= 9;
 const T_NOT				= 10;
 const T_BLOCK			= 11;
-const T_COLUMN			= 12;
+const T_RESOURCE		= 12;
 const T_GT				= 13;
 const T_LT				= 14;
 const T_EQ				= 15;
@@ -46,7 +46,7 @@ class QueryLexer {
 		"{(\(([^()]|(?R))*\))}" => T_BLOCK,
 		"{( and )}" => T_AND,
 		"{( or )}" => T_OR,
-		"{(^[a-zA-Z\./]+)}" => T_COLUMN,
+		"{(^[a-zA-Z\./]+)}" => T_RESOURCE,
 		"{( gt)}" => T_GT,
 		"{( lt)}" => T_LT,
 		"{( eq)}" => T_EQ,

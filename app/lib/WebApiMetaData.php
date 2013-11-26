@@ -134,20 +134,20 @@ class WebApiStructuralType {
 				if($row["table_name"] == $this->table_name) {
 					$nav["name"] = $row["foreign_table_name"];
 					$nav["entityTypeName"] = $this->_underscore_to_pascal_case($row["foreign_table_name"]).":#" . $this->namespace;
-					$nav["isScalar"] = false;
+					$nav["isScalar"] = true;
 					$nav["associationName"] = $row["constraint_name"];
-					if($row["column_name"] != $this->primary_key) { 
-						$nav["foreignKeyNames"] = [$row["column_name"],$row["foreign_column_name"]];
-					} else {
-						$nav["foreignKeyNames"] = [$row["foreign_column_name"]];
-					}
+					//if($row["column_name"] != $this->primary_key) { 
+					//	$nav["foreignKeyNames"] = [$row["column_name"],$row["foreign_column_name"]];
+					//} else {
+						$nav["foreignKeyNames"] = [$row["column_name"]];
+					//}
 					
 				} else {
 					$nav["name"] = $row["table_name"];
 					$nav["entityTypeName"] = $this->_underscore_to_pascal_case($row["table_name"]).":#" . $this->namespace;
-					$nav["isScalar"] = true;						
+					$nav["isScalar"] = false;						
 					$nav["associationName"] = $row["constraint_name"];
-					$nav["invForeignKeyNames"] = [$row["column_name"]];
+					$nav["invForeignKeyNames"] = [$row["foreign_column_name"]];
 				}
 				array_push($this->navigationProperties, $nav);
 			}				
@@ -211,9 +211,12 @@ class WebApiStructuralType {
 	}
 	
 	public function get_navigation_property($property) {
-		foreach ($this->navigationProperties as $navproperty) {
-			if ($navproperty["name"] == $property) {
-				return $navproperty;
+		if(isset($this->navigationProperties)) {
+		
+			foreach ($this->navigationProperties as $navproperty) {
+				if ($navproperty["name"] == $property) {
+					return $navproperty;
+				}
 			}
 		}
 		return null;
@@ -228,6 +231,9 @@ class WebApiStructuralType {
 		return null;
 	}
 
+	public function get_data_properties() {
+		return $this->dataProperties;
+	}
 	
 	public function get_primary_key() {
 		return $this->primary_key;

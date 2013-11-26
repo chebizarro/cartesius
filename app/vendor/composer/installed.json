@@ -1,51 +1,5 @@
 [
     {
-        "name": "slim/slim",
-        "version": "2.3.1",
-        "version_normalized": "2.3.1.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/codeguy/Slim.git",
-            "reference": "2e540cc392644b9b5cdcc57e5576db5a92ca2149"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/codeguy/Slim/zipball/2e540cc392644b9b5cdcc57e5576db5a92ca2149",
-            "reference": "2e540cc392644b9b5cdcc57e5576db5a92ca2149",
-            "shasum": ""
-        },
-        "require": {
-            "ext-mcrypt": "*",
-            "php": ">=5.3.0"
-        },
-        "time": "2013-07-20 18:38:05",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "Slim": "."
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Josh Lockhart",
-                "email": "info@joshlockhart.com",
-                "homepage": "http://www.joshlockhart.com/"
-            }
-        ],
-        "description": "Slim Framework, a PHP micro framework",
-        "homepage": "http://github.com/codeguy/Slim",
-        "keywords": [
-            "microframework",
-            "rest",
-            "router"
-        ]
-    },
-    {
         "name": "j4mie/idiorm",
         "version": "v1.4.0",
         "version_normalized": "1.4.0.0",
@@ -228,54 +182,6 @@
         ]
     },
     {
-        "name": "entomb/slim-json-api",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/entomb/slim-json-api.git",
-            "reference": "6f80b47ca656c874ee14e0cac7656c9b012cfb79"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/entomb/slim-json-api/zipball/6f80b47ca656c874ee14e0cac7656c9b012cfb79",
-            "reference": "6f80b47ca656c874ee14e0cac7656c9b012cfb79",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.0"
-        },
-        "time": "2013-09-05 21:38:41",
-        "type": "library",
-        "installation-source": "source",
-        "autoload": {
-            "classmap": [
-                "jsonAPI/"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "GPL 3.0"
-        ],
-        "authors": [
-            {
-                "name": "Jonathan Tavares",
-                "email": "the.entomb@gmail.com",
-                "homepage": "https://github.com/entomb",
-                "role": "Developer"
-            }
-        ],
-        "description": "Slim extension to implement fast JSON API's",
-        "homepage": "https://github.com/entomb/slim-json-api",
-        "keywords": [
-            "api",
-            "json",
-            "middleware",
-            "slim",
-            "view"
-        ]
-    },
-    {
         "name": "slim/extras",
         "version": "2.0.3",
         "version_normalized": "2.0.3.0",
@@ -326,6 +232,100 @@
             "extensions",
             "middleware",
             "templating"
+        ]
+    },
+    {
+        "name": "slim/slim",
+        "version": "2.3.5",
+        "version_normalized": "2.3.5.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/codeguy/Slim.git",
+            "reference": "3dec4f9ee2e9c204a9f334afd72abc174c1b792e"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/codeguy/Slim/zipball/3dec4f9ee2e9c204a9f334afd72abc174c1b792e",
+            "reference": "3dec4f9ee2e9c204a9f334afd72abc174c1b792e",
+            "shasum": ""
+        },
+        "require": {
+            "ext-mcrypt": "*",
+            "php": ">=5.3.0"
+        },
+        "time": "2013-10-31 02:05:09",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Slim": "."
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Josh Lockhart",
+                "email": "info@joshlockhart.com",
+                "homepage": "http://www.joshlockhart.com/"
+            }
+        ],
+        "description": "Slim Framework, a PHP micro framework",
+        "homepage": "http://github.com/codeguy/Slim",
+        "keywords": [
+            "microframework",
+            "rest",
+            "router"
+        ]
+    },
+    {
+        "name": "entomb/slim-json-api",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/entomb/slim-json-api.git",
+            "reference": "ed597a4036d1ee2f1643a8363d3f712ce5cb380f"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/entomb/slim-json-api/zipball/ed597a4036d1ee2f1643a8363d3f712ce5cb380f",
+            "reference": "ed597a4036d1ee2f1643a8363d3f712ce5cb380f",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "time": "2013-11-13 17:19:43",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "classmap": [
+                "jsonAPI/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL 3.0"
+        ],
+        "authors": [
+            {
+                "name": "Jonathan Tavares",
+                "email": "the.entomb@gmail.com",
+                "homepage": "https://github.com/entomb",
+                "role": "Developer"
+            }
+        ],
+        "description": "Slim extension to implement fast JSON API's",
+        "homepage": "https://github.com/entomb/slim-json-api",
+        "keywords": [
+            "api",
+            "json",
+            "middleware",
+            "slim",
+            "view"
         ]
     }
 ]

@@ -10,7 +10,12 @@
 		</ul>
 
 		<div class="section" style="padding: 10px;">
-			<div>
+			<div><!--
+				<ul data-bind="foreach: data.project_author">
+					<li>
+						<span data-bind="text: id"></span>
+					</li>
+				</ul>-->
 				<p>Blah blah Add a project blah blah</p>
 			</div>
 			<form class="cartesius">
@@ -21,8 +26,10 @@
 						<!--<div>Explanation</div>-->
 					</div>
 					<div>
+					<!--	
 						<label for="projectAuthors">Project authors	</label>
 						<input id="projectAuthors" data-bind="kendoMultiSelect: { dataTextField: 'username', data: listPeopleDataSource, dataValueField: 'id' }" />
+					-->
 					</div>
 					<div>
 						<label for="projectDate">Date</label>
@@ -34,7 +41,9 @@
 					</div>
 					<div>
 						<label for="projectSummary">Summary</label>
-						<textarea id="projectSummary" data-bind="{value: data.summary}" />
+
+						<textarea id="projectSummary">
+						</textarea>
 					</div>
 					<div>
 						<input type="button" value="Next" id='projectInfoNext' />

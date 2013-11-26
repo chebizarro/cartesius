@@ -1,4 +1,5 @@
-define(['plugins/router', 'durandal/app'], function (router, app) {
+define(['plugins/router', 'durandal/app', 'services/datacontext'],
+	function (router, app, datacontext) {
 
 
     return {

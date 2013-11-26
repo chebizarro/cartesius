@@ -44,9 +44,6 @@ define(['durandal/system', 'durandal/app', 'durandal/viewLocator'],  function (s
 	
 	app.dataservice = new breeze.EntityManager('/webapi/cartesius/');
 	
-	ko.kendo.setDataSource = function (widget, fnCall, options) {
-		fnCall(widget, options)
-	};
 
 	
 	if (app.dataservice.metadataStore.isEmpty()) {

@@ -8,16 +8,17 @@ define(['plugins/router', 'durandal/app'], function (router, app) {
 
 			self.data = null;
 
+
 			if(project) {
 				
 				var query = new breeze.EntityQuery()
 					.from("Project")
-					.where("title","eq","te''st")
-					.expand("ProjectRisk.Risk");
+					.where("id","eq",project.id);
+					//.expand("ProjectAuthor");
 					
 				app.dataservice.executeQuery(query).then(function(data){
+					console.log(data);
 					self.data = data.results[0];
-					console.log(self.data);
 				}).fail(function(e) {
 					console.log(e);							  
 				});
@@ -25,7 +26,7 @@ define(['plugins/router', 'durandal/app'], function (router, app) {
 				self.data = app.dataservice.createEntity('Project');
 			}
 
-
+/*
 			self.listPeopleDataSource = function (widget, options) {
 				widget.setDataSource(new kendo.data.extensions.BreezeDataSource({
 					entityManager: app.dataservice,
@@ -37,7 +38,7 @@ define(['plugins/router', 'durandal/app'], function (router, app) {
 					})
 				);
 			};
-                
+*/              
 		},
 	
 		attached: function () {

@@ -1,0 +1,10 @@
+Versions
+Durandal							2.01
+Breeze								1.4.6
+jQuery								1.9.1
+kendo-breeze-knockout.datasource	0.0.5
+knockout-kendo						0.6.3
+KendoUI								2013.2.716
+Knockout							2.3.0
+Leaflet								0.6.4
+RequireJS							2.1.8

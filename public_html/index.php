@@ -32,9 +32,9 @@ require LIB.'GoogleOAuth.php';
 
 \WebApi\WebApiAdapter::configure(array(
 	'connections' => array(
-		'cartesius' => 'pgsql:host=127.0.0.1;port=5432;dbname=cartesius;user=postgres;password=postgres',
-		'northwind' => 'pgsql:host=127.0.0.1;port=5432;dbname=northwind;user=postgres;password=postgres',
-		'todos' => 'pgsql:host=127.0.0.1;port=5432;dbname=todos;user=postgres;password=postgres'
+		'cartesius' => 'pgsql:host=127.0.0.1;port=5432;dbname=cartesius;user=postgres;password=postgres'
+		//'northwind' => 'pgsql:host=127.0.0.1;port=5432;dbname=northwind;user=postgres;password=postgres',
+		//'todos' => 'pgsql:host=127.0.0.1;port=5432;dbname=todos;user=postgres;password=postgres'
 	),
 	'modelpath' => MODELS,
 	'metadatapath' => DATA,
@@ -241,21 +241,23 @@ $app->get('/regextest', function() use ($app) {
  	$app->response->headers->set('Content-Type', 'application/javascript');
 
 	$reg = Array(
-		//"EmployeeID eq 1",
-		//"IsArchived eq false",
-		//"Freight gt 100m",
-		//"OrderDate ge datetime'1997-12-31T17:00:00.000Z'",
-		//"Region ne null",
-		//"(IsArchived eq false) and (IsDone eq false)",
-		//"(startswith(CompanyName,'S') eq true) and (substringof('er', City) eq true)",
-		//"(City eq 'London') or (City eq 'Paris')",
-		//"(Freight gt 100) and (OrderDate gt datetime'1998-03-31T17:00:00.000Z')",
-		//"(Freight gt 100) or (OrderDate gt datetime'1998-03-31T17:00:00.000Z')",
-		//"((OrderDate ge datetime'1995-12-31T17:00:00.000Z') and (OrderDate lt datetime'1996-12-31T17:00:00.000Z')) and (Freight gt 100)",
+		"EmployeeID eq 1",
+		"IsArchived eq false",
+		"Freight gt 100m",
+		"OrderDate ge datetime'1997-12-31T17:00:00.000Z'",
+		"Region ne null",
+		"(IsArchived eq false) and (IsDone eq false)",
+		"(startswith(CompanyName,'S') eq true) and (substringof('er', City) eq true)",
+		"(City eq 'London') or (City eq 'Paris')",
+		"(Freight gt 100) and (OrderDate gt datetime'1998-03-31T17:00:00.000Z')",
+		"(Freight gt 100) or (OrderDate gt datetime'1998-03-31T17:00:00.000Z')",
+		"((OrderDate ge datetime'1995-12-31T17:00:00.000Z') and (OrderDate lt datetime'1996-12-31T17:00:00.000Z')) and (Freight gt 100)",
 		"length(CompanyName) gt 30",
 		"toupper(substring(CompanyName,1,2)) eq 'OM'",
 		"substringof('market',CompanyName) eq true",
 		"startswith(ProductName,'C') eq true",
+		"startswith(Category/CategoryName,'S') eq true",
+		"startswith(Category.CategoryName,'S') eq true",
 		"not (Freight gt 100)"
 	);
 
@@ -272,12 +274,12 @@ $app->get('/regextest', function() use ($app) {
 
 $app->get('/filtertest', function() use ($app) {
  	$app->response->headers->set('Content-Type', 'application/javascript');
-
-	//echo \WebApi\WebApiAdapter::get_data('northwind', 'employees' ,array('$filter' => 'EmployeeID eq 1'));
+/*
+	echo \WebApi\WebApiAdapter::get_data('northwind', 'employees' ,array('$filter' => 'EmployeeID eq 1'));
 	echo \WebApi\WebApiAdapter::get_data('todos', 'todos', array('$filter' => 'IsArchived eq false'));
-	//echo \WebApi\WebApiAdapter::get_data('northwind','orders',array('$filter' => "Freight gt 100m"));
+	echo \WebApi\WebApiAdapter::get_data('northwind','orders',array('$filter' => "Freight gt 100"));
 	echo \WebApi\WebApiAdapter::get_data('northwind','orders',array('$filter' => "OrderDate ge datetime'1998-04-28T17:00:00.000Z'"));
-	//echo \WebApi\WebApiAdapter::get_data('northwind','employees',array('$filter' => "Region ne null"));
+	echo \WebApi\WebApiAdapter::get_data('northwind','employees',array('$filter' => "Region ne null"));
 	echo \WebApi\WebApiAdapter::get_data('todos','todos',array('$filter' => "(IsArchived eq false) and (IsDone eq false)"));
 	echo \WebApi\WebApiAdapter::get_data('northwind','suppliers',array('$filter' => "(startswith(CompanyName,'S') eq true) and (substringof('er', City) eq true)"));
 	echo \WebApi\WebApiAdapter::get_data('northwind','suppliers',array('$filter' => "(City eq 'London') or (City eq 'Paris')"));
@@ -285,23 +287,32 @@ $app->get('/filtertest', function() use ($app) {
 	echo \WebApi\WebApiAdapter::get_data('northwind','orders',array('$filter' => "(Freight gt 100) or (OrderDate gt datetime'1998-03-31T17:00:00.000Z')"));
 	echo \WebApi\WebApiAdapter::get_data('northwind','orders',array('$filter' => "((OrderDate ge datetime'1995-12-31T17:00:00.000Z') and (OrderDate lt datetime'1996-12-31T17:00:00.000Z')) and (Freight gt 100)"));
 	echo \WebApi\WebApiAdapter::get_data('northwind','suppliers',array('$filter' => "length(CompanyName) gt 30"));
-	//echo \WebApi\WebApiAdapter::get_data('northwind','suppliers',array('$filter' => "toupper(substring(CompanyName,1,2)) eq 'OM'"));
+	echo \WebApi\WebApiAdapter::get_data('northwind','suppliers',array('$filter' => "toupper(substring(CompanyName,1,2)) eq 'OM'"));
 	echo \WebApi\WebApiAdapter::get_data('northwind','suppliers',array('$filter' => "substringof('market',CompanyName) eq true"));
 	echo \WebApi\WebApiAdapter::get_data('northwind','products',array('$filter' => "startswith(ProductName,'C') eq true"));
 	echo \WebApi\WebApiAdapter::get_data('northwind','orders',array('$filter' => "not (Freight gt 100)"));
-	echo \WebApi\WebApiAdapter::get_data('northwind','customers',array('$filter' => "(startswith(CompanyName,'S')eq true) and (substringof('er',City) eq true)", '$select' => "CompanyName,City"));
-	//echo \WebApi\WebApiAdapter::get_data('northwind','products',array('$expand' => "Category,Supplier"));
+	echo \WebApi\WebApiAdapter::get_data('northwind','products',array('$expand' => "Suppliers"));
 	echo \WebApi\WebApiAdapter::get_data('cartesius','account',array('$expand' => "ProjectAuthor"));
+*/	
+	echo \WebApi\WebApiAdapter::get_data('northwind','products',array('$filter' => "startswith(Categories/CategoryName,'C') eq true", '$select' => "Categories"));
+	echo \WebApi\WebApiAdapter::get_data('northwind','orders',array('$filter' => "Customers/Region eq 'CA'"));
+	echo \WebApi\WebApiAdapter::get_data('northwind','products',array('$filter' => "startswith(Suppliers/CompanyName,'S') eq true", '$orderby' => "UnitPrice desc,ProductName"));
+	echo \WebApi\WebApiAdapter::get_data('northwind','products',array('$filter' => "startswith(Suppliers/CompanyName,'S') eq true", '$orderby' => "Suppliers/CompanyName"));
+	echo \WebApi\WebApiAdapter::get_data('northwind','products',array('$filter' => "startswith(Suppliers/CompanyName,'S') eq true", '$orderby' => "Suppliers/CompanyName"));
+	echo \WebApi\WebApiAdapter::get_data('northwind','customers',array('$filter' => "(startswith(CompanyName,'S')eq true) and (substringof('er',City) eq true)", '$select' => "CompanyName,City"));
+	echo \WebApi\WebApiAdapter::get_data('northwind','employees',array('$select' => "Photo", '$filter' => "Region ne null"));
+
 });
 
 $app->get('/expandtest', function() use ($app) {
 	$app->response->headers->set('Content-Type', 'application/javascript');
 	$starttime = microtime(true);
+	echo "'\$expand' => 'OrderDetails.Products'\n";
 	echo $starttime. "\n";
 	
 	//echo \WebApi\WebApiAdapter::get_data('cartesius','account',array('$expand' => "ProjectAuthor"));
 	//echo \WebApi\WebApiAdapter::get_data('cartesius','project',array('$expand' => "ProjectAuthor"));
-	$response = \WebApi\WebApiAdapter::get_data('northwind','orders',array('$expand' => "Customers,Shippers"));
+	$response = \WebApi\WebApiAdapter::get_data('northwind','orders',array('$expand' => "OrderDetails.Products"));
 	//echo \WebApi\WebApiAdapter::get_data('northwind','products',array('$orderby' => 'ProductName','$skip'=>10,'$expand'=>'Categories'));
 	
 	$endtime = microtime(true);
@@ -311,6 +322,45 @@ $app->get('/expandtest', function() use ($app) {
 	
 	echo $response;
 
+});
+
+$app->get('/jointest', function() use ($app) {
+//.where("Category.CategoryName", "startswith", "S")
+
+WebApi\ORM\ORM::configure('id_column_overrides', array(
+    'categories' => 'CategoryID',
+    'products' => 'ProductID',
+),
+"northwind");
+
+//$data = WebApi\ORM\ORM::for_table("products", "northwind")
+$data = WebApi\ORM\Model::factory("WebApi\ORM\Northwind\Products", "northwind");
+
+//print_r($data);
+
+$data = $data->table_alias('p1')->order_by_asc('CategoryID');
+
+
+echo $data->get_connection();
+
+echo $data->get_class_name();
+
+$data = WebApi\ORM\Model::factory("WebApi\ORM\Northwind\Products", "northwind")
+    ->table_alias('p1')
+    ->select('p1.*')
+    ->select('p2.*', 'p2_*')
+    ->join('categories', array('p2.CategoryID', '=', 'p1.CategoryID'), 'p2')
+    ->where_like('p2.CategoryName', 'B%')
+    ->find_many();
+    
+//print_r($data);
+
+//$data = WebApi\ORM\Model::factory("WebApi\ORM\Northwind\Products", "northwind");
+//$data = $data->find_many();
+
+//$meta = $data->get_metadata();
+
+//print_r($data);
 });
 
 $app->run();
