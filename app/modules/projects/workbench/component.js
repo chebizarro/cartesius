@@ -16,11 +16,12 @@ define(['plugins/router',
 						
 			 self.listProjectsDataSource = function (widget, options) {
 				 try {
-					datacontext.manager.clear();
-
 					widget.setDataSource(new kendo.data.extensions.BreezeDataSource({
 							entityManager: datacontext.manager,
-							endPoint: new breeze.EntityQuery.from("Project")
+							endPoint: new breeze.EntityQuery.from("Project"),
+							mapping: {
+								ignore: ['project_author']
+							}
 						})
 					);
 				} catch (e) {

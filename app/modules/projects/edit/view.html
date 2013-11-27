@@ -9,16 +9,11 @@
 			<li>Documents</li>
 		</ul>
 
-		<div class="section" style="padding: 10px;">
-			<div><!--
-				<ul data-bind="foreach: data.project_author">
-					<li>
-						<span data-bind="text: id"></span>
-					</li>
-				</ul>-->
+		<div style="padding: 10px;">
+			<div>
 				<p>Blah blah Add a project blah blah</p>
 			</div>
-			<form class="cartesius">
+			<form class="forms">
 				<div id="projectInfo">
 					<div>
 						<label for="projectTitle">Project title</label>
@@ -26,10 +21,8 @@
 						<!--<div>Explanation</div>-->
 					</div>
 					<div>
-					<!--	
 						<label for="projectAuthors">Project authors	</label>
-						<input id="projectAuthors" data-bind="kendoMultiSelect: { dataTextField: 'username', data: listPeopleDataSource, dataValueField: 'id' }" />
-					-->
+						<input style="width: 250px;" id="projectAuthors" data-bind="kendoMultiSelect: { dataTextField: 'username', data: listPeopleDataSource, dataValueField: 'id' }" />
 					</div>
 					<div>
 						<label for="projectDate">Date</label>

@@ -14,13 +14,14 @@ define(['plugins/router',
 		activate : function () {
 			self = this;
 			
-			datacontext.manager.clear();
-
 			self.listPeopleDataSource = function (widget, options) {
 				widget.setDataSource(new kendo.data.extensions.BreezeDataSource({
 					entityManager: datacontext.manager,
 					endPoint: "Account",
 					defaultSort: "username asc",
+					mapping: {
+						ignore: ['project_author']
+					},
 					onFail: function(error) {
 						console.log(error);
 						}

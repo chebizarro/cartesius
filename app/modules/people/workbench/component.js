@@ -18,7 +18,11 @@ define(['plugins/router',
 					widget.setDataSource(new kendo.data.extensions.BreezeDataSource({
 							entityManager: datacontext.manager,
 							endPoint: new breeze.EntityQuery.from("Account"),
-							defaultSort: "username asc"
+							defaultSort: "username asc",
+							mapping: {
+								ignore: ['project_author']
+							}
+
 						})
 					);
 				} catch (e) {

@@ -133,3 +133,23 @@ html, body
 	padding: 0px;
 	overflow: hidden;
 }
+
+label {
+	font-weight: bold;
+    padding: 6px 1ex 0px 0px;
+	display: inline-block;
+	width: 160px;
+	text-align: right;
+}
+
+.k-multiselect {
+	display: inline-block;
+}
+
+.forms > div > div {
+	padding: 6px 1ex 0px 0px;
+}
+
+.forms > input {
+	width: 260px;
+}
