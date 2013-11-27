@@ -39,47 +39,8 @@ define(['durandal/system', 'durandal/app', 'durandal/viewLocator'],  function (s
     });
 
 	app.modules = ko.observableArray();
-	
-	app.theme = ko.observable('metro');
-	
-	app.dataservice = new breeze.EntityManager('/webapi/cartesius/');
-	
-
-	
-	if (app.dataservice.metadataStore.isEmpty()) {
-		app.dataservice.fetchMetadata()
-					  .then(function (rawMetadata) {
-				executeQuery();
-			}).fail(function(e) {
-						console.log(e);
-					});
-		} else {
-			executeQuery();
-		}
-
-	
-	function executeQuery() {
-		var query = new breeze.EntityQuery()
-			.from("Modules");
-		app.dataservice.executeQuery(query).then(function(data){
-			ko.utils.arrayForEach(data.results, function(item) {
-				require(['/module/' + item.path() + '/module'], function(mod) {
-						app.modules.push(mod);
-					});				
-			});
-		}).fail(function(e) {
-			console.log(e);							  
-		});
-	}
-
 
     app.start().then(function() {
-        //Replace 'viewmodels' in the moduleId with 'views' to locate the view.
-        //Look for partial views in a 'views' folder in the root.
-        //viewLocator.useConvention();
-
-        //Show the app by setting the root view model for our application with a transition.
-                
         app.setRoot('/module/cartesius', 'entrance');
 
     });

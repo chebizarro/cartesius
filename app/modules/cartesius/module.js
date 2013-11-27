@@ -1,28 +1,48 @@
-define(['plugins/router', 'durandal/app', 'services/datacontext'],
-	function (router, app, datacontext) {
+define(['plugins/router',
+		'durandal/app',
+        'config',		
+		'services/datacontext'],
+	function (router, app, config, datacontext) {
 
+		var shell = {
+			activate: activate,
+			router: router,
+			viewUrl: '/view/cartesius/mainpage/view',
+			attached: attached,
+			mainmenu: mainmenu,
+			workbench: null
+		};
+        return shell;
 
-    return {
-		router: router,
-		viewUrl: '/view/cartesius/mainpage/view',
-        activate: function () {
-						
+        function activate() {
+			app.title = config.appTitle;
+			return datacontext.primeData()
+				.then(boot)
+				.fail(failedInitialization);
+        }
+
+        function boot() {
             router.map([
-                { route: '', moduleId: '/component/geo/map', nav: true }
+                { route: '', moduleId: config.startModule, nav: true }
             ]).buildNavigationModel().makeRelative('/').mapUnknownRoutes();
             
             return router.activate();
-        },
-        
-        attached: function () {
-			$("#vsplitter").fadeIn().resize();	
-		},
+        }
 
-        mainmenu: function() {
-            
-        },
+        function failedInitialization(error) {
+            var msg = 'App initialization failed: ' + error.message;
+            console.log(msg);
+            //logger.logError(msg, error, system.getModuleId(shell), true);
+        }
+
         
-		workbench: null
+        function attached() {
+			$("#vsplitter").fadeIn().resize();	
+		}
+
+        function mainmenu() {   
+        }
+        
     }
 
-});
+);

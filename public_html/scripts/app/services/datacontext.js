@@ -1,14 +1,32 @@
 ﻿define([
     'durandal/system',
-    'services/model',
     'config',
-    'services/logger',
-    'services/breeze.partial-entities'],
-    function (system, model, config, logger, partialMapper) {
+	'durandal/app'],
+    function (system, config, app) {
+		
         var EntityQuery = breeze.EntityQuery;
         var manager = configureBreezeManager();
-        var orderBy = model.orderBy;
-        var entityNames = model.entityNames;
+                
+        var getModules = function () {
+			
+			var query = new breeze.EntityQuery().from("Modules");
+
+			return manager.executeQuery(query).then(function(data){
+
+				ko.utils.arrayForEach(data.results, function(item) {
+					require(['/module/' + item.path() + '/module'], function(mod) {
+							app.modules.push(mod);
+						});				
+				});
+
+			}).fail(function(e) {
+				console.log(e);							  
+			});
+
+		};
+
+
+        
         
         var getSpeakerPartials = function (speakersObservable, forceRemote) {
 
@@ -125,24 +143,24 @@
 
         var primeData = function () {
             var promise = Q.all([
-                getLookups(),
-                getSpeakerPartials(null, true)])
+                //getLookups(),
+                getModules()])
                 .then(applyValidators);
 
             return promise.then(success);
             
             function success() {
-                datacontext.lookups = {
+                /*datacontext.lookups = {
                     rooms: getLocal('Rooms', 'name', true),
                     tracks: getLocal('Tracks', 'name', true),
                     timeslots: getLocal('TimeSlots', 'start', true),
                     speakers: getLocal('Persons', orderBy.speaker, true)
                 };
-                log('Primed data', datacontext.lookups);
+                log('Primed data', datacontext.lookups);*/
             }
             
             function applyValidators() {
-                model.applySessionValidators(manager.metadataStore);
+                //model.applySessionValidators(manager.metadataStore);
             }
 
         };
@@ -158,14 +176,16 @@
         });
 
         var datacontext = {
-            createSession: createSession,
+/*            createSession: createSession,
             getSessionPartials: getSessionPartials,
             getSpeakerPartials: getSpeakerPartials,
             hasChanges: hasChanges,
             getSessionById: getSessionById,
-            primeData: primeData,
             cancelChanges: cancelChanges,
-            saveChanges: saveChanges
+            saveChanges: saveChanges */
+            primeData: primeData,
+            getModules: getModules,
+            manager: manager
         };
 
         return datacontext;
@@ -211,9 +231,9 @@
         }
 
         function configureBreezeManager() {
-            breeze.NamingConvention.camelCase.setAsDefault();
+            //breeze.NamingConvention.camelCase.setAsDefault();
             var mgr = new breeze.EntityManager(config.remoteServiceName);
-            model.configureMetadataStore(mgr.metadataStore);
+            //model.configureMetadataStore(mgr.metadataStore);
             return mgr;
         }
 

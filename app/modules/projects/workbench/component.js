@@ -1,4 +1,8 @@
-define(['plugins/router', 'durandal/app'], function (router, app) {
+define(['plugins/router',
+		'durandal/app',
+        'config',		
+		'services/datacontext'],
+	function (router, app, config, datacontext) {
 
 	var results;
 	var dataAdapter;
@@ -12,15 +16,19 @@ define(['plugins/router', 'durandal/app'], function (router, app) {
 						
 			 self.listProjectsDataSource = function (widget, options) {
 				 try {
+					datacontext.manager.clear();
+
 					widget.setDataSource(new kendo.data.extensions.BreezeDataSource({
-							entityManager: app.dataservice,
+							entityManager: datacontext.manager,
 							endPoint: new breeze.EntityQuery.from("Project")
 						})
 					);
 				} catch (e) {
 					console.log(e);
+				} finally {
+					return true;
 				}
-			};         
+			};   
 
                 
 		},

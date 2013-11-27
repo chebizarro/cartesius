@@ -1,4 +1,8 @@
-define(['plugins/router', 'durandal/app'], function (router, app) {
+define(['plugins/router',
+		'durandal/app',
+        'config',		
+		'services/datacontext'],
+	function (router, app, config, datacontext) {
 
 	var results;
 	var dataAdapter;
@@ -9,10 +13,11 @@ define(['plugins/router', 'durandal/app'], function (router, app) {
 		
 		activate : function () {
 			self = this;
-									
+			datacontext.manager.clear();
+
 			self.listProjectsDataSource = function (widget, options) {
 				widget.setDataSource(new kendo.data.extensions.BreezeDataSource({
-					entityManager: app.dataservice,
+					entityManager: datacontext.manager,
 					endPoint: "Project",
 					onFail: function(error) {
 						console.log(error);
@@ -29,6 +34,10 @@ define(['plugins/router', 'durandal/app'], function (router, app) {
 			self.projectGrid = {
 				columns: [
 					{ field: 'title', title: 'Name'},
+					{ field: 'date', title: 'Start Date'},
+					{ field: 'review_date', title: 'Review Date'},
+					{ field: 'summary', title: 'Summary'},
+					
 					{ command: [{ name: 'edit',
 							click: function(e) {
 								var tr = $(e.target).closest("tr");

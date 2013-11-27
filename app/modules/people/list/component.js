@@ -1,4 +1,8 @@
-define(['plugins/router', 'durandal/app'], function (router, app) {
+define(['plugins/router',
+		'durandal/app',
+        'config',		
+		'services/datacontext'],
+	function (router, app, config, datacontext) {
 
 	var results;
 	var dataAdapter;
@@ -10,13 +14,12 @@ define(['plugins/router', 'durandal/app'], function (router, app) {
 		activate : function () {
 			self = this;
 			
-			var query = new breeze.EntityQuery()
-				.from("Account");
-			
+			datacontext.manager.clear();
+
 			self.listPeopleDataSource = function (widget, options) {
 				widget.setDataSource(new kendo.data.extensions.BreezeDataSource({
-					entityManager: app.dataservice,
-					endPoint: query,
+					entityManager: datacontext.manager,
+					endPoint: "Account",
 					defaultSort: "username asc",
 					onFail: function(error) {
 						console.log(error);
