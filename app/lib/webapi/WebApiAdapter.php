@@ -5,86 +5,42 @@ namespace WebApi;
 use \PDO;
 
 class WebApiAdapter {
-	protected static $resources;
-
-
-	protected static $connections;
-	protected static $modelpath;
-	protected static $metadatapath;
-	protected static $endpoint;
-	protected static $metadata;
-
-	protected static $namingconvention;
-	
+	protected static $resource = [];
+	protected static $metadata = [];
+	protected static $metadata_path;
 	
 	public static function configure($config) {
-		foreach($config as $resource) {
-			
-			
+		self::$metadata_path = $config["metadata_path"];
+		foreach($config["resources"] as $resource) {
+			$name = $resource["name"];
+			self::$resource[$name] = self::resource_factory($resource);
+			self::$metadata[$name] = self::load_metadata($name);
 		}
-		
-		
-		
-		self::$connections = isset($config['connections']) ? $config['connections'] : null;
-		self::$modelpath = isset($config['modelpath']) ? $config['modelpath'] : '/models/';
-		self::$metadatapath = isset($config['metadatapath']) ? $config['metadatapath'] : '/data/';
-		self::$endpoint = isset($config['endpoint']) ? $config['endpoint'] : 'webapi';
-		self::$metadata = [];
-		
-		//naming convention
-
-		foreach(self::$connections as $key => $value) {
-			ORM\ORM::configure('error_mode', PDO::ERRMODE_WARNING, $key);
-			ORM\ORM::configure($value, null, $key);
-			ORM\ORM::configure('return_result_sets', true, $key);
-			ORM\ORM::configure('logging', true, $key);
-			ORM\ORM::configure('caching', true, $key);
-			
-			self::load_metadata($key);
-			self::load_models($key);
-		}		
 	}
 
-	/*
-	 * Metadata functions
-	 */
+	protected static function resource_factory($resource);
+		$resourceclass = "WebApiResource" . ucfirst($resource["type"]);
+		return new $resourceclass($resource);
+	}
 
-	protected static function load_metadata($connection) {
-		$metadatafile = self::$metadatapath."{$connection}.metadata.serial";
-		if (!file_exists($metadatafile)) {
-			self::$metadata[$connection] = new WebApiMetaData($connection, self::$endpoint);
-			file_put_contents($metadatafile, serialize(self::$metadata[$connection]));
+	protected static function load_metadata($name) {
+		$metadata_file = self::$metadata_path."{$name}.metadata.serial";
+		if (!file_exists($metadata_file)) {
+			self::$metadata[$name] = new WebApiMetaData(self::$resource[$name]);
+			file_put_contents($metadatafile, serialize(self::$metadata[$name]));
 		} else {
-			self::$metadata[$connection] = unserialize(file_get_contents($metadatafile));
+			self::$metadata[$name] = unserialize(file_get_contents($metadata_file));
 		}
 	}
 
-	public static function show_metadata($connection, $format = "JSON") {		
-		if($format == "JSON") {
-			return json_encode(self::$metadata[$connection], JSON_PRETTY_PRINT);
+	public static function show_metadata($resource, $format = "application/json") {		
+		if($format == "application/json") {
+			return json_encode(self::$metadata[$resource], JSON_PRETTY_PRINT);
 		} else {
 			//other formats? XML?
 		}
 	}
 
-	/*
-	 * Load the models - to be replaced with class autoloader or discarded altogether
-	 */
-
-	protected static function load_models($connection) {
-		$dir = self::$modelpath.$connection.'/';
-		
-		foreach(self::$metadata[$connection]->resourceEntityTypeMap as $model_name => $model_value) {
-			$file_name = "{$dir}{$model_name}.php";
-			if(!file_exists($file_name)) {
-				if(!is_dir($dir)) {
-					mkdir($dir);
-				}
-				file_put_contents($file_name, self::$metadata[$connection]->get_model($model_name));
-			}
-			require_once($file_name);
-		}	
-	}
 	
 	/*
 	 * Utility functions for converting class and table names

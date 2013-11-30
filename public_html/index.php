@@ -30,19 +30,25 @@ require LIB.'WebApiQueryLexer.php';
 require LIB.'GoogleOAuth.php';
 
 
-$config = array('cartesius' => array(
-	'type'=>'pgsql',
-	'host' => '127.0.0.1',
-	'port' => 5432,
-	'resource' => 'cartesius',
-	'username' => 'postgres',
-	'password' => 'postgres',
-	'endpoint' => 'webapi',
-	'metadatapath' => DATA,
-	'nc' = NC_PASCAL,
-	'authenticate' = 'authenticate_function',
-	'exclude' = array('account' => array('token')),				
-));
+$config = array(
+	'resources' => array(
+		array(
+			'type'=>'pgsql',
+			'host' => '127.0.0.1',
+			'port' => 5432,
+			'name' => 'cartesius',
+			'username' => 'postgres',
+			'password' => 'postgres',
+			'endpoint' => 'webapi',
+			'nc' = NC_PASCAL,
+			'authenticate' = null,
+			'exclude' = array(
+				'account' => array('token')
+			)
+		)
+	),
+	'metadata_path' => DATA
+);
 
 \WebApi\WebApiAdapter::configure($config);
 
