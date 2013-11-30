@@ -32,18 +32,20 @@ class WebApiQueryParser {
 		$this->inlinecount = isset($query['$inlinecount']) ? $query['$inlinecount'] : null;
 		$this->format = isset($query['$format']) ? $query['$format'] : null;
 		$this->data = $data = \ORM::for_table($resource, $connection);
-		//$this->data = $this->data->table_alias("p1")
 	}
 	
 	public function parse() {
+		// These two will create joins if there are expanded properties
 		(isset($this->filter)) ? $this->filter() : null;
-		(isset($this->select)) ? $this->select() : null;
 		(isset($this->orderby)) ? $this->orderby() : null;
+
 		(isset($this->top)) ? $this->top() : null;
 		(isset($this->skip)) ? $this->skip() : null;
 		
-		//$this->data = $this->data->find_many();
 		
+		//$this->data = $this->data->find_many();
+		// These two will expand the data
+		(isset($this->select)) ? $this->select() : null;		
 		(isset($this->expand)) ? $this->expand() : null;
 	}
 	

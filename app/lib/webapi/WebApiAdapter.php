@@ -5,6 +5,8 @@ namespace WebApi;
 use \PDO;
 
 class WebApiAdapter {
+	protected static $resources;
+
 
 	protected static $connections;
 	protected static $modelpath;
@@ -16,6 +18,13 @@ class WebApiAdapter {
 	
 	
 	public static function configure($config) {
+		foreach($config as $resource) {
+			
+			
+		}
+		
+		
+		
 		self::$connections = isset($config['connections']) ? $config['connections'] : null;
 		self::$modelpath = isset($config['modelpath']) ? $config['modelpath'] : '/models/';
 		self::$metadatapath = isset($config['metadatapath']) ? $config['metadatapath'] : '/data/';

@@ -2,6 +2,8 @@
 
 namespace WebApi;
 
+/* Parser constants */
+
 const T_AND				= 1;
 const T_OR				= 2;
 const T_LENGTH			= 3;
@@ -39,3 +41,10 @@ const T_GUID_VALUE		= 27;
 const T_EXPAND			= 28;
 const T_ORDERBY			= 29;
 const T_ORDERBYDESC		= 30;
+
+
+/* Resource constants */
+const NC_PASCAL = 0;
+const NC_CAMEL = 1;
+const NC_LOWERCASE = 2;
+const NC_NATIVE = 3;

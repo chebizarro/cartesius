@@ -30,16 +30,21 @@ require LIB.'WebApiQueryLexer.php';
 require LIB.'GoogleOAuth.php';
 
 
-\WebApi\WebApiAdapter::configure(array(
-	'connections' => array(
-		'cartesius' => 'pgsql:host=127.0.0.1;port=5432;dbname=cartesius;user=postgres;password=postgres'
-		//'northwind' => 'pgsql:host=127.0.0.1;port=5432;dbname=northwind;user=postgres;password=postgres',
-		//'todos' => 'pgsql:host=127.0.0.1;port=5432;dbname=todos;user=postgres;password=postgres'
-	),
-	'modelpath' => MODELS,
+$config = array('cartesius' => array(
+	'type'=>'pgsql',
+	'host' => '127.0.0.1',
+	'port' => 5432,
+	'resource' => 'cartesius',
+	'username' => 'postgres',
+	'password' => 'postgres',
+	'endpoint' => 'webapi',
 	'metadatapath' => DATA,
-	'endpoint' => 'webapi'
+	'nc' = NC_PASCAL,
+	'authenticate' = 'authenticate_function',
+	'exclude' = array('account' => array('token')),				
 ));
+
+\WebApi\WebApiAdapter::configure($config);
 
 
 // Start Slim.
