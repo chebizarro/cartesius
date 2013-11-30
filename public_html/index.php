@@ -240,32 +240,64 @@ $app->get('/regextest', function() use ($app) {
 
  	$app->response->headers->set('Content-Type', 'application/javascript');
 
-	$reg = Array(
-		"EmployeeID eq 1",
-		"IsArchived eq false",
-		"Freight gt 100m",
-		"OrderDate ge datetime'1997-12-31T17:00:00.000Z'",
-		"Region ne null",
-		"(IsArchived eq false) and (IsDone eq false)",
-		"(startswith(CompanyName,'S') eq true) and (substringof('er', City) eq true)",
-		"(City eq 'London') or (City eq 'Paris')",
-		"(Freight gt 100) and (OrderDate gt datetime'1998-03-31T17:00:00.000Z')",
-		"(Freight gt 100) or (OrderDate gt datetime'1998-03-31T17:00:00.000Z')",
-		"((OrderDate ge datetime'1995-12-31T17:00:00.000Z') and (OrderDate lt datetime'1996-12-31T17:00:00.000Z')) and (Freight gt 100)",
-		"length(CompanyName) gt 30",
-		"toupper(substring(CompanyName,1,2)) eq 'OM'",
-		"substringof('market',CompanyName) eq true",
-		"startswith(ProductName,'C') eq true",
-		"startswith(Category/CategoryName,'S') eq true",
-		"startswith(Category.CategoryName,'S') eq true",
-		"not (Freight gt 100)"
+	$reg = array(
+		"orderby" => array(
+			"UnitPrice desc",
+			"UnitPrice",
+			"UnitPrice desc,ProductName",
+			"UnitPrice desc,ProductName/Category",
+			"Product/UnitPrice,ProductName/Category desc",
+			"Product/UnitPrice,ProductName desc,Category",
+			"Product,ProductName",
+			"Suppliers/CompanyName"
+		),
+
+		"expand" => array(
+			"ProjectAuthor",
+			"Suppliers/CompanyName",
+			"ProjectAuthor,Suppliers/CompanyName",
+			"ProjectAuthor,Suppliers/CompanyName,Monkey/Island",
+			"ProjectAuthor,Suppliers/CompanyName,Monkey"
+		),
+
+		"select" => array(
+			"ProjectAuthor",
+			"Suppliers/CompanyName",
+			"ProjectAuthor,Suppliers/CompanyName",
+			"ProjectAuthor,Suppliers/CompanyName,Monkey/Island",
+			"ProjectAuthor,Suppliers/CompanyName,Monkey"
+		),
+	
+		"filter" => array(
+			"EmployeeID eq 1",
+			"IsArchived eq false",
+			"Freight gt 100m",
+			"OrderDate ge datetime'1997-12-31T17:00:00.000Z'",
+			"Region ne null",
+			"(IsArchived eq false) and (IsDone eq false)",
+			"(startswith(CompanyName,'S') eq true) and (substringof('er', City) eq true)",
+			"(City eq 'London') or (City eq 'Paris')",
+			"(Freight gt 100) and (OrderDate gt datetime'1998-03-31T17:00:00.000Z')",
+			"(Freight gt 100) or (OrderDate gt datetime'1998-03-31T17:00:00.000Z')",
+			"((OrderDate ge datetime'1995-12-31T17:00:00.000Z') and (OrderDate lt datetime'1996-12-31T17:00:00.000Z')) and (Freight gt 100)",
+			"length(CompanyName) gt 30",
+			"toupper(substring(CompanyName,1,2)) eq 'OM'",
+			"substringof('market',CompanyName) eq true",
+			"startswith(ProductName,'C') eq true",
+			"startswith(Category/CategoryName,'S') eq true",
+			"startswith(Category.CategoryName,'S') eq true",
+			"not (Freight gt 100)"
+		)
 	);
 
-	foreach($reg as $key) {
-		try {
-			print_r(\WebApi\QueryLexer::run($key));
-		} catch (\Exception $e) {
-			echo $e;
+	foreach($reg as $key => $value) {
+		foreach($value as $query) {
+			try {
+				echo "\n{$key}: {$query}\n\n";
+				print_r(\WebApi\QueryLexer::run($key, $query));
+			} catch (\Exception $e) {
+				echo $e;
+			}
 		}
 	}
 

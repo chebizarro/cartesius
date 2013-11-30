@@ -4,11 +4,6 @@ namespace WebApi;
 
 use \PDO;
 
-class ODataQueryProcessor {
-	
-	
-}
-
 class WebApiAdapter {
 
 	protected static $connections;
@@ -16,9 +11,9 @@ class WebApiAdapter {
 	protected static $metadatapath;
 	protected static $endpoint;
 	protected static $metadata;
+
+	protected static $namingconvention;
 	
-	// counter for the number of times a table is joined
-	protected static $joincount = 1;
 	
 	public static function configure($config) {
 		self::$connections = isset($config['connections']) ? $config['connections'] : null;
@@ -26,6 +21,8 @@ class WebApiAdapter {
 		self::$metadatapath = isset($config['metadatapath']) ? $config['metadatapath'] : '/data/';
 		self::$endpoint = isset($config['endpoint']) ? $config['endpoint'] : 'webapi';
 		self::$metadata = [];
+		
+		//naming convention
 
 		foreach(self::$connections as $key => $value) {
 			ORM\ORM::configure('error_mode', PDO::ERRMODE_WARNING, $key);
@@ -123,25 +120,20 @@ class WebApiAdapter {
 
 	public static function get_data($connection, $model, $vars) {
 		// functions can be called within the request URL path or query inside the $filter or $orderby parameter
-		
 		//$value - the raw value of a primitive type's property
-		
 		// Resource(x)? 
-		
-		//$filter
-		//$expand
-		//$select
-		//$orderby
-		//$top
-		//$skip
-		//$inlinecount
-		//$format
 				
 		$model_name = __NAMESPACE__."\ORM\\".self::_table_name_to_class_name($connection)."\\".self::_table_name_to_class_name($model);
 
 		$data = ORM\Model::factory($model_name, $connection);
 
-		$data = $data->table_alias('p1');
+		//$data = ORM\ORM::for_table($model, $connection);
+
+		$query = new QueryParser($model, $connection, $vars, self::$metadata[$connection]);
+		$query->parse();
+		var_dump($query);
+
+		/*$data = $data->table_alias('p1');
 
 		$data = isset($vars['$select']) ? self::select($vars['$select'], $data) : self::select_all($data);
 		
@@ -159,14 +151,14 @@ class WebApiAdapter {
 		$data = isset($vars['$skip']) ? self::skip($vars['$skip'], $data) : $data;
 		$data = isset($vars['$orderby']) ? self::orderby($vars['$orderby'], $data) : $data;
 		
-		$data = $data->find_many();
+		$data = $data->find_many();*/
 		
 		//print_r($vars);
 		//echo ORM\ORM::get_last_query() . "\n";
 		
-		$data = isset($vars['$expand']) ? json_encode(self::expand($vars['$expand'], $data), JSON_PRETTY_PRINT) : $data->as_json();
+		//$data = isset($vars['$expand']) ? json_encode(self::expand($vars['$expand'], $data), JSON_PRETTY_PRINT) : $data->as_json();
 		
-		return $data;
+		//return $data;
 	}
 
 	/*
@@ -422,17 +414,20 @@ class WebApiAdapter {
 
 	private static function expand($expand, $data) {
 		$stack = [];
+		$to_expand = array();
+
 		$expand = str_getcsv($expand);
+				
 		foreach($expand as $expander) {
-			$strpos = (strpos($expander, ".") > 0) ? strpos($expander, ".") : strpos($expander, "/");
-			if($strpos>0) {
-				$to_expand[] = self::_class_name_to_table_name(substr($expander, 0, $strpos));
-				$to_expand[] = self::_class_name_to_table_name(substr($expander, $strpos+1));
-			} else {
-				$to_expand[] = self::_class_name_to_table_name($expander);
-			}
+			$to_expand = array_merge($to_expand, explode("/", $expander));
 		}
-		$result = self::recurse_expand($data, $to_expand, $stack);
+
+		array_walk($to_expand, function(&$value, $key) { 
+			$value = self::_class_name_to_table_name($value);
+		}); 
+
+		
+		$result = self::recurse_expand($data, array_reverse($to_expand), $stack);
 		return $result;
 	}
 	
@@ -453,9 +448,11 @@ class WebApiAdapter {
 				$object_name = get_class($row);
 				$row_array = array_merge(array('$id'=>count($stack), '$type'=>str_replace("\\",".",$object_name)),$row_array);
 				$object_name = self::_class_name_to_table_name($object_name);
-				//$object_name = end(explode("\\", $object_name));
-				//(in_array($object_name, $expand)) ? null : $expand[] = $object_name; 
-				//print_r($expand);
+				
+				if(($key = array_search($object_name, $expand)) !== false) {
+					unset($expand[$key]);
+				}
+				
 				if($expand) {
 					foreach($expand as $expander) {
 						if(method_exists($row, $expander)) {

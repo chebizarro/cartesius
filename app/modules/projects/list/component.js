@@ -22,7 +22,7 @@ define(['plugins/router',
 					entityManager: datacontext.manager,
 					endPoint: query,
 					mapping: {
-						ignore: ['project_author']
+						ignore: ['project_author','team']
 					},
 					onFail: function(error) {
 						console.log(error);
@@ -39,8 +39,8 @@ define(['plugins/router',
 			self.projectGrid = {
 				columns: [
 					{ field: 'title', title: 'Name'},
-					{ field: 'date', title: 'Start Date'},
-					{ field: 'review_date', title: 'Review Date'},
+					{ field: 'date', title: 'Start Date', format: '{0: dd-MM-yyyy}'},
+					{ field: 'review_date', title: 'Review Date', format: '{0: dd-MM-yyyy}'},
 					{ field: 'summary', title: 'Summary'},
 					
 					{ command: [

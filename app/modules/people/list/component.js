@@ -20,7 +20,7 @@ define(['plugins/router',
 					endPoint: "Account",
 					defaultSort: "username asc",
 					mapping: {
-						ignore: ['project_author']
+						ignore: ['project_author','team_member']
 					},
 					onFail: function(error) {
 						console.log(error);

@@ -20,7 +20,7 @@ define(['plugins/router',
 							entityManager: datacontext.manager,
 							endPoint: new breeze.EntityQuery.from("Project"),
 							mapping: {
-								ignore: ['project_author']
+								ignore: ['project_author','team']
 							}
 						})
 					);

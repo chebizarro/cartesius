@@ -20,7 +20,7 @@ define(['plugins/router',
 							endPoint: new breeze.EntityQuery.from("Account"),
 							defaultSort: "username asc",
 							mapping: {
-								ignore: ['project_author']
+								ignore: ['project_author','team_member']
 							}
 
 						})

@@ -197,11 +197,12 @@ class WebApiStructuralType {
 				$foreign_table = $this->_underscore_to_pascal_case($nav_property['name']);
 				$model .= "\n\tpublic function {$nav_property['name']}() {\n";
 				$model .= "\t\treturn \$this->";
-				if($nav_property["isScalar"]) {
-					$model .=  "has_many('WebApi\ORM\\{$this->dbnamespace}\\{$foreign_table}', '{$nav_property['invForeignKeyNames'][0]}');\n";
+				if(!$nav_property["isScalar"]) {
+					$fkname = (isset($nav_property['foreignKeyNames'][1])) ? ",'{$nav_property['invForeignKeyNames'][1]}'":"";
+					$model .=  "belongs_to('WebApi\ORM\\{$this->dbnamespace}\\{$foreign_table}', '{$nav_property['invForeignKeyNames'][0]}'{$fkname});\n";
 				} else {
 					$fkname = (isset($nav_property['foreignKeyNames'][1])) ? ",'{$nav_property['foreignKeyNames'][1]}'":"";
-					$model .=  "belongs_to('WebApi\ORM\\{$this->dbnamespace}\\{$foreign_table}','{$nav_property['foreignKeyNames'][0]}'{$fkname});\n";
+					$model .=  "has_many('WebApi\ORM\\{$this->dbnamespace}\\{$foreign_table}','{$nav_property['foreignKeyNames'][0]}'{$fkname});\n";
 				}
 				$model .= "\t}\n";
 			}

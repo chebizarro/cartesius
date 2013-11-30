@@ -23,7 +23,7 @@ define(['plugins/router',
 					entityManager: self.datacontext.manager,
 					endPoint: "Account",
 					mapping: {
-						ignore: ['project_author'] // category.products is recursive - ignore it
+						ignore: ['project_author','team_member'] // category.products is recursive - ignore it
 					},
 
 					onFail: function(error) {
@@ -41,7 +41,7 @@ define(['plugins/router',
 					var query = new breeze.EntityQuery()
 						.from("Project")
 						.where("id","eq",project.id)
-						.expand("ProjectAuthor");
+						.expand("ProjectAuthor, Team.TeamMember");
 					return datacontext.manager.executeQuery(query)
 							.then(function(data){
 								console.log(data.results[0]);

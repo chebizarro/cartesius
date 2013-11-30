@@ -11,7 +11,7 @@
 
 		<div style="padding: 10px;">
 			<div>
-				<p>Blah blah Add a project blah blah</p>
+				<p>Instructions</p>
 			</div>
 			<form class="forms">
 				<div id="projectInfo">
@@ -47,7 +47,7 @@
 
 		<div class="section">
 			<div><p>Instructions</p></div>
-			<form class="cartesius">
+			<form class="forms">
 				<div id="projectTeam">
 					<div>
 						<label for="newTeam">Team name</label>
@@ -55,15 +55,17 @@
 						<input type="button" value="Add team" id='addTeam' />
 					</div>
 					
-					<div>
+					<div data-bind="foreach: data.team">
 						<fieldset>
-							<legend/>
+							<legend data-bind="text: name"/>
 							<div>
-								<label for="projectSummary">Description</label>
-								<textarea id="projectSummary" />								
+								<label for="teamDescription">Description</label>
+								<textarea id="teamDescription" data-bind="value: description" />								
 							</div>
 							<div>
-								<div id="teamGrid"></div>
+								<div data-bind="foreach: team_member">
+									<span data-bind="text: account_id"></span>
+								</div>
 							</div>
 						</fieldset>
 					</div>
@@ -74,7 +76,7 @@
 
 		<div class="section">
 			<div><p>Instructions</p></div>
-				<form class="cartesius">
+				<form class="forms">
 					<div id="projectItinerary">
 
 				</div>
