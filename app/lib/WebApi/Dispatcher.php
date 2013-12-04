@@ -4,127 +4,63 @@ namespace WebApi;
 
 use \PDO;
 
-class WebApiAdapter {
-	protected static $resource = [];
+class Dispatcher {
+	protected static $services = [];
 	protected static $metadata = [];
 	protected static $metadata_path;
 	
 	public static function configure($config) {
 		self::$metadata_path = $config["metadata_path"];
-		foreach($config["resources"] as $resource) {
-			$name = $resource["name"];
-			self::$resource[$name] = self::resource_factory($resource);
-			self::$metadata[$name] = self::load_metadata($name);
+		foreach($config["services"] as $service) {
+			$service_name = $service["name"];
+			self::$services[$service_name] = self::service_factory($service);
+			self::load_metadata($service_name);
 		}
 	}
-
-	protected static function resource_factory($resource);
-		$resourceclass = "WebApiResource" . ucfirst($resource["type"]);
-		return new $resourceclass($resource);
+	
+	protected static function service_factory($service) {
+		$serviceclass = "WebApi\\".ucfirst($service["type"]) . "Service";
+		return new $serviceclass($service);
 	}
 
-	protected static function load_metadata($name) {
-		$metadata_file = self::$metadata_path."{$name}.metadata.serial";
+	protected static function parser_factory($resource, $query, $service) {
+		$parserclass = "WebApi\\".ucfirst(self::$services[$service]->get_type()) . "QueryParser";
+		return new $parserclass($resource, $query, self::$services[$service], self::$metadata[$service]);
+	}
+
+	protected static function load_metadata($service) {
+		$metadata_file = self::$metadata_path."{$service}.metadata.serial";
 		if (!file_exists($metadata_file)) {
-			self::$metadata[$name] = new WebApiMetaData(self::$resource[$name]);
-			file_put_contents($metadatafile, serialize(self::$metadata[$name]));
+			self::$metadata[$service] = new MetaData(self::$services[$service]);
+			file_put_contents($metadata_file, serialize(self::$metadata[$service]));
 		} else {
-			self::$metadata[$name] = unserialize(file_get_contents($metadata_file));
+			self::$metadata[$service] = unserialize(file_get_contents($metadata_file));
 		}
 	}
 
-	public static function show_metadata($resource, $format = "application/json") {		
+	public static function show_metadata($service, $format = "application/json") {		
 		if($format == "application/json") {
-			return json_encode(self::$metadata[$resource], JSON_PRETTY_PRINT);
+			return json_encode(self::$metadata[$service], JSON_PRETTY_PRINT);
 		} else {
 			//other formats? XML?
 		}
 	}
 
-	
-	/*
-	 * Utility functions for converting class and table names
-	 */
-	
-	protected static function _base_class_name($class_name) {
-		return end(explode("\\", $class_name));
-	} 
-	
-	protected static function _class_name_to_table_name($class_name) {
-		$class_name = end(explode("\\", $class_name));
-		return strtolower(preg_replace(
-			array('/\\\\/', '/(?<=[a-z])([A-Z])/', '/__/'),
-			array('_', '_$1', '_'),
-			ltrim($class_name, '\\')
-		));
+	public static function query($service, $resource, $query) {
+		$queryparser = self::parser_factory($resource, $query, $service);
+		
+		$queryparser->parse();
+		$queryparser->execute();
+		
+		//return Serialiser::serialise($queryparser);
+		var_dump($queryparser);
+		
+		//echo json_encode(self::$metadata[$service], JSON_PRETTY_PRINT);
+		//var_dump(self::$metadata[$service]);
 	}
 	
-	protected static function _table_name_to_class_name($table_name) {
-		return preg_replace('/(?:^|_)(.?)/e',"strtoupper('$1')",$table_name);
-	}
-
-	/*
-	 * Utility functions for metadata
-	 */
-
-	protected static function check_type($column, $struct_type) {
-		$type = $struct_type->get_data_property($column);
-		return ($type) ? $type["dataType"] : null;
-	} 
-
-	private static function _get_structural_type($data) {
-		$base_model = self::_base_class_name($data->get_class_name());
-		$metadata = self::$metadata[$data->get_connection()];
-		return $metadata->get_structural_type($base_model);
-	}
-
-	/*
-	 * Functions for retrieving data
-	 */
-
-
-	public static function get_data($connection, $model, $vars) {
-		// functions can be called within the request URL path or query inside the $filter or $orderby parameter
-		//$value - the raw value of a primitive type's property
-		// Resource(x)? 
-				
-		$model_name = __NAMESPACE__."\ORM\\".self::_table_name_to_class_name($connection)."\\".self::_table_name_to_class_name($model);
-
-		$data = ORM\Model::factory($model_name, $connection);
-
-		//$data = ORM\ORM::for_table($model, $connection);
-
-		$query = new QueryParser($model, $connection, $vars, self::$metadata[$connection]);
-		$query->parse();
-		var_dump($query);
-
-		/*$data = $data->table_alias('p1');
-
-		$data = isset($vars['$select']) ? self::select($vars['$select'], $data) : self::select_all($data);
-		
-		if(isset($vars['$filter'])) {
-			$filter = $vars['$filter'];
-			try {
-				$query = QueryLexer::run($filter);
-				$data = self::filter($query, $data);
-			} catch (\Exception $e) {
-				echo $e;
-			}
-		}
-
-		$data = isset($vars['$top']) ? self::top($vars['$top'], $data) : $data;
-		$data = isset($vars['$skip']) ? self::skip($vars['$skip'], $data) : $data;
-		$data = isset($vars['$orderby']) ? self::orderby($vars['$orderby'], $data) : $data;
-		
-		$data = $data->find_many();*/
-		
-		//print_r($vars);
-		//echo ORM\ORM::get_last_query() . "\n";
-		
-		//$data = isset($vars['$expand']) ? json_encode(self::expand($vars['$expand'], $data), JSON_PRETTY_PRINT) : $data->as_json();
-		
-		//return $data;
-	}
+	
+	// Below here is be removed to other classes
 
 	/*
 	 * Select fields or navigation properties
