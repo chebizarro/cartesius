@@ -35,7 +35,6 @@ abstract class QueryParser implements QueryParserInterface {
 		$this->metadata = $metadata;
 		$this->resource = $resource;
 		$this->entities = $this->metadata->get_resource($this->service->parse_nc($this->resource));
-
 		$this->filter = isset($query['$filter']) ? QueryLexer::run('filter',$query['$filter']) : null;
 		$this->expand = isset($query['$expand']) ? QueryLexer::run('expand', $query['$expand']) : null;
 		$this->select = isset($query['$select']) ? QueryLexer::run('select', $query['$select']) : null;
@@ -56,8 +55,9 @@ abstract class QueryParser implements QueryParserInterface {
 
 	abstract protected function _filter($property, $value, $condition);
 	abstract protected function _orderby($property, $order);
-	abstract protected function _join($resource);
-	
+	abstract protected function _join($property, $nav_property);
+	abstract protected function _filter_not($property, $condition, $value);
+
 	public function parse() {
 		// These two will create joins if there are expanded properties
 		(isset($this->filter)) ? $this->filter($this->filter) : null;
@@ -83,18 +83,16 @@ abstract class QueryParser implements QueryParserInterface {
 		{
 			case T_RESOURCE: $this->filter_property($filter); break;
 			case T_BLOCK: $this->filter_block($filter); break;
-			case T_LENGTH: $this->filter_length($filter); break;
-			case T_SUBSTRING_OF: $this->filter_substring_of($filter); break;
-			case T_STARTS_WITH: $this->filter_starts_with($filter); break;
 			case T_NOT: $this->filter_not(); break;
-			//case T_TO_UPPER: return $this->filter_function(T_TO_UPPER,);
-			//case T_SUBSTRING: return $this->filter_function(T_SUBSTRING,);
+			case T_FUNCTION: $this->filter_function($filter); break;
+			default: throw new \Exception("Query error: Filter type {$filter[0]["match"]} does not exist");
+
 		}
 	}
 
 	protected function filter_property($filter) {
 		$property = $filter[0]["match"];
-		if($this->entities->property_exists($property)) {
+		if($this->entities->data_property_exists($property)) {
 			$property = $this->resource.".".$property;
 			$condition = $filter[1]["token"];
 			$value = $filter[2]["match"];
@@ -106,7 +104,6 @@ abstract class QueryParser implements QueryParserInterface {
 
 	private function filter_block($filter) {
 		$token = $filter[0]["match"][0]["token"];
-	
 		$operator = $filter[1]["token"];
 		$left = $filter[0]["match"];
 		$right = $filter[2]["match"];
@@ -136,12 +133,10 @@ abstract class QueryParser implements QueryParserInterface {
 					
 				}
 				break;
-			case T_STARTS_WITH :
-				if($operator == T_AND) {
-					$this->filter($left);
-					$this->filter($right);
-					break;
-				}
+			case T_FUNCTION :
+				$this->filter($left);
+				$this->filter($right);
+				break;
 		}
 	}
 
@@ -149,51 +144,9 @@ abstract class QueryParser implements QueryParserInterface {
 		$property = '"'.$filter[1]["match"][0]["match"].'"';
 		$condition = $filter[1]["match"][1]["match"];		
 		$value = "'".$filter[1]["match"][2]["match"]."'";
-		//return $data->where_raw('NOT ('.$column_name.$condition.$value.')');
+		$this->_filter_not($property, $condition, $value);
 	}
 
-	/*
-	 * Functions
-	 */
-
-	private static function filter_function($function, $query, $data) {
-		switch ($function) {
-			case T_TO_UPPER:
-				$string = self::filter_to_upper($query);
-				break;
-		}
-		//return $data->where_raw($string);
-	}
-
-	private static function filter_substring_of($query, $data) {
-		$column_name = $query[1]["match"][0]["match"][1]["match"];
-		$value = '%' . $query[1]["match"][0]["match"][0]["match"] . '%';
-		$condition = $query[3]["token"];		
-		//return ($condition == T_TRUE) ? $data->where_like($column_name, $value) : $data->where_not_like($column_name, $value);
-	}
-
-	private static function filter_starts_with($filter) {
-		$column_name = self::filter_join($query[1]["match"][0]["match"], $data);		
-		$value = $query[1]["match"][1]["match"][0]["match"] . '%';
-		$condition = $query[3]["token"];		
-		//return ($condition == T_TRUE) ? $data->where_like($column_name, $value) : $data->where_not_like($column_name, $value);
-	}
-
-	private static function filter_to_upper($query) {
-		$function = "upper(";
-		if($query[1]["token"][0]["token"] != T_RESOURCE) {
-			$function .= self::filter($query[1]["match"]).")";
-		} else {
-			$function .= '"'.$query[1]["match"][0]["match"].")";
-		}		
-		$function .= $query[2]["match"] . $query[3]["match"];
-		//return $function;
-	}
-
-	private static function filter_length($query, $data) {
-		$column_name = $query[1]["match"][0]["match"];
-		//return $data->where_raw('length("'.$column_name.'")'.$query[2]["match"].trim($query[3]["match"]));
-	}
 
 
 	/* Select */
@@ -239,43 +192,43 @@ abstract class QueryParser implements QueryParserInterface {
 				case T_EXPAND:
 					$expandedEntityCollection = $entityCollection;
 					foreach($orderby["match"] as $expand) {
-						$navProperty = $expandedEntityCollection->navigation_property_exists($expand["match"]);
-						if($navProperty) {
-							
-							$this->join($navProperty, $expand["match"]);
-							$expandedEntityCollection = $this->metadata->get_resource($expand["match"]);
+						$property = $expand["match"];
+						if($expandedEntityCollection->navigation_property_exists($property)) {
+							$navProperty = $expandedEntityCollection->get_navigation_property($property);
+							$this->join($navProperty);
+							$expandedEntityCollection = $this->metadata->get_resource($property);							
+						} elseif ($expandedEntityCollection->data_property_exists($property)) {
+							$navProperty = $expandedEntityCollection->get_data_property($property);
+							$property = "{$expandedEntityCollection->defaultResourceName}.{$property}";
+							$this->response = $this->_orderby($property, $expand["token"]); 
 						} else {
-							$navProperty = $expandedEntityCollection->get_data_property($expand["match"]);
-								$property = "{$expandedEntityCollection->defaultResourceName}.{$expand['match']}";
-								$this->response = $this->_orderby($property, $expand["token"]); 
-							} else{
-								throw new \Exception('Query error: Property does not exist');
-							}
+							throw new \Exception("Query Orderby error: Property: {$property} does not exist");
 						}
 					}
 					break;
 				case T_ORDERBY:
-				case T_ORDERBYDESC:	
-					if($entityCollection->data_property_exists($orderby["match"])) {
-						$this->response = $this->_orderby("{$this->resource}.{$orderby['match']}", $token);
+				case T_ORDERBYDESC:
+					$property = $orderby["match"];
+					if($entityCollection->data_property_exists($property)) {
+						$this->response = $this->_orderby("{$this->resource}.{$property}", $token);
 					} else {
-						throw new \Exception('Query error: Property does not exist');
+						throw new \Exception("Query Orderby error: Property: {$property} does not exist");
 					}
 					break;
-				default: throw new \Exception('Query error: Invalid Orderby clause');
+				default: throw new \Exception("Query error: Invalid Orderby clause");
 			}
 		}
 	}
 
 
-	protected function join($resource, $service) {
-		if(!isset($this->joins[$resource])) {
-			
-			$property = $this->entities->get_navigation_property($this->resource);
-			if ($property) {
-				$this->_join($property);
+	protected function join($resource) {
+		if(!isset($this->joins[$resource["name"]])) {
+			if ($this->entities->has_navigation_property($resource["name"])) {
+				$nav_property = $this->entities->get_navigation_property($resource["name"]);
+				$this->_join($resource, $nav_property);
+				$this->joins[] = $resource["name"];
 			} else {
-				throw new \Exception("Query error: Property: {$property} does not exist");
+				throw new \Exception("Query error: Property: {$resource["name"]} does not exist");
 			}
 		}
 	}
@@ -285,6 +238,125 @@ abstract class QueryParser implements QueryParserInterface {
 	protected function expand() {
 
 	}
+
+
+	/*
+	 * Functions
+	 */
+
+	protected function filter_function($filter) {
+		$function = $this->call_function($filter);
+		//$this->response = $this->response->raw_query($function);
+	}
+
+	protected function call_function($filter, $string = "") {
+		$function = "function_".$filter[0]["match"];
+		if(method_exists($this, $function)) {
+			return $this->$function($filter);
+		}
+	}
+
+	protected function function_substringof($filter) {
+		$property = $filter[1]["match"][0]["match"][1]["match"];
+		$value = '%' . $filter[1]["match"][0]["match"][0]["match"] . '%';
+		$condition = $filter[3]["token"];
+		$this->response = ($condition == T_TRUE) ? $this->response->where_like($property, $value) : $this->response->where_not_like($property, $value);
+		//return $property;
+	}
+
+	protected function function_startswith($filter) {
+		$property = $filter[1]["match"][0]["match"];
+		$value = $filter[1]["match"][1]["match"][0]["match"] . '%';
+		$condition = $filter[3]["token"];
+		$this->response = ($condition == T_TRUE) ? $this->response->where_like($property, $value) : $this->response->where_not_like($property, $value);
+		//return $property;
+	}
+
+	protected function function_toupper($filter) {
+		$function = "upper(";
+		if($filter[1]["token"][0]["token"] != T_RESOURCE) {
+			$function .= $this->call_function($filter[1]["match"]).")";
+		} else {
+			$function .= '"'.$filter[1]["match"][0]["match"].")";
+		}		
+		$function .= $filter[2]["match"] . $filter[3]["match"];
+		return $function;
+	}
+
+	protected function function_length($filter) {
+		$function = "length(";
+		if($filter[1]["token"][0]["token"] != T_RESOURCE) {
+			$function .= $this->call_function($filter[1]["match"]).")";
+		} else {
+			$function .= '"'.$filter[1]["match"][0]["match"].")";
+		}		
+		$function .= $filter[2]["match"] . $filter[3]["match"];
+		return $function;
+	}
+
+	protected function function_endswith() {
+	
+	}
+	
+	protected function function_indexof() {
+	
+	}
+
+	protected function function_replace() {
+	
+	}
+	
+	protected function function_substring() {
+	
+	}
+		
+	protected function function_tolower() {
+	
+	}
+	
+	protected function function_trim() {
+	
+	}
+	
+	protected function function_concat() {
+	
+	}
+	
+	protected function function_day() {
+	
+	}
+	
+	protected function function_hour() {
+	
+	}
+	
+	protected function function_minute() {
+	
+	}
+	
+	protected function function_month() {
+	
+	}
+	
+	protected function function_second() {
+	
+	}
+	
+	protected function function_year() {
+	
+	}
+	
+	protected function function_round() {
+	
+	}
+	
+	protected function function_floor() {
+	
+	}
+	
+	protected function function_ceiling() {
+	
+	}
 	
 }
 
@@ -293,7 +365,6 @@ class ORMQueryParser extends QueryParser {
 	protected function new_response() {
 		return \ORM::for_table($this->resource, $this->service->get_name())->create();
 	}
-
 
 	protected function _filter($property, $value, $condition) {
 		switch ($condition)
@@ -308,23 +379,26 @@ class ORMQueryParser extends QueryParser {
 		}
 	}
 	
+	protected function _filter_not($property, $condition, $value) {
+		$this->response = $this->response->where_raw("NOT ('{$property}'{$condition}'{$value}')");
+	}
+	
 	protected function _orderby($property, $order) {
 		switch ($order)
 		{
-			case: T_ORDERBY: return $this->response->order_by_asc($column);
-			case: T_ORDERBYDESC: return $this->response->order_by_desc($column);
+			case T_ORDERBY: return $this->response->order_by_asc($column);
+			case T_ORDERBYDESC: return $this->response->order_by_desc($column);
 			default: throw new \Exception('Query error: Invalid Orderby clause');
 		}
 	}
 
-	protected function _join($property) {
+	protected function _join($property, $nav_property) {
 		$this->response = $this->response->join(
-			$this->resource,
-			array("{$property['name']}.{$property['invForeignKeyNames'][0]}",
+			$this->$property['name'],
+			array("{$this->resouce}.{$navProperty['foreignKeyNames'][0]}",
 			"=",
-			"{$this->resouce}.{$navProperty['foreignKeyNames'][0]}"),
-			$this->resource
-		);		
+			"{$property['name']}.{$property['invForeignKeyNames'][0]}")
+		);
 	}
 	/* 
 	 * Top and Skip functions (limit & offset)
@@ -339,8 +413,11 @@ class ORMQueryParser extends QueryParser {
 	}
 
 	public function execute() {
+		
 		$this->count = ($this->inlinecount == "allpages") ? $this->response->count(): null;
-		$this->response = $this->response->find_many();
+		$this->response = $this->response->find_many()->as_array();
+		print_r($this->response);
+		echo \ORM::get_last_query();
 	}
 
 

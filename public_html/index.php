@@ -268,6 +268,7 @@ $app->get('/regextest', function() use ($app) {
 			"UnitPrice desc,ProductName/Category",
 			"Product/UnitPrice,ProductName/Category desc",
 			"Product/UnitPrice,ProductName desc,Category",
+			"Product/UnitPrice,ProductName desc,Category/CategoryItems/CategoryDescription",
 			"Product,ProductName",
 			"Suppliers/CompanyName"
 		),
@@ -379,43 +380,5 @@ $app->get('/expandtest', function() use ($app) {
 
 });
 
-$app->get('/jointest', function() use ($app) {
-//.where("Category.CategoryName", "startswith", "S")
-
-WebApi\ORM\ORM::configure('id_column_overrides', array(
-    'categories' => 'CategoryID',
-    'products' => 'ProductID',
-),
-"northwind");
-
-//$data = WebApi\ORM\ORM::for_table("products", "northwind")
-$data = WebApi\ORM\Model::factory("WebApi\ORM\Northwind\Products", "northwind");
-
-//print_r($data);
-
-$data = $data->table_alias('p1')->order_by_asc('CategoryID');
-
-
-echo $data->get_connection();
-
-echo $data->get_class_name();
-
-$data = WebApi\ORM\Model::factory("WebApi\ORM\Northwind\Products", "northwind")
-    ->table_alias('p1')
-    ->select('p1.*')
-    ->select('p2.*', 'p2_*')
-    ->join('categories', array('p2.CategoryID', '=', 'p1.CategoryID'), 'p2')
-    ->where_like('p2.CategoryName', 'B%')
-    ->find_many();
-    
-//print_r($data);
-
-//$data = WebApi\ORM\Model::factory("WebApi\ORM\Northwind\Products", "northwind");
-//$data = $data->find_many();
-
-//$meta = $data->get_metadata();
-
-//print_r($data);
-});
 
 $app->run();

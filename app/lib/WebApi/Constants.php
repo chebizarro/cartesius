@@ -42,6 +42,7 @@ const T_EXPAND			= 28;
 const T_ORDERBY			= 29;
 const T_ORDERBYDESC		= 30;
 
+const T_FUNCTION		= 31;
 
 /* Resource constants */
 const NC_PASCAL = 0;

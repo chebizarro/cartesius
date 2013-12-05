@@ -14,11 +14,11 @@ interface ServiceInterface {
 
 	public function get_resources();
 	
-	public function get_data_properties($struct_type);
+	public function get_data_properties($resource);
 
-	public function get_primary_key($struct_type);
+	public function get_primary_key($resource);
 
-	public function get_navigation_properties($struct_type);
+	public function get_navigation_properties($resource);
 
 	public function match_type($type);
 	
@@ -86,6 +86,7 @@ abstract class Service implements ServiceInterface {
 	abstract public function get_navigation_properties($struct_type);
 
 	abstract public function match_type($type);
+	
 }
 
 

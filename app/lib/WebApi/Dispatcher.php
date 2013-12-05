@@ -53,7 +53,7 @@ class Dispatcher {
 		$queryparser->execute();
 		
 		//return Serialiser::serialise($queryparser);
-		var_dump($queryparser);
+		//var_dump($queryparser);
 		
 		//echo json_encode(self::$metadata[$service], JSON_PRETTY_PRINT);
 		//var_dump(self::$metadata[$service]);

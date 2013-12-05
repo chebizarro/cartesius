@@ -26,6 +26,20 @@ class ORMService extends Service {
 		\ORM::configure('return_result_sets', true, $this->name);
 		\ORM::configure('logging', true, $this->name);
 		\ORM::configure('caching', true, $this->name);
+		
+		$tables = $this->get_resources();
+		
+		$primary_keys = [];
+		
+		foreach($tables as $table) {
+			$tablename = $table["resource"];
+			$pkey = $this->get_primary_key($tablename);
+			if($pkey) {
+				$primary_keys[$tablename] = $pkey[0]["name"];	
+			}
+		}
+		
+		\ORM::configure('id_column_overrides', $primary_keys, $this->name);
 	}
 	
 	protected function build_connection_string() {
@@ -36,11 +50,11 @@ class ORMService extends Service {
 
 	public function get_resources(){}
 
-	public function get_data_properties($struct_type){}
+	public function get_data_properties($resource){}
 
-	public function get_primary_key($struct_type){}
+	public function get_primary_key($resource){}
 
-	public function get_navigation_properties($struct_type){}
+	public function get_navigation_properties($resource){}
 
 	public function match_type($type){}
 		

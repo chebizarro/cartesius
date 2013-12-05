@@ -5,8 +5,6 @@ namespace WebApi;
 
 class MetaData implements \JsonSerializable {
 
-	private $endpoint;
-	private $connection;
 	private $entity_map;
 	private $service;
 
@@ -53,8 +51,12 @@ class MetaData implements \JsonSerializable {
 		} 
 	} 
 
-	public function get_resource($model_name) {
-		return $this->entity_map[$model_name];
+	public function get_resource($resource) {
+		return $this->entity_map[$resource];
+	}
+
+	public function resource_exists($resource) {
+		return (isset($this->entity_map[$resource]))? true : false;
 	}
 
 }
@@ -129,6 +131,7 @@ class StructuralType {
 				if($row["resource"] == $this->resource) {
 					$nav["name"] = $this->service->parse_nc($row["foreign_resource"]);
 					$nav["entityTypeName"] = $this->service->parse_nc($row["foreign_resource"]).":#" . $this->namespace;
+					$nav["nameOnServer"] = $row["foreign_resource"];
 					$nav["isScalar"] = true;
 					$nav["associationName"] = $row["association_name"];
 					$nav["foreignKeyNames"] = [$row["property"]];
@@ -136,6 +139,7 @@ class StructuralType {
 				} else {
 					$nav["name"] = $this->service->parse_nc($row["resource"]);
 					$nav["entityTypeName"] = $this->service->parse_nc($row["resource"]).":#" . $this->namespace;
+					$nav["nameOnServer"] = $row["resource"];
 					$nav["isScalar"] = false;						
 					$nav["associationName"] = $row["association_name"];
 					$nav["invForeignKeyNames"] = [$row["foreign_property"]];
@@ -158,9 +162,9 @@ class StructuralType {
 	}
 
 	public function get_data_property($property) {
-		foreach ($this->dataProperties as $navproperty) {
-			if ($navproperty["name"] == $property) {
-				return $navproperty;
+		foreach ($this->dataProperties as $dataproperty) {
+			if ($dataproperty["name"] == $property) {
+				return $dataproperty;
 			}
 		}
 		throw new \Exception("Error: Data Property: {$property} does not exist");
@@ -176,7 +180,7 @@ class StructuralType {
 	}
 
 	public function navigation_property_exists($property) {
-		foreach ($this->dataProperties as $navproperty) {
+		foreach ($this->navigationProperties as $navproperty) {
 			if ($navproperty["name"] == $property) {
 				return true;
 			}

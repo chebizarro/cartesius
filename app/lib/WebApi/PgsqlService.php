@@ -21,33 +21,33 @@ class PgsqlService extends ORMService {
 		return $resource;
 	}
 
-	public function get_data_properties($struct_type) {
+	public function get_data_properties($resource) {
 		$sql = "SELECT column_name AS name,
 				is_nullable,
 				column_default AS default_value,
 				character_maximum_length AS max_length,
 				udt_name AS data_type 
 				FROM information_schema.columns
-				WHERE table_name = '{$struct_type}'
+				WHERE table_name = '{$resource}'
 				ORDER BY ordinal_position";
 				
 		return \ORM::get_db($this->name)->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 	}
 
-	public function get_primary_key($struct_type) {
+	public function get_primary_key($resource) {
 		$sql = "SELECT tc.constraint_name AS pkey, kcu.column_name AS name
 				FROM information_schema.table_constraints tc
 				LEFT JOIN information_schema.key_column_usage kcu
 				ON tc.constraint_catalog = kcu.constraint_catalog
 				AND tc.constraint_name = kcu.constraint_name
-				WHERE tc.table_name = '{$struct_type}'
+				WHERE tc.table_name = '{$resource}'
 				AND tc.constraint_type = 'PRIMARY KEY'";	
 
 		return \ORM::get_db($this->name)->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 		
 	}
 
-	public function get_navigation_properties($struct_type) {
+	public function get_navigation_properties($resource) {
 		$sql = "SELECT
 				tc.table_name AS resource,
 				kcu.column_name AS property,
@@ -61,7 +61,7 @@ class PgsqlService extends ORMService {
 				JOIN information_schema.constraint_column_usage 
 				AS ccu ON ccu.constraint_name = tc.constraint_name
 				WHERE constraint_type = 'FOREIGN KEY'
-				AND (ccu.table_name = '{$struct_type}' OR tc.table_name = '{$struct_type}')";
+				AND (ccu.table_name = '{$resource}' OR tc.table_name = '{$resource}')";
 				
 		return \ORM::get_db($this->name)->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 	}
