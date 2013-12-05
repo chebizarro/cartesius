@@ -327,13 +327,11 @@ $app->get('/regextest', function() use ($app) {
 
 $app->get('/filtertest', function() use ($app) {
  	$app->response->headers->set('Content-Type', 'application/javascript');
-/*
+
 	echo \WebApi\Dispatcher::query('northwind', 'employees' ,array('$filter' => 'EmployeeID eq 1'));
-	echo \WebApi\Dispatcher::query('todos', 'todos', array('$filter' => 'IsArchived eq false'));
 	echo \WebApi\Dispatcher::query('northwind','orders',array('$filter' => "Freight gt 100"));
 	echo \WebApi\Dispatcher::query('northwind','orders',array('$filter' => "OrderDate ge datetime'1998-04-28T17:00:00.000Z'"));
 	echo \WebApi\Dispatcher::query('northwind','employees',array('$filter' => "Region ne null"));
-	echo \WebApi\Dispatcher::query('todos','todos',array('$filter' => "(IsArchived eq false) and (IsDone eq false)"));
 	echo \WebApi\Dispatcher::query('northwind','suppliers',array('$filter' => "(startswith(CompanyName,'S') eq true) and (substringof('er', City) eq true)"));
 	echo \WebApi\Dispatcher::query('northwind','suppliers',array('$filter' => "(City eq 'London') or (City eq 'Paris')"));
 	echo \WebApi\Dispatcher::query('northwind','orders',array('$filter' => "(Freight gt 100) and (OrderDate gt datetime'1998-03-31T17:00:00.000Z')"));
@@ -345,19 +343,19 @@ $app->get('/filtertest', function() use ($app) {
 	echo \WebApi\Dispatcher::query('northwind','products',array('$filter' => "startswith(ProductName,'C') eq true"));
 	echo \WebApi\Dispatcher::query('northwind','orders',array('$filter' => "not (Freight gt 100)"));
 	echo \WebApi\Dispatcher::query('northwind','products',array('$expand' => "Suppliers"));
-*/
+
 	echo \WebApi\Dispatcher::query('northwind','suppliers',array('$filter' => "(startswith(CompanyName,'S') eq true) and (substringof('er', City) eq true)"));
 
 	echo \WebApi\Dispatcher::query('cartesius','account',array('$filter' => 'id eq 2', '$expand' => "ProjectAuthor"));
 	
-/*	echo \WebApi\Dispatcher::query('northwind','products',array('$filter' => "startswith(Categories/CategoryName,'C') eq true", '$select' => "Categories"));
+	echo \WebApi\Dispatcher::query('northwind','products',array('$filter' => "startswith(Categories/CategoryName,'C') eq true", '$select' => "Categories"));
 	echo \WebApi\Dispatcher::query('northwind','orders',array('$filter' => "Customers/Region eq 'CA'"));
 	echo \WebApi\Dispatcher::query('northwind','products',array('$filter' => "startswith(Suppliers/CompanyName,'S') eq true", '$orderby' => "UnitPrice desc,ProductName"));
 	echo \WebApi\Dispatcher::query('northwind','products',array('$filter' => "startswith(Suppliers/CompanyName,'S') eq true", '$orderby' => "Suppliers/CompanyName"));
 	echo \WebApi\Dispatcher::query('northwind','products',array('$filter' => "startswith(Suppliers/CompanyName,'S') eq true", '$orderby' => "Suppliers/CompanyName"));
 	echo \WebApi\Dispatcher::query('northwind','customers',array('$filter' => "(startswith(CompanyName,'S')eq true) and (substringof('er',City) eq true)", '$select' => "CompanyName,City"));
 	echo \WebApi\Dispatcher::query('northwind','employees',array('$select' => "Photo", '$filter' => "Region ne null"));
-*/
+
 });
 
 $app->get('/expandtest', function() use ($app) {

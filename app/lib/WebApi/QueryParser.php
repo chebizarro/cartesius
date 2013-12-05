@@ -29,8 +29,6 @@ abstract class QueryParser implements QueryParserInterface {
 	protected $joins;
 
 	public function __construct($resource, $query, $service, $metadata) {
-		// expand: expand, select
-		// join: filter, orderby
 		$this->service = $service;
 		$this->metadata = $metadata;
 		$this->resource = $resource;
@@ -47,6 +45,10 @@ abstract class QueryParser implements QueryParserInterface {
 		$this->joins = [];
 		
 		$this->response = $this->new_response();
+
+		echo "\n" . \ORM::get_last_query() . "\n\n"; 
+		if(isset($this->filter)) { print_r($this->filter);}
+
 	}
 	
 	abstract protected function new_response();
@@ -83,7 +85,7 @@ abstract class QueryParser implements QueryParserInterface {
 		{
 			case T_RESOURCE: $this->filter_property($filter); break;
 			case T_BLOCK: $this->filter_block($filter); break;
-			case T_NOT: $this->filter_not(); break;
+			case T_NOT: $this->filter_not($filter); break;
 			case T_FUNCTION: $this->filter_function($filter); break;
 			default: throw new \Exception("Query error: Filter type {$filter[0]["match"]} does not exist");
 
@@ -113,13 +115,7 @@ abstract class QueryParser implements QueryParserInterface {
 					$this->filter($left);
 					$this->filter($right);
 				} elseif ($operator == T_OR) {
-					/*
-					$data = $data->where_raw(
-						'("'.$left[0]['match'].'"'.$left[1]['match']."'".$left[2]['match']."'".
-						" OR ".
-						'"'.$right[0]['match'].'"'.$right[1]['match']."'".$right[2]['match']."')"
-					);
-					*/
+					$this->_filter_or($left, $right);
 				}
 				break;
 			case T_BLOCK :
@@ -140,10 +136,10 @@ abstract class QueryParser implements QueryParserInterface {
 		}
 	}
 
-	private static function filter_not($filter) {
-		$property = '"'.$filter[1]["match"][0]["match"].'"';
+	protected function filter_not($filter) {
+		$property = $filter[1]["match"][0]["match"];
 		$condition = $filter[1]["match"][1]["match"];		
-		$value = "'".$filter[1]["match"][2]["match"]."'";
+		$value = $filter[1]["match"][2]["match"];
 		$this->_filter_not($property, $condition, $value);
 	}
 
@@ -223,7 +219,7 @@ abstract class QueryParser implements QueryParserInterface {
 
 	protected function join($resource) {
 		if(!isset($this->joins[$resource["name"]])) {
-			if ($this->entities->has_navigation_property($resource["name"])) {
+			if ($this->entities->navigation_property_exists($resource["name"])) {
 				$nav_property = $this->entities->get_navigation_property($resource["name"]);
 				$this->_join($resource, $nav_property);
 				$this->joins[] = $resource["name"];
@@ -249,27 +245,70 @@ abstract class QueryParser implements QueryParserInterface {
 		//$this->response = $this->response->raw_query($function);
 	}
 
-	protected function call_function($filter, $string = "") {
+	protected function call_function($filter) {
 		$function = "function_".$filter[0]["match"];
 		if(method_exists($this, $function)) {
 			return $this->$function($filter);
+		} else {
+			throw new \Exception("Function error: Function: {$function} does not exist");			
 		}
 	}
 
 	protected function function_substringof($filter) {
+		$token = $filter[1]["match"][0]["match"][1]["token"];
+		/*switch($token) {
+			case T_EXPAND:
+				break;
+			case T_RESOURCE:
+				$property = $filter[1]["match"][0]["match"][1]["match"];
+				break;			
+			case T_FUNCTION:
+				$property = $this->call_function($filter[1]["match"][0]["match"][1]["match"]);
+				break;
+		}*/
 		$property = $filter[1]["match"][0]["match"][1]["match"];
+
 		$value = '%' . $filter[1]["match"][0]["match"][0]["match"] . '%';
 		$condition = $filter[3]["token"];
 		$this->response = ($condition == T_TRUE) ? $this->response->where_like($property, $value) : $this->response->where_not_like($property, $value);
-		//return $property;
+		return null;
 	}
 
 	protected function function_startswith($filter) {
+		$token = $filter[1]["match"][0]["token"];
+		
+		switch($token) {
+			case T_EXPAND:
+				$entityCollection = $this->entities;
+				$expandedEntityCollection = $entityCollection;
+					foreach($filter[1]["match"][0]["match"] as $expand) {
+						$property = $expand["match"];
+						if($expandedEntityCollection->navigation_property_exists($property)) {
+							$navProperty = $expandedEntityCollection->get_navigation_property($property);
+							$this->join($navProperty);
+							$expandedEntityCollection = $this->metadata->get_resource($property);							
+						} elseif ($expandedEntityCollection->data_property_exists($property)) {
+							$navProperty = $expandedEntityCollection->get_data_property($property);
+							$property = "{$expandedEntityCollection->defaultResourceName}.{$property}";
+						} else {
+							throw new \Exception("Query Orderby error: Property: {$property} does not exist");
+						}
+					}
+
+				break;
+			case T_RESOURCE:
+				$property = $filter[1]["match"][0]["match"];
+				break;			
+			case T_FUNCTION:
+				$property = $this->call_function($filter[1]["match"][0]["match"]);
+				break;
+		}
+		
 		$property = $filter[1]["match"][0]["match"];
 		$value = $filter[1]["match"][1]["match"][0]["match"] . '%';
 		$condition = $filter[3]["token"];
 		$this->response = ($condition == T_TRUE) ? $this->response->where_like($property, $value) : $this->response->where_not_like($property, $value);
-		//return $property;
+		return null;
 	}
 
 	protected function function_toupper($filter) {
@@ -285,7 +324,7 @@ abstract class QueryParser implements QueryParserInterface {
 
 	protected function function_length($filter) {
 		$function = "length(";
-		if($filter[1]["token"][0]["token"] != T_RESOURCE) {
+		if($filter[1]["match"][0]["token"] != T_RESOURCE) {
 			$function .= $this->call_function($filter[1]["match"]).")";
 		} else {
 			$function .= '"'.$filter[1]["match"][0]["match"].")";
@@ -380,7 +419,15 @@ class ORMQueryParser extends QueryParser {
 	}
 	
 	protected function _filter_not($property, $condition, $value) {
-		$this->response = $this->response->where_raw("NOT ('{$property}'{$condition}'{$value}')");
+		$this->response = $this->response->where_raw("NOT (\"{$property}\" {$condition} '{$value}')");
+	}
+	
+	protected function _filter_or($left, $right) {
+		$this->response = $this->response->where_raw(
+			"(\"{$left[0]['match']}\"{$left[1]['match']}'{$left[2]['match']}')".
+			" OR ".
+			"(\"{$right[0]['match']}\"{$right[1]['match']}'{$right[2]['match']}')"
+		);
 	}
 	
 	protected function _orderby($property, $order) {
@@ -416,8 +463,6 @@ class ORMQueryParser extends QueryParser {
 		
 		$this->count = ($this->inlinecount == "allpages") ? $this->response->count(): null;
 		$this->response = $this->response->find_many()->as_array();
-		print_r($this->response);
-		echo \ORM::get_last_query();
 	}
 
 
