@@ -134,7 +134,7 @@ class StructuralType {
 					$nav["nameOnServer"] = $row["foreign_resource"];
 					$nav["isScalar"] = true;
 					$nav["associationName"] = $row["association_name"];
-					$nav["foreignKeyNames"] = [$row["property"]];
+					$nav["foreignKeyNames"] = [$row["foreign_property"]];
 					
 				} else {
 					$nav["name"] = $this->service->parse_nc($row["resource"]);
@@ -142,7 +142,7 @@ class StructuralType {
 					$nav["nameOnServer"] = $row["resource"];
 					$nav["isScalar"] = false;						
 					$nav["associationName"] = $row["association_name"];
-					$nav["invForeignKeyNames"] = [$row["foreign_property"]];
+					$nav["invForeignKeyNames"] = [$row["property"]];
 				}
 				array_push($this->navigationProperties, $nav);
 			}				
@@ -190,6 +190,14 @@ class StructuralType {
 	
 	public function get_primary_key() {
 		return $this->primary_key;
+	}
+
+	public function get_name() {
+		return $this->resource;
+	}
+
+	public function get_default_resource_name() {
+		return $this->defaultResourceName;
 	}
 
 }
