@@ -235,44 +235,24 @@ abstract class QueryParser implements QueryParserInterface {
 	}
 
 	/* Expand */
+	
+	protected function expand_resource($nav_from, $nav_to, &$result) {
+		$resources = [];
+		$nav_to = $this->metadata->get_resource($nav_to);
+		$this->join($nav_from, $nav_to);
+		$resources[$nav_to->get_default_resource_name()]["resource"] = $nav_to;
+		$resources[$nav_to->get_default_resource_name()]["properties"] = "{$nav_to->get_name()}.*";
+		$result[] = $resources;
+	}
+
 
 	protected function expand() {
-		$resources = [];
-		if(isset($this->expand)) {
-
-			foreach($this->expand as $expanded) {
-				$token = $expanded["token"];
-
-				switch($token) {
-					case T_RESOURCE:
-						$nav_from = $this->entities;
-						$nav_to = $this->metadata->get_resource($expanded["match"]);
-						$this->join($nav_from, $nav_to);
-						$resources[$nav_to->get_default_resource_name()] = array("resource" => $nav_to);
-						break;
-					case T_EXPAND: 	
-						$expandedEntities = $this->entities;
-						foreach($expanded["match"] as $expand) {
-							if($expandedEntities->navigation_property_exists($expand["match"])) {
-								$nav_from = $expandedEntities;
-								$nav_to = $this->metadata->get_resource($expand["match"]);
-								$this->join($nav_from, $nav_to);
-								$expandedEntities = $nav_to;
-								$resources[$nav_to->get_default_resource_name()] = array("resource" => $nav_to);
-							} else {
-								$nav_property = $expandedEntities->get_data_property($expand["match"]);
-								if(!isset($resources[$nav_to->get_default_resource_name()]["property"])) {
-									$resources[$nav_to->get_default_resource_name()]["property"] = array($nav_property);
-								} else {
-									array_push($resources[$nav_to->get_default_resource_name()]["property"], $nav_property);
-								}
-							}
-						}
-						break;
-				}
-			}
-		}		
-		$response = $this->response;
+		$results = [];
+		
+		$results[$this->resource]["resource"] = $this->entities;
+		$results[$this->resource]["properties"]=[];
+		$results[$this->resource]["expand"]=[];
+		
 		
 		if(count($this->selected > 0)) {
 			$idstring = "{$this->resource}.{$this->entities->get_primary_key()}";
@@ -280,16 +260,41 @@ abstract class QueryParser implements QueryParserInterface {
 				$this->selected[] = $idstring;
 			}
 			foreach($this->selected as $select) {
-				$response = $response->select($select);
+				$results[$this->resource]["properties"][] = $select;
 			}
 		} else {
-			$response = $response->select("{$this->resource}.*");
+			$results[$this->resource]["properties"][] = "{$this->resource}.*";
 		}
 		
-		$results[$this->resource] = array(
-			"response" => $response->find_many()->as_array(),
-			"resource" => $this->entities);
-				
+		if(isset($this->expand)) {
+			foreach($this->expand as $expanded) {
+				$token = $expanded["token"];
+				switch($token) {
+					case T_RESOURCE:
+						$this->expand_resource($this->entities, $expanded["match"], $results[$this->resource]["expand"]);
+						break;
+					case T_EXPAND: 	
+						$expandedEntities = $this->entities;
+						$expandedArray = &$results[$this->resource]["expand"];
+						foreach($expanded["match"] as $expand) {
+							if($expandedEntities->navigation_property_exists($expand["match"])) {
+								$this->expand_resource($expandedEntities, $expand["match"], $expandedArray);
+								$expandedEntities = $this->metadata->get_resource($expand["match"]);
+								$oldArray = &$expandedArray[count($expandedArray)-1][$expand["match"]];
+								$expandedArray = &$expandedArray[count($expandedArray)-1][$expand["match"]]["expand"];
+							} else {
+								$property = $expandedEntities->get_data_property($expand["match"]);
+								$oldArray["properties"] = "{$expandedEntities->get_name()}.{$property['name']}";
+							}
+						}
+						break;
+				}
+			}
+		}		
+
+		$response = $this->response;
+		
+/*				
 		foreach($resources as $resource) {
 			$response = $this->response;
 			$resource_name = $resource["resource"]->get_name();
@@ -310,6 +315,7 @@ abstract class QueryParser implements QueryParserInterface {
 				"response" => $response->find_many()->as_array(),
 				"resource" => $resource["resource"]);
 		}
+*/
 		print_r($results);
 	}
 
