@@ -23,7 +23,7 @@ define(['plugins/router',
 					entityManager: self.datacontext.manager,
 					endPoint: "Account",
 					mapping: {
-						ignore: ['project_author','team_member'] // category.products is recursive - ignore it
+						ignore: ['ProjectAuthor','TeamMember'] // category.products is recursive - ignore it
 					},
 
 					onFail: function(error) {
@@ -41,10 +41,10 @@ define(['plugins/router',
 					var query = new breeze.EntityQuery()
 						.from("Project")
 						.where("id","eq",project.id)
-						.expand("ProjectAuthor, Team.TeamMember");
+						.expand("ProjectAuthor, Team");
 					return datacontext.manager.executeQuery(query)
 							.then(function(data){
-								console.log(data.results[0]);
+								//console.log(data);
 								self.data = data.results[0];
 							})
 							.fail(function(e) {
@@ -62,8 +62,11 @@ define(['plugins/router',
 			var projectAuthors = $("#projectAuthors").data("kendoMultiSelect");
 			var authors = [];
 			
-			ko.utils.arrayForEach(self.data.project_author(), function(item) {
-				authors.push(item.account_id());
+			//console.log(self.data)
+			
+			ko.utils.arrayForEach(self.data.ProjectAuthor, function(item) {
+				authors.push(item.account_id);
+				consoler.log(item.account_id());
 			});
 
 			projectAuthors.value(authors);

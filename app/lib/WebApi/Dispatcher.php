@@ -47,84 +47,18 @@ class Dispatcher {
 	}
 
 	public static function query($service, $resource, $query) {
-		$queryparser = self::parser_factory($resource, $query, $service);
-		
-		$queryparser->parse();
-		$queryparser->execute();
-		
+		//try {
+			$queryparser = self::parser_factory($resource, $query, $service);
+			$queryparser->parse();
+			return json_encode($queryparser->execute(), JSON_PRETTY_PRINT);
+		//} catch (\Exception $e) {
+		//	echo $e->getCode();
+		//}
 		//return Serialiser::serialise($queryparser);
-		//var_dump($queryparser);
-		
-		//echo json_encode(self::$metadata[$service], JSON_PRETTY_PRINT);
-		//var_dump(self::$metadata[$service]);
 	}
 	
 	
 	// Below here is be removed to other classes
-
-	/*
-	 * Expand functions wich expand navigation properties
-	 */
-
-	private static function expand($expand, $data) {
-		$stack = [];
-		$to_expand = array();
-
-		$expand = str_getcsv($expand);
-				
-		foreach($expand as $expander) {
-			$to_expand = array_merge($to_expand, explode("/", $expander));
-		}
-
-		array_walk($to_expand, function(&$value, $key) { 
-			$value = self::_class_name_to_table_name($value);
-		}); 
-
-		
-		$result = self::recurse_expand($data, array_reverse($to_expand), $stack);
-		return $result;
-	}
-	
-	private static function recurse_expand($object, $expand, &$stack) {
-		$ref = 0;
-		$result = [];
-		foreach ($object as $row) {
-			$row_array = $row->as_array();
-			$cereal = serialize($row_array);
-			foreach($stack as $key => $val) {
-				if($val === $cereal) {
-					$ref = $key+1;
-					break;
-				}
-			}
-			if($ref === 0) {
-				$stack[] = $cereal;
-				$object_name = get_class($row);
-				$row_array = array_merge(array('$id'=>count($stack), '$type'=>str_replace("\\",".",$object_name)),$row_array);
-				$object_name = self::_class_name_to_table_name($object_name);
-				
-				if(($key = array_search($object_name, $expand)) !== false) {
-					unset($expand[$key]);
-				}
-				
-				if($expand) {
-					foreach($expand as $expander) {
-						if(method_exists($row, $expander)) {
-							$expanded = $row->{$expander}()->find_many();
-							if($expanded->count() > 0) {
-								$row_array[$expander] = self::recurse_expand($expanded, $expand, $stack);
-							}
-						}
-					}
-				}
-				$result[] = $row_array;
-			} else {
-				$result[] = array("\$ref" => $ref);
-			}
-			$ref = 0;
-		}
-		return $result;
-	}
 
 
 	/*

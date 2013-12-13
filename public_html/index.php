@@ -227,10 +227,10 @@ $app->post('/webapi/:connection/SaveChanges', function($connection) use ($app) {
 
 
 
-$app->get('/webapi/:connection/:model', function($connection, $model) use ($app) {
+$app->get('/webapi/:connection/:resource', function($connection, $resource) use ($app) {
 	$app->contentType('application/json');
 	$vars = $app->request->get();
-	echo \WebApi\Dispatcher::query($connection, $model, $vars);
+	echo \WebApi\Dispatcher::query($connection, $resource, $vars);
 });
 
 
@@ -345,8 +345,8 @@ $app->get('/filtertest', function() use ($app) {
 	echo \WebApi\Dispatcher::query('northwind','suppliers',array('$filter' => "(startswith(CompanyName,'S') eq true) and (substringof('er', City) eq true)"));
 	echo \WebApi\Dispatcher::query('cartesius','account',array('$filter' => 'id eq 2', '$expand' => "ProjectAuthor"));
 	
-	echo \WebApi\Dispatcher::query('northwind','products',array('$filter' => "startswith(Categories/CategoryName,'C') eq true", '$select' => "ProductName,Categories/CategoryName"));
-	echo \WebApi\Dispatcher::query('cartesius','project',array('$filter' => "id eq 2", '$select' => "title, ProjectAuthor/Account/id, "));
+//	echo \WebApi\Dispatcher::query('northwind','products',array('$filter' => "startswith(Categories/CategoryName,'C') eq true", '$select' => "ProductName,Categories/CategoryName"));
+	echo \WebApi\Dispatcher::query('cartesius','project',array('$filter' => "id eq 2", '$select' => "title, ProjectAuthor/Account, "));
 	echo \WebApi\Dispatcher::query('northwind','orders',array('$filter' => "Customers/Region eq 'CA'"));
 	echo \WebApi\Dispatcher::query('northwind','products',array('$filter' => "startswith(Suppliers/CompanyName,'S') eq true", '$orderby' => "UnitPrice desc,ProductName"));
 	echo \WebApi\Dispatcher::query('northwind','products',array('$filter' => "startswith(Suppliers/CompanyName,'S') eq true", '$orderby' => "Suppliers/CompanyName"));

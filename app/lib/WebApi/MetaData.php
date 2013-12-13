@@ -12,7 +12,7 @@ class MetaData implements \JsonSerializable {
 	public $structuralTypes;
 	public $resourceEntityTypeMap;
 	
-	function __construct($service) {
+	function __construct(&$service) {
 		$this->service = $service;
 		$this->construct_data_services();
 		$this->construct_structural_types();
@@ -66,6 +66,7 @@ class StructuralType {
 	
 	private $resource;
 	private $primary_key;
+	private $service;
 	
 	public $shortName;
 	public $namespace;
@@ -85,7 +86,6 @@ class StructuralType {
 		
 		$this->construct_data_properties();
 		$this->construct_navigation_properties();
-		
 	}
 	
 	
@@ -134,7 +134,7 @@ class StructuralType {
 					$nav["nameOnServer"] = $row["foreign_resource"];
 					$nav["isScalar"] = true;
 					$nav["associationName"] = $row["association_name"];
-					$nav["foreignKeyNames"] = [$row["foreign_property"]];
+					$nav["foreignKeyNames"] = [$row["property"]];
 					
 				} else {
 					$nav["name"] = $this->service->parse_nc($row["resource"]);
@@ -142,7 +142,7 @@ class StructuralType {
 					$nav["nameOnServer"] = $row["resource"];
 					$nav["isScalar"] = false;						
 					$nav["associationName"] = $row["association_name"];
-					$nav["invForeignKeyNames"] = [$row["property"]];
+					//$nav["invForeignKeyNames"] = [$row["property"]];
 				}
 				array_push($this->navigationProperties, $nav);
 			}				
@@ -198,6 +198,14 @@ class StructuralType {
 
 	public function get_default_resource_name() {
 		return $this->defaultResourceName;
+	}
+
+	public function get_namespace() {
+		return $this->namespace;
+	}
+
+	public function get_entity_type_name() {
+		return $this->defaultResourceName.":#".$this->namespace;
 	}
 
 }

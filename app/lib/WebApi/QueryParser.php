@@ -32,24 +32,20 @@ abstract class QueryParser implements QueryParserInterface {
 	public function __construct($resource, $query, $service, $metadata) {
 		$this->service = $service;
 		$this->metadata = $metadata;
-		$this->resource = $resource;
-		$this->entities = $this->metadata->get_resource($this->service->parse_nc($this->resource));
+		$this->entities = $this->metadata->get_resource($this->service->parse_nc($resource));
+		$this->resource = $this->entities->get_name();
 		$this->filter = isset($query['$filter']) ? QueryLexer::run('filter',$query['$filter']) : null;
 		$this->expand = isset($query['$expand']) ? QueryLexer::run('expand', $query['$expand']) : null;
 		$this->select = isset($query['$select']) ? QueryLexer::run('select', $query['$select']) : null;
 		$this->orderby = isset($query['$orderby']) ? QueryLexer::run('orderby', $query['$orderby']) : null;
 		$this->top = isset($query['$top']) ? intval($query['$top']) : null;
 		$this->skip = isset($query['$skip']) ? intval($query['$skip']) : null;
-		$this->inlinecount = isset($query['$inlinecount']) ? $query['$inlinecount'] : null;
+		$this->inlinecount = isset($query['$inlinecount']) ? $query['$inlinecount'] : "none";
 		$this->format = isset($query['$format']) ? $query['$format'] : null;
 		
 		$this->joins = [];
 		
 		$this->response = $this->new_response();
-
-		echo "\n" . \ORM::get_last_query() . "\n\n"; 
-		echo $resource . "\n";
-		print_r($query);
 
 	}
 	
@@ -65,6 +61,7 @@ abstract class QueryParser implements QueryParserInterface {
 	public function parse() {
 		// These two will create joins if there are expanded properties
 		(isset($this->filter)) ? $this->filter($this->filter) : null;
+		$this->count = ($this->inlinecount == "allpages") ? $this->response->distinct()->count(): null;
 		(isset($this->orderby)) ? $this->orderby() : null;
 
 	}
@@ -193,15 +190,14 @@ abstract class QueryParser implements QueryParserInterface {
 		$nav_to_name = $nav_to->get_name();
 
 		if(!isset($this->joins[$nav_to_name])) {
-		
-			$nav_to_key = ($nav_from_property['isScalar']) ? $nav_from_property['foreignKeyNames'][0] : $nav_from_property['invForeignKeyNames'][0];
-			$nav_from_key = ($nav_to_property['isScalar']) ? $nav_to_property['foreignKeyNames'][0] : $nav_to_property['invForeignKeyNames'][0];
-		
+			$nav_to_key = ($nav_from_property['isScalar']) ? $nav_from_property['foreignKeyNames'][0] : $nav_from->get_primary_key();
+			$nav_from_key = ($nav_to_property['isScalar']) ? $nav_to_property['foreignKeyNames'][0] : $nav_from->get_primary_key();
+
 			$this->response = $this->response->join(
 				$nav_to_name,
-				array("{$nav_to_name}.{$nav_from_key}",
+				array("{$nav_to_name}.{$nav_to_key}",
 				"=",
-				"{$nav_from_name}.{$nav_to_key}")
+				"{$nav_from_name}.{$nav_from_key}")
 			);
 			$this->joins[$nav_to_name] = array($nav_from_property, $nav_to_property);
 		}
@@ -236,46 +232,58 @@ abstract class QueryParser implements QueryParserInterface {
 
 	/* Expand */
 	
-	protected function expand_resource($nav_from, $nav_to, &$result) {
-		$resources = [];
-		$nav_to = $this->metadata->get_resource($nav_to);
+	protected function expand_resource($nav_from, $nav_to_name, &$result) {
+		$resource = [];
+		$nav_to = $this->metadata->get_resource($nav_to_name);
 		$this->join($nav_from, $nav_to);
-		$resources[$nav_to->get_default_resource_name()]["resource"] = $nav_to;
-		$resources[$nav_to->get_default_resource_name()]["properties"] = "{$nav_to->get_name()}.*";
-		$result[] = $resources;
+		$response = $this->response;
+		$resource[$nav_to_name]["resource"] = &$nav_to;
+		$response = $response->use_id_column($nav_to->get_primary_key());
+		$resource[$nav_to_name]["response"] = $response;
+		$resource[$nav_to_name]["from"] = (count($this->selected > 0)) ? null : &$nav_from;
+		$resource[$nav_to_name]["result"] = $response->select("{$nav_to->get_name()}.*")->find_many()->as_array();
+		//$resources["query"] = \ORM::get_last_query();	
+		$result[] = $resource;
+
 	}
 
 
 	protected function expand() {
-		$results = [];
-		
-		$results[$this->resource]["resource"] = $this->entities;
-		$results[$this->resource]["properties"]=[];
-		$results[$this->resource]["expand"]=[];
-		
-		
+		$resource[$this->resource]["resource"] = &$this->entities;
+		$resource[$this->resource]["expand"]=[];
+		$resource[$this->resource]["response"]= $this->response;
+		$resource[$this->resource]["result"] = $resource[$this->resource]["response"]->select("{$this->resource}.*")->find_many()->as_array();
+
 		if(count($this->selected > 0)) {
-			$idstring = "{$this->resource}.{$this->entities->get_primary_key()}";
-			if(!in_array($idstring,$this->selected)) {
-				$this->selected[] = $idstring;
-			}
+			//$idstring = "{$this->resource}.{$this->entities->get_primary_key()}";
+
+			//if(!in_array($idstring,$this->selected)) {
+			//	$this->selected[] = $idstring;
+			//}
 			foreach($this->selected as $select) {
-				$results[$this->resource]["properties"][] = $select;
+				$resource[$this->resource]["select"] = $$select;
 			}
-		} else {
-			$results[$this->resource]["properties"][] = "{$this->resource}.*";
 		}
+		
+		$resource[$this->resource]["from"] = null;
+		
+		// else {
+			//$resource[$this->resource]["result"] = $resource[$this->resource]["result"]->select("{$this->resource}.*");
+		//}
+
+		//$resource[$this->resource]["result"] = $resource[$this->resource]["result"]->find_many()->as_array();
+		//$resource["query"] = \ORM::get_last_query();	
 		
 		if(isset($this->expand)) {
 			foreach($this->expand as $expanded) {
 				$token = $expanded["token"];
 				switch($token) {
 					case T_RESOURCE:
-						$this->expand_resource($this->entities, $expanded["match"], $results[$this->resource]["expand"]);
+						$this->expand_resource($this->entities, $expanded["match"], $resource[$this->resource]["expand"]);
 						break;
 					case T_EXPAND: 	
 						$expandedEntities = $this->entities;
-						$expandedArray = &$results[$this->resource]["expand"];
+						$expandedArray = &$resource[$this->resource]["expand"];
 						foreach($expanded["match"] as $expand) {
 							if($expandedEntities->navigation_property_exists($expand["match"])) {
 								$this->expand_resource($expandedEntities, $expand["match"], $expandedArray);
@@ -283,47 +291,42 @@ abstract class QueryParser implements QueryParserInterface {
 								$oldArray = &$expandedArray[count($expandedArray)-1][$expand["match"]];
 								$expandedArray = &$expandedArray[count($expandedArray)-1][$expand["match"]]["expand"];
 							} else {
-								$property = $expandedEntities->get_data_property($expand["match"]);
-								$oldArray["properties"] = "{$expandedEntities->get_name()}.{$property['name']}";
-							}
+								//$property = $expandedEntities->get_data_property($expand["match"]);
+								//$oldArray["result"] = $response = $this->response;
+								$oldArray["select"][] = $expand["match"];
+								//$oldArray["result"] = $response->select("{$expandedEntities->get_name()}.{$property['name']}");
+								//if($property != $expandedEntities->get_primary_key()) {
+								//	$oldArray["result"] = $oldArray["result"]->select("{$expandedEntities->get_name()}.{$expandedEntities->get_primary_key()}");
+								//}
+								//$oldArray["result"] = $oldArray["result"]->use_id_column($expandedEntities->get_primary_key())->find_many()->as_array();
+								//$oldArray["query"] = \ORM::get_last_query();
+							}					
 						}
 						break;
 				}
 			}
 		}		
-
-		$response = $this->response;
 		
-/*				
-		foreach($resources as $resource) {
-			$response = $this->response;
-			$resource_name = $resource["resource"]->get_name();
-			if(isset($resource["property"])) {
-				$id = $resource["resource"]->get_primary_key();
-				$idcount = 0;
-				foreach($resource["property"] as $property) {
-					$response = $response->select("{$resource_name}.{$property['name']}");
-					$idcount = ($property['name'] == $id) ? 1 : 0;
-				}
-				if($idcount == 0) {
-					$response = $response->select("{$resource_name}.{$id}");
-				}
-			} else {
-				$response = $response->select("{$resource_name}.*");
-			}
-			$results[$resource_name] = array(
-				"response" => $response->find_many()->as_array(),
-				"resource" => $resource["resource"]);
-		}
-*/
-		print_r($results);
+		$stack = [];
+		print_r($resource);
+		$result = $this->expand_recursive($resource[$this->resource], null, null, $stack);
+		//print_r($result);
+		//return $result;
 	}
 
-	protected function expand_recursive($results, $base, $expand, &$stack) {
+	protected function expand_recursive($resource, $navkey, $navvalue, &$stack) {
 		$ref = 0;
 		$result = [];
-		foreach ($results[$base]["response"] as $row) {
+		
+		
+		foreach ($resource["result"] as $row) {
 			$row_array = $row->as_array();
+			if($navkey) {
+				if($row_array[$navkey] != $navvalue) {
+					continue;
+				}
+			}
+
 			$cereal = serialize($row_array);
 			foreach($stack as $key => $val) {
 				if($val === $cereal) {
@@ -333,25 +336,32 @@ abstract class QueryParser implements QueryParserInterface {
 			}
 			if($ref === 0) {
 				$stack[] = $cereal;
-				
-				$object_name = get_class($row);
-				$row_array = array_merge(array('$id'=>count($stack), '$type'=>str_replace("\\",".",$object_name)),$row_array);
-				$object_name = self::_class_name_to_table_name($object_name);
-				
-				if(($key = array_search($object_name, $expand)) !== false) {
-					unset($expand[$key]);
-				}
-				
-				if($expand) {
-					foreach($expand as $expander) {
-						if(method_exists($row, $expander)) {
-							$expanded = $row->{$expander}()->find_many();
-							if($expanded->count() > 0) {
-								$row_array[$expander] = self::recurse_expand($expanded, $expand, $stack);
-							}
+				$entity_type_name = $resource["resource"]->get_entity_type_name();
+				$resource_name = $resource["resource"]->get_default_resource_name();
+				$row_array = array_merge(array('$id'=>count($stack), '$type'=>$entity_type_name), $row_array);
+				if(isset($resource["expand"])) {
+
+					foreach($resource["expand"] as $expand) {
+						foreach($expand as $expanded) {
+							$nav_to = $expanded["resource"]->get_navigation_property($resource_name);
+							$nav_to_key = ($nav_to['isScalar']) ? $nav_to['foreignKeyNames'][0] : $resource["resource"]->get_primary_key();
+							$nav_from_name = $expanded["resource"]->get_default_resource_name();
+							$nav_from = $resource["resource"]->get_navigation_property($nav_from_name);
+							$nav_from_key = ($nav_from['isScalar']) ? $nav_from['foreignKeyNames'][0] : $resource["resource"]->get_primary_key();
+							$nav_to_value = $row_array[$nav_from_key];
+							$row_array[$nav_from_name] = $this->expand_recursive($expanded, $nav_to_key, $nav_to_value, $stack);
+						
+							 
+						
 						}
+						
+						
+						
 					}
+					
 				}
+				
+				
 				$result[] = $row_array;
 			} else {
 				$result[] = array("\$ref" => $ref);
@@ -359,8 +369,6 @@ abstract class QueryParser implements QueryParserInterface {
 			$ref = 0;
 		}
 		return $result;
-
-		
 	}
 
 	/*
@@ -400,7 +408,6 @@ abstract class QueryParser implements QueryParserInterface {
 				break;
 			case T_RESOURCE:
 				$property = $filter[1]["match"][0]["match"];
-							echo $property;
 				break;			
 			case T_FUNCTION:
 				$property = $this->call_function($filter[1]["match"][0]["match"]);
@@ -555,6 +562,7 @@ class ORMQueryParser extends QueryParser {
 
 	protected function _join($property, $nav_property) {
 	}
+	
 	/* 
 	 * Top and Skip functions (limit & offset)
 	 */
@@ -568,21 +576,24 @@ class ORMQueryParser extends QueryParser {
 	}
 
 	public function execute() {
-		$this->count = ($this->inlinecount == "allpages") ? $this->response->count(): null;
+		$result = [];
+		
+		(!isset($this->top)) ?: $this->top();
+		(!isset($this->skip)) ?: $this->skip();
 
 		if(!isset($this->select) && !isset($this->expand)) {
-			(!isset($this->top)) ?: $this->top();
-			(!isset($this->skip)) ?: $this->skip();
 			$this->response = $this->response->find_many()->as_array();
+			$counter = 0;
+			$entity_type_name = $this->entities->get_entity_type_name();
+			foreach($this->response as $response) {
+				$result[] = array_merge(array('$id'=> ++$counter, '$type'=>$entity_type_name), $response->as_array());
+			}
 		} else {
 			$this->select();
-			$this->expand();
-			//$this->response = $this->response->find_many()->as_array();
+			$result = $this->expand();
 		}
-		//print_r($this->response);
+		return $result;
 	}
-
-
 }
 
 
