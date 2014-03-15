@@ -13,13 +13,12 @@ $cart_config = array(
 			'name' => 'cartesius',
 			'username' => 'postgres',
 			'password' => 'postgres',
-			'nc' => \WebApi\NC_PASCAL
+			'nc' => \WebApi\NC_PASCAL,
+			'endpoint' => 'webpai'
 		);
 
-$dispatcher_config = array('endpoint' => 'webpai');
-
-$cartesius = new \WebApi\ORMService($cart_config);
-$dispatcher = new \WebApi\Dispatcher($dispatcher_config);
+$cartesius = new \WebApi\ServiceFactory($cart_config);
+$dispatcher = new \WebApi\Dispatcher();
 $dispatcher->addService($cartesius);
 
 $app = new \Slim\Slim($slimconfig);
