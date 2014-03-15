@@ -26,27 +26,49 @@ abstract class QueryParser implements QueryParserInterface {
 	protected $format;
 	
 	protected $count;
-	protected $joins;
+	protected $joins = [];
 	protected $selected = [];
 
-	public function __construct($resource, $query, $service, $metadata) {
-		$this->service = $service;
+	public function __construct($resource, $metadata) {
 		$this->metadata = $metadata;
-		$this->entities = $this->metadata->get_resource($this->service->parse_nc($resource));
+		$this->entities = $this->metadata->get_resource($this->metadata->parse_nc($resource));
 		$this->resource = $this->entities->get_name();
-		$this->filter = isset($query['$filter']) ? QueryLexer::run('filter',$query['$filter']) : null;
-		$this->expand = isset($query['$expand']) ? QueryLexer::run('expand', $query['$expand']) : null;
-		$this->select = isset($query['$select']) ? QueryLexer::run('select', $query['$select']) : null;
-		$this->orderby = isset($query['$orderby']) ? QueryLexer::run('orderby', $query['$orderby']) : null;
-		$this->top = isset($query['$top']) ? intval($query['$top']) : null;
-		$this->skip = isset($query['$skip']) ? intval($query['$skip']) : null;
-		$this->inlinecount = isset($query['$inlinecount']) ? $query['$inlinecount'] : "none";
-		$this->format = isset($query['$format']) ? $query['$format'] : null;
-		
-		$this->joins = [];
-		
 		$this->response = $this->new_response();
+	}
 
+	public function set_filter($filter) {
+		
+		$this->filter = (isset($this->filter)) ? array_push($this->filter($this->filter), QueryLexer::run('filter',$filter)): QueryLexer::run('filter',$filter);
+
+		//$this->filter[] = QueryLexer::run('filter',$filter);		
+	}
+
+	public function set_expand($expand) {
+		$this->expand[] = QueryLexer::run('expand', $expand);
+	}
+	
+	public function set_select($select) {
+		$this->select[] = QueryLexer::run('select', $select);		
+	}
+	
+	public function set_orderby($orderby) {
+		$this->orderby[] = QueryLexer::run('orderby', $orderby);		
+	}
+
+	public function set_top($top) {
+		$this->top = intval($top);		
+	}
+
+	public function set_skip($skip) {
+		$this->skip = intval($skip);		
+	}
+
+	public function set_inlinecount($inlinecount) {
+		$this->inlinecount = $inlinecount;		
+	}
+
+	public function set_format($format) {
+		$this->format = $format;
 	}
 	
 	abstract protected function new_response();
@@ -539,7 +561,7 @@ abstract class QueryParser implements QueryParserInterface {
 class ORMQueryParser extends QueryParser {
 	
 	protected function new_response() {
-		return \ORM::for_table($this->resource, $this->service->get_name())->create();
+		return \ORM::for_table($this->resource, $this->metadata->get_service_name())->create();
 	}
 
 	protected function _filter($property, $value, $condition) {

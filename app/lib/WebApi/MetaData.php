@@ -58,6 +58,14 @@ class MetaData implements \JsonSerializable {
 	public function resource_exists($resource) {
 		return (isset($this->entity_map[$resource]))? true : false;
 	}
+	
+	public function parse_nc($resource) {
+		return $this->service->parse_nc($resource);	
+	}
+
+	public function get_service_name() {
+		return $this->service->get_name();
+	}
 
 }
 

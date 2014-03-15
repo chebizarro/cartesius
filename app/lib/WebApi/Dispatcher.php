@@ -4,7 +4,46 @@ namespace WebApi;
 
 use \PDO;
 
-class Dispatcher {
+class Dispatcher extends \Slim\Middleware {
+
+
+	public function __construct($config) {
+		self::configure($config);
+	}
+
+	public function call() {
+		$resourceUris = $this->app->request()->getResourceUri();
+		$resourceUriArray = explode("/",$resourceUris);
+		$response = $this->app->response();
+		
+		if($resourceUriArray[0] == $this->endpoint) {
+			$requestMethod = $app->request->getMethod();
+			
+			$resource = $resourceUriArray[1];
+			$query = $app->request->params();
+			
+			switch($requestMethod) {
+			case "GET":
+				// check for metadata call
+				$this->app->data = $this->get();
+			case "POST":
+				$this->app->data = $this->post();
+			case "PUT":
+				$this->app->data = $this->put();
+			case "DELETE":
+				$this->app->data = $this->delete();
+			}
+		}
+		$this->next->call();
+		
+		if ($response->status() == 200 && isset($this->app->data)) {
+			$response["Content-Type"] = $this->data["content_type"];
+            $response->body($this->data["body"]);
+            // set the recordcount option and other headers
+        }
+	}
+
+
 	protected static $services = [];
 	protected static $metadata = [];
 	protected static $metadata_path;
@@ -23,9 +62,9 @@ class Dispatcher {
 		return new $serviceclass($service);
 	}
 
-	protected static function parser_factory($resource, $query, $service) {
+	protected static function parser_factory($service, $resource) {
 		$parserclass = "WebApi\\".ucfirst(self::$services[$service]->get_type()) . "QueryParser";
-		return new $parserclass($resource, $query, self::$services[$service], self::$metadata[$service]);
+		return new $parserclass($resource, self::$metadata[$service]);
 	}
 
 	protected static function load_metadata($service) {
@@ -47,14 +86,22 @@ class Dispatcher {
 	}
 
 	public static function query($service, $resource, $query) {
-		//try {
-			$queryparser = self::parser_factory($resource, $query, $service);
-			$queryparser->parse();
-			return json_encode($queryparser->execute(), JSON_PRETTY_PRINT);
-		//} catch (\Exception $e) {
-		//	echo $e->getCode();
-		//}
-		//return Serialiser::serialise($queryparser);
+		try {
+			$queryparser = self::parser_factory($service, $resource);
+
+			(!isset($query['$filter'])) ? : $queryparser->set_filter($query['$filter']);
+			(!isset($query['$expand'])) ? : $queryparser->set_expand($query['$expand']);
+			(!isset($query['$select'])) ? : $queryparser->set_select($query['$select']);
+			(!isset($query['$orderby'])) ? : $queryparser->set_orderby($query['$orderby']);
+			(!isset($query['$top'])) ? : $queryparser->set_top($query['$top']);
+			(!isset($query['$skip'])) ? : $queryparser->set_skip($query['$skip']);
+			(!isset($query['$inlinecount'])) ? : $queryparser->set_inlinecount($query['$inlinecount']);
+			(!isset($query['$format'])) ? : $queryparser->set_format($query['$format']);
+
+			return print_r($queryparser->execute());
+		} catch (\Exception $e) {
+			return new QueryException($e);
+		}
 	}
 	
 	
