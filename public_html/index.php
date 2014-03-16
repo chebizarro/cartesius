@@ -17,16 +17,24 @@ $cart_config = array(
 			'endpoint' => 'webpai'
 		);
 
-$cartesius = new \WebApi\ServiceFactory($cart_config);
+$cartesius = \WebApi\ServiceFactory::create($cart_config);
 $dispatcher = new \WebApi\Dispatcher();
-$dispatcher->addService($cartesius);
+//$dispatcher->addService($cartesius);
 
 $app = new \Slim\Slim($slimconfig);
 $app->add(new \Slim\Middleware\SessionCookie($slimcookiesecret));
-$app->add($dispatcher);
+//$app->add($dispatcher);
 
 
-$app->get('/', function() use ($app) {
+$app->get('/webapi/cartesius/Metadata', function() use ($app) {
+	$resourceUris = $app->request()->getResourceUri();
+	echo $resourceUris."\n";
+	
+	$resourceUriArray = array_filter(explode("/",substr($resourceUris,1)));
+	print_r($resourceUriArray);
+	list($endpoint, $service, $resource) = $resourceUriArray;
+	echo $endpoint;
+	echo $service;
 
 });
 

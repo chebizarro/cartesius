@@ -6,155 +6,52 @@ use \PDO;
 
 class Dispatcher extends \Slim\Middleware {
 
+	private $services;
+	
+	public function __construct() {
 
-	public function __construct($config) {
-		self::configure($config);
+	}
+
+	public function addService($service) {
+		$name = $service->getName();
+		$endpoint = $service->getEndpoint();
+		$this->services[$endpoint][$name] = $service;
 	}
 
 	public function call() {
 		$resourceUris = $this->app->request()->getResourceUri();
-		$resourceUriArray = explode("/",$resourceUris);
+		$resourceUriArray = array_filter(explode("/",substr($resourceUris,1)));
 		$response = $this->app->response();
-		
-		if($resourceUriArray[0] == $this->endpoint) {
-			$requestMethod = $app->request->getMethod();
+				
+		if(isset($this->services[$resourceUriArray[0]])) {
 			
-			$resource = $resourceUriArray[1];
-			$query = $app->request->params();
+			$service = $this->services[$resourceUriArray[0]][$resourceUriArray[1]];
 			
-			switch($requestMethod) {
-			case "GET":
-				// check for metadata call
-				$this->app->data = $this->get();
-			case "POST":
-				$this->app->data = $this->post();
-			case "PUT":
-				$this->app->data = $this->put();
-			case "DELETE":
-				$this->app->data = $this->delete();
+			if($resourceUriArray[2] == "Metadata") {
+				$metadata = $service->getMetaData();				
+				// check format
+				$response->headers->set('Content-Type', 'application/javascript');
+				$response->setBody(json_encode($metadata, JSON_PRETTY_PRINT));
+			} else {
+				$requestMethod = $this->app->request->getMethod();
+				$requestQuery = $this->app->request->params();
+				$resource = $service->getResource($resourceUriArray[2]);								
+				switch($requestMethod) {
+				case "GET":
+					$resource->setQuery($requestQuery);
+				case "POST":
+				case "PUT":
+				case "DELETE":
+				}
 			}
 		}
 		$this->next->call();
 		
-		if ($response->status() == 200 && isset($this->app->data)) {
-			$response["Content-Type"] = $this->data["content_type"];
-            $response->body($this->data["body"]);
+		if ($response->status() != 200 && isset($this->app->data)) {
+			// Get output format
+			//$response["Content-Type"] = $this->data["content_type"];
+            //$response->body($this->app->data->output());
             // set the recordcount option and other headers
         }
 	}
-
-
-	protected static $services = [];
-	protected static $metadata = [];
-	protected static $metadata_path;
-	
-	public static function configure($config) {
-		self::$metadata_path = $config["metadata_path"];
-		foreach($config["services"] as $service) {
-			$service_name = $service["name"];
-			self::$services[$service_name] = self::service_factory($service);
-			self::load_metadata($service_name);
-		}
-	}
-	
-	protected static function service_factory($service) {
-		$serviceclass = "WebApi\\".ucfirst($service["type"]) . "Service";
-		return new $serviceclass($service);
-	}
-
-	protected static function parser_factory($service, $resource) {
-		$parserclass = "WebApi\\".ucfirst(self::$services[$service]->get_type()) . "QueryParser";
-		return new $parserclass($resource, self::$metadata[$service]);
-	}
-
-	protected static function load_metadata($service) {
-		$metadata_file = self::$metadata_path."{$service}.metadata.serial";
-		if (!file_exists($metadata_file)) {
-			self::$metadata[$service] = new MetaData(self::$services[$service]);
-			file_put_contents($metadata_file, serialize(self::$metadata[$service]));
-		} else {
-			self::$metadata[$service] = unserialize(file_get_contents($metadata_file));
-		}
-	}
-
-	public static function show_metadata($service, $format = "application/json") {		
-		if($format == "application/json") {
-			return json_encode(self::$metadata[$service], JSON_PRETTY_PRINT);
-		} else {
-			//other formats? XML?
-		}
-	}
-
-	public static function query($service, $resource, $query) {
-		try {
-			$queryparser = self::parser_factory($service, $resource);
-
-			(!isset($query['$filter'])) ? : $queryparser->set_filter($query['$filter']);
-			(!isset($query['$expand'])) ? : $queryparser->set_expand($query['$expand']);
-			(!isset($query['$select'])) ? : $queryparser->set_select($query['$select']);
-			(!isset($query['$orderby'])) ? : $queryparser->set_orderby($query['$orderby']);
-			(!isset($query['$top'])) ? : $queryparser->set_top($query['$top']);
-			(!isset($query['$skip'])) ? : $queryparser->set_skip($query['$skip']);
-			(!isset($query['$inlinecount'])) ? : $queryparser->set_inlinecount($query['$inlinecount']);
-			(!isset($query['$format'])) ? : $queryparser->set_format($query['$format']);
-
-			return print_r($queryparser->execute());
-		} catch (\Exception $e) {
-			return new QueryException($e);
-		}
-	}
-	
-	
-	// Below here is be removed to other classes
-
-
-	/*
-	 * Save data functions
-	 */
-
-	public static function save_changes($connection, $data) {
-		
-	/*
-	{
-		"entities":[
-			{
-				"id":"K_-1",
-				"title":"Test",
-				"date":"",
-				"review_date":"Thu Nov 21 2013 00:00:00 GMT+0700 (WIB)",
-				"summary":null,
-				"entityAspect":{
-					"entityTypeName":"Project:#XMLPARIS.Model",
-					"defaultResourceName":"Project",
-					"entityState":"Added",
-					"originalValuesMap":{},
-					"autoGeneratedKey":{
-						"propertyName":"id",
-						"autoGeneratedKeyType":"Identity"
-					}
-				}
-			}
-		],
-		"saveOptions":{}
-	}
-	*/
-
-		foreach ($data->entities as $entity) {
-			$aspect = $entity->entityAspect;
-			if($aspect->entityState == "Added") {
-				$model = ORM\Model::factory($aspect->defaultResourceName, self::$models[$aspect->defaultResourceName])->create();
-				$keyVar = $aspect->autoGeneratedKey->propertyName;
-				foreach($entity as $key => $value) {
-					if (($key !== $keyVar) && ($key !== "entityAspect")) {
-						if(strtotime($value) != null) {
-							$value = strtotime($value);
-						}
-						$model->$key = $value;
-					}
-				}
-				$model->save();
-			}
-		}
-	}
-
 }

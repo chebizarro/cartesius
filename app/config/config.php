@@ -37,35 +37,4 @@ $slimgoogleauth = array(
 		array('path' => '/'))
 );
 
-$config = array(
-	'services' => array(
-		array(
-			'type'=>'pgsql',
-			'host' => '127.0.0.1',
-			'port' => 5432,
-			'name' => 'cartesius',
-			'username' => 'postgres',
-			'password' => 'postgres',
-			'endpoint' => 'webapi',
-			'nc' => NC_PASCAL,
-			'authenticate' => null,
-			'exclude' => array(
-				'account' => array('token')
-			)
-		),
-		array(
-			'type'=>'pgsql',
-			'host' => '127.0.0.1',
-			'port' => 5432,
-			'name' => 'northwind',
-			'username' => 'postgres',
-			'password' => 'postgres',
-			'endpoint' => 'webapi',
-			'nc' => NC_PASCAL,
-			'authenticate' => null,
-			'exclude' => null
-		)
-	),
-	'metadata_path' => DATA,
-	'endpoint' => 'webapi'
-);
+
