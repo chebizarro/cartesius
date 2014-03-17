@@ -10,6 +10,20 @@ interface ResourceInterface {
 }
 
 abstract class Resource implements ResourceInterface, \JsonSerializable {
+	
+	protected $metadata;
+	protected $entities;
+	protected $resourceName;
+	protected $resource;
+
+	protected $filter;
+	protected $expand;
+	protected $select;
+	protected $orderby;
+	protected $top;
+	protected $skip;
+	protected $inlinecount;
+	protected $format;
 
 	public function __construct($resourceName, $metadata) {
 		$this->metadata = $metadata;
@@ -17,8 +31,6 @@ abstract class Resource implements ResourceInterface, \JsonSerializable {
 		$this->resourceName = $this->entities->getName();
 		$this->resource = $this->newResource();
 	}
-
-	abstract protected function newResource();
 
 	public function setQuery(Array $query) {
 		(!isset($query['$filter'])) ? : $this->setFilter($query['$filter']);
@@ -85,8 +97,7 @@ abstract class Resource implements ResourceInterface, \JsonSerializable {
 		$value = $filter[2]["match"];
 		if($this->entities->data_property_exists($property)) {
 			$property = $this->resourceName.".".$property;
-			// Modify to be a method
-			$this->resource = $this->_filter($property, $value, $condition);
+			$this->_filter($property, $value, $condition);
 		} else {
 			throw new \Exception('Query error: Property does not exist');
 		}
@@ -158,9 +169,31 @@ abstract class Resource implements ResourceInterface, \JsonSerializable {
 		}
 	}
 
+	/* helper functions */
+	
+	/* to be abstracted */
+	protected function join($nav_from, $nav_to) {
+		$nav_to_property = $nav_from->get_navigation_property($nav_to->get_default_resource_name());
+		$nav_from_property = $nav_to->get_navigation_property($nav_from->get_default_resource_name());
+		$nav_from_name = $nav_from->get_name();
+		$nav_to_name = $nav_to->get_name();
+
+		if(!isset($this->joins[$nav_to_name])) {
+			$nav_to_key = ($nav_from_property['isScalar']) ? $nav_from_property['foreignKeyNames'][0] : $nav_from->get_primary_key();
+			$nav_from_key = ($nav_to_property['isScalar']) ? $nav_to_property['foreignKeyNames'][0] : $nav_from->get_primary_key();
+
+			$this->resource = $this->resource->join(
+				$nav_to_name,
+				array("{$nav_to_name}.{$nav_to_key}",
+				"=",
+				"{$nav_from_name}.{$nav_from_key}")
+			);
+			$this->joins[$nav_to_name] = array($nav_from_property, $nav_to_property);
+		}
+	}
+
 
 	/* Orderby */
-
 	protected function orderby() {
 		foreach($this->orderby as $orderby) {
 			$token = $orderby["token"];
@@ -168,6 +201,7 @@ abstract class Resource implements ResourceInterface, \JsonSerializable {
 			switch($token) {
 				case T_EXPAND:
 					$property = $this->filter_expand($orderby);
+					/* split parameters */
 					$property = "{$property['resource']}.{$property['property']}";
 					$order = end($orderby['match']);
 					$this->_orderby($property, $order['token']); 
@@ -175,6 +209,7 @@ abstract class Resource implements ResourceInterface, \JsonSerializable {
 				case T_ORDERBY:
 				case T_ORDERBYDESC:
 					$property = $orderby["match"];
+					/* split parameters */
 					if($entityCollection->data_property_exists($property)) {
 						$this->_orderby("{$this->resource}.{$property}", $token);
 					} else {
@@ -185,7 +220,6 @@ abstract class Resource implements ResourceInterface, \JsonSerializable {
 			}
 		}
 	}
-
 
 	/* abstract functions to be implemented by the sub class */
 	abstract protected function newResource();
@@ -211,17 +245,15 @@ class ORMResource extends Resource {
 
 	/* implementation specific functions */
 
-	// Modify to be a method
 	protected function _filter($property, $value, $condition) {
 		switch ($condition)
 		{
-			case T_GT: return $this->resource->where_gt($property, $value);
-			case T_LT: return $this->resource->where_lt($property, $value);
-			case T_EQ: return $this->resource->where_equal($property, $value);
-			case T_GE: return $this->resource->where_gte($property, $value);
-			case T_LE: return $this->resource->where_lte($property, $value);
-			case T_NE: return $this->resource->where_not_equal($property, $value);
-			default : return $this->resource;
+			case T_GT: $this->resource = $this->resource->where_gt($property, $value); break;
+			case T_LT: $this->resource = $this->resource->where_lt($property, $value); break;
+			case T_EQ: $this->resource = $this->resource->where_equal($property, $value); break;
+			case T_GE: $this->resource = $this->resource->where_gte($property, $value); break;
+			case T_LE: $this->resource = $this->resource->where_lte($property, $value); break;
+			case T_NE: $this->resource = $this->resource->where_not_equal($property, $value); break;
 		}
 	}
 	
