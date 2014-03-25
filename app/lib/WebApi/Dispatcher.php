@@ -23,34 +23,42 @@ class Dispatcher extends \Slim\Middleware {
 		$resourceUriArray = array_filter(explode("/",substr($resourceUris,1)));
 		$response = $this->app->response();
 				
-		if(isset($this->services[$resourceUriArray[0]])) {
-			
+		try {
 			$service = $this->services[$resourceUriArray[0]][$resourceUriArray[1]];
 			
 			if($resourceUriArray[2] == "Metadata") {
-				$metadata = $service->getMetaData();				
+				//$metadata = $service->getMetaData();
 				// check format
-				$response->headers->set('Content-Type', 'application/javascript');
-				$response->setBody(json_encode($metadata, JSON_PRETTY_PRINT));
+				//$response->headers->set('Content-Type', 'application/json');
+				//$response->setBody(json_encode([$metadata], JSON_PRETTY_PRINT));
+				$this->app->resource = $service->getMetaData();
 			} else {
 				$requestMethod = $this->app->request->getMethod();
 				$requestQuery = $this->app->request->params();
-				$resource = $service->getResource($resourceUriArray[2]);								
+				$resource = $service->getResource($resourceUriArray[2]);							
 				switch($requestMethod) {
 				case "GET":
 					$resource->setQuery($requestQuery);
+					$this->app->resource = $resource;
 				case "POST":
 				case "PUT":
 				case "DELETE":
 				}
 			}
+		} catch (\Exception $e) {
+			;
 		}
+		
 		$this->next->call();
 		
-		if ($response->status() != 200 && isset($this->app->data)) {
+		if (isset($this->app->resource)) {
 			// Get output format
-			//$response["Content-Type"] = $this->data["content_type"];
-            //$response->body($this->app->data->output());
+			$response->setStatus(200);
+			
+			$response->headers->set('Content-Type', 'application/json');
+			
+			$response->setBody(json_encode($this->app->resource->get(), JSON_PRETTY_PRINT));
+			
             // set the recordcount option and other headers
         }
 	}

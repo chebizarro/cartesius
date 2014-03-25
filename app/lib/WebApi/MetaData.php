@@ -75,6 +75,10 @@ class MetaData implements MetaDataInterface, \JsonSerializable {
 	public function getServiceName() {
 		return $this->service->getName();
 	}
+	
+	public function get() {
+		return $this;
+	}
 
 }
 

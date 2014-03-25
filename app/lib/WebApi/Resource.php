@@ -109,12 +109,12 @@ abstract class Resource implements ResourceInterface, \JsonSerializable {
 		foreach($filter["match"] as $expand) {
 			if($expandedEntities->navigation_property_exists($expand["match"])) {
 				$nav_from = $expandedEntities;
-				$nav_to = $this->metadata->get_resource($expand["match"]);
+				$nav_to = $this->metadata->getResource($expand["match"]);
 				$this->join($nav_from, $nav_to);
 				$expandedEntities = $nav_to;
 			} else {
 				$nav_property = $expandedEntities->get_data_property($expand["match"]);
-				$property["resource"] = $expandedEntities->get_name();
+				$property["resource"] = $expandedEntities->getName();
 				$property["property"] = $expand['match'];
 				return $property;
 			}
@@ -132,7 +132,7 @@ abstract class Resource implements ResourceInterface, \JsonSerializable {
 					$this->filter($left);
 					$this->filter($right);
 				} elseif ($operator == T_OR) {
-					$this->_filter_or($left, $right);
+					$this->_filterOr($left, $right);
 				}
 				break;
 			case T_BLOCK :
@@ -145,7 +145,7 @@ abstract class Resource implements ResourceInterface, \JsonSerializable {
 				$this->filter($right);
 				break;
 			case T_NOT:
-				$this->filter_not($filter);
+				$this->filterNot($filter);
 				break;
 		}
 	}
@@ -155,7 +155,7 @@ abstract class Resource implements ResourceInterface, \JsonSerializable {
 		if($this->entities->data_property_exists($property)) {
 			$condition = $filter[1]["match"][1]["match"];
 			$value = $filter[1]["match"][2]["match"];
-			$this->_filter_not($property, $condition, $value);
+			$this->_filterNot($property, $condition, $value);
 		} else {
 			throw new \Exception('Query error: Property does not exist');
 		}
@@ -175,8 +175,8 @@ abstract class Resource implements ResourceInterface, \JsonSerializable {
 	protected function join($nav_from, $nav_to) {
 		$nav_to_property = $nav_from->get_navigation_property($nav_to->get_default_resource_name());
 		$nav_from_property = $nav_to->get_navigation_property($nav_from->get_default_resource_name());
-		$nav_from_name = $nav_from->get_name();
-		$nav_to_name = $nav_to->get_name();
+		$nav_from_name = $nav_from->getName();
+		$nav_to_name = $nav_to->getName();
 
 		if(!isset($this->joins[$nav_to_name])) {
 			$nav_to_key = ($nav_from_property['isScalar']) ? $nav_from_property['foreignKeyNames'][0] : $nav_from->get_primary_key();
@@ -220,6 +220,144 @@ abstract class Resource implements ResourceInterface, \JsonSerializable {
 			}
 		}
 	}
+	
+	
+	/*
+	 * Expand
+	 */ 
+	
+		/* Expand */
+	
+	protected function expand_resource($nav_from, $nav_to_name, &$result) {
+		$nav_to = $this->metadata->get_resource($nav_to_name);
+		$this->join($nav_from, $nav_to);
+		$response = clone $this->resource;
+		$resource[$nav_to_name]["resource"] = $nav_to;
+		$response = $response->use_id_column($nav_to->get_primary_key());
+		$resource[$nav_to_name]["response"] = $response;
+		$resource[$nav_to_name]["from"] =& $result;
+		$resource[$nav_to_name]["result"] = $response->select("{$nav_to->get_name()}.*")->find_many()->as_array();
+		$result["expand"][] = $resource;
+
+	}
+
+
+	protected function expand() {
+		$resource[$this->resourceName]["resource"] = &$this->entities;
+		$resource[$this->resourceName]["expand"]=[];
+		$resource[$this->resourceName]["response"]= clone $this->resource;
+
+		// These two will create joins if there are expanded properties
+		//(isset($this->filter)) ? $this->filter($this->filter) : null;
+		if(isset($this->filter)) {			
+			foreach($this->filter as $filter) {
+				$this->filter($filter);
+			}
+		}
+		
+		$this->count = ($this->inlinecount == "allpages") ? $this->resource->distinct()->count(): null;
+		(isset($this->orderby)) ? $this->orderby() : null;
+		
+		$resource[$this->resourceName]["result"] = $this->resource->select("{$this->resourceName}.*")->find_many()->as_array();
+
+		//$this->select();
+/*
+		if(count($this->selected > 0)) {
+			foreach($this->selected as $select) {
+				$resource[$this->resource]["select"] = $select;
+			}
+		}
+*/
+	
+		$resource[$this->resourceName]["from"] = null;
+				
+		if(isset($this->expand)) {
+			foreach($this->expand as $expanded => $expand) {
+				$token = $expanded["token"];
+				switch($token) {
+					case T_RESOURCE:
+						$this->expand_resource($this->entities, $expanded["match"], $resource[$this->resourceName]);
+						break;
+					case T_EXPAND: 	
+						$expandedEntities = $this->entities;
+						$expandedArray = &$resource[$this->resourceName];
+						foreach($expanded["match"] as $expand) {
+							if($expandedEntities->navigation_property_exists($expand["match"])) {
+								$this->expand_resource($expandedEntities, $expand["match"], $expandedArray);
+								$expandedEntities = $this->metadata->get_resource($expand["match"]);
+								$oldArray = &$expandedArray["expand"][count($expandedArray["expand"])-1][$expand["match"]];
+								$expandedArray = &$expandedArray["expand"][count($expandedArray["expand"])-1][$expand["match"]];
+							} else {
+								$oldArray["select"][] = $expand["match"];
+							}					
+						}
+						break;
+				}
+			}
+		}		
+		
+		$stack = [];
+		$result = $this->expand_recursive($resource[$this->resourceName], null, null, $stack);
+	}
+
+	protected function expand_recursive($resource, $navkey, $navvalue, &$stack) {
+		$ref = 0;
+		$result = [];
+		
+		foreach ($resource["result"] as $row) {
+			$row_array = $row->as_array();
+			if($navkey) {
+				if($row_array[$navkey] != $navvalue) {
+					continue;
+				}
+			}
+
+			$cereal = serialize($row_array);
+			foreach($stack as $key => $val) {
+				if($val === $cereal) {
+					$ref = $key+1;
+					break;
+				}
+			}
+			if($ref === 0) {
+				$stack[] = $cereal;
+				$entity_type_name = $resource["resource"]->get_entity_type_name();
+				$resource_name = $resource["resource"]->get_default_resource_name();
+				$row_array = array_merge(array('$id'=>count($stack), '$type'=>$entity_type_name), $row_array);
+				if(isset($resource["expand"])) {
+
+					foreach($resource["expand"] as $expand) {
+						foreach($expand as $expanded) {
+							$nav_to = $expanded["resource"]->get_navigation_property($resource_name);
+							$nav_to_key = ($nav_to['isScalar']) ? $nav_to['foreignKeyNames'][0] : $resource["resource"]->get_primary_key();
+							$nav_from_name = $expanded["resource"]->get_default_resource_name();
+							$nav_from = $resource["resource"]->get_navigation_property($nav_from_name);
+							$nav_from_key = ($nav_from['isScalar']) ? $nav_from['foreignKeyNames'][0] : $resource["resource"]->get_primary_key();
+							$nav_to_value = $row_array[$nav_from_key];
+							$row_array[$nav_from_name] = $this->expand_recursive($expanded, $nav_to_key, $nav_to_value, $stack);						
+						}
+					}
+					
+				}
+				if(isset($resource["from"])) {
+					$from_name = $resource["from"]["resource"]->get_default_resource_name();
+					$resource["from"]["result"] = $resource["from"]["response"]->select($resource["from"]["resource"]->get_name() . ".*")->find_many()->as_array();
+					$nav_to_key = $resource["from"]["resource"]->get_primary_key();
+					$nav_from = $resource["resource"]->get_navigation_property($from_name);
+					$nav_from_key = ($nav_from['isScalar']) ? $nav_from['foreignKeyNames'][0] : $resource["resource"]->get_primary_key();
+					$nav_to_value = $row_array[$nav_from_key];
+					$row_array[$from_name] = $this->expand_recursive($resource["from"], $nav_to_key, $nav_to_value, $stack);
+				}
+				
+				$result[] = $row_array;
+			} else {
+				$result[] = array("\$ref" => $ref);
+			}
+			$ref = 0;
+		}
+		return $result;
+	}
+
 
 	/* abstract functions to be implemented by the sub class */
 	abstract protected function newResource();
@@ -232,6 +370,8 @@ abstract class Resource implements ResourceInterface, \JsonSerializable {
 	abstract protected function _filterNot($property, $condition, $value);
 	abstract protected function _filterOr($left, $right);
 
+
+	abstract public function get();
 
 	abstract public function jsonSerialize();
 
@@ -297,6 +437,171 @@ class ORMResource extends Resource {
 
 	public function jsonSerialize() {
 		
+	}
+
+	public function get() {
+		$result = [];
+		
+		(!isset($this->top)) ?: $this->top();
+		(!isset($this->skip)) ?: $this->skip();
+
+		if(!isset($this->select) && !isset($this->expand)) {
+			// These two will create joins if there are expanded properties
+			if(isset($this->filter)) {			
+				foreach($this->filter as $filter) {
+					$this->filter($filter);
+				}
+			}
+			$this->count = ($this->inlinecount == "allpages") ? $this->resource->distinct()->count(): null;
+
+			(isset($this->orderby)) ? $this->orderby() : null;
+			
+			$this->resource = $this->resource->find_many()->as_array();
+			$counter = 0;
+			$entity_type_name = $this->entities->get_entity_type_name();
+			foreach($this->resource as $resource) {
+				$result[] = array_merge(array('$id'=> ++$counter, '$type'=>$entity_type_name), $resource->as_array());
+			}
+		} else {
+			$result = $this->expand();
+		}
+		return $result;
+	}
+
+	/* Functions */
+
+	protected function call_function($filter) {
+		$function = "function_".$filter[0]["match"];
+		if(method_exists($this, $function)) {
+			return $this->$function($filter);
+		} else {
+			throw new \Exception("Function error: Function: {$function} does not exist");			
+		}
+	}
+
+	protected function function_substringof($filter) {
+		$property = $filter[1]["match"][0]["match"][1]["match"];
+		$value = '%' . $filter[1]["match"][0]["match"][0]["match"] . '%';
+		$condition = $filter[3]["token"];
+		$this->resource = ($condition == T_TRUE) ? $this->resource->where_like($property, $value) : $this->resource->where_not_like($property, $value);
+		return null;
+	}
+
+	protected function function_startswith($filter) {
+		$token = $filter[1]["match"][0]["token"];
+		switch($token) {
+			case T_EXPAND:
+				$property = $this->filter_expand($filter[1]["match"][0]);
+				$property = "{$property['resource']}.{$property['property']}";
+				break;
+			case T_RESOURCE:
+				$property = $filter[1]["match"][0]["match"];
+				break;			
+			case T_FUNCTION:
+				$property = $this->call_function($filter[1]["match"][0]["match"]);
+				break;
+			default: 
+		}
+		$value = $filter[1]["match"][1]["match"][0]["match"] . '%';
+		$condition = $filter[3]["token"];
+		$this->resource = ($condition == T_TRUE) ? $this->resource->where_like($property, $value) : $this->resource->where_not_like($property, $value);
+		return null;
+	}
+
+	protected function function_toupper($filter) {
+		$function = "upper(";
+		if($filter[1]["token"][0]["token"] != T_RESOURCE) {
+			$function .= $this->call_function($filter[1]["match"]).")";
+		} else {
+			$function .= "\"{$filter[1]["match"][0]["match"]}\")";
+		}		
+		$function .= $filter[2]["match"] . "'{$filter[3]["match"]}'";
+		return $function;
+	}
+
+	protected function function_length($filter) {
+		$function = "length(";
+		if($filter[1]["match"][0]["token"] != T_RESOURCE) {
+			$function .= $this->call_function($filter[1]["match"]).")";
+		} else {
+			$function .= "\"{$filter[1]["match"][0]["match"]}\")";
+		}		
+		$function .= $filter[2]["match"] . $filter[3]["match"];
+		return $function;
+	}
+	
+	protected function function_substring($filter) {
+		$function = "substring(";
+		if($filter[1]["match"][0]["token"] != T_RESOURCE) {
+			$function .= $this->call_function($filter[1]["match"]);
+		} else {
+			$function .= "\"{$filter[1]["match"][0]["match"]}\"";
+		}		
+		$function .= " from {$filter[1]["match"][1]["match"][0]["match"]}";
+		$function .= (isset($filter[1]["match"][1]["match"][1])) ? " for {$filter[1]["match"][1]["match"][1]["match"]})" : ")";
+		return $function;	
+	}
+
+
+	protected function function_endswith() {
+	
+	}
+	
+	protected function function_indexof() {
+	
+	}
+
+	protected function function_replace() {
+	
+	}
+
+		
+	protected function function_tolower() {
+	
+	}
+	
+	protected function function_trim() {
+	
+	}
+	
+	protected function function_concat() {
+	
+	}
+	
+	protected function function_day() {
+	
+	}
+	
+	protected function function_hour() {
+	
+	}
+	
+	protected function function_minute() {
+	
+	}
+	
+	protected function function_month() {
+	
+	}
+	
+	protected function function_second() {
+	
+	}
+	
+	protected function function_year() {
+	
+	}
+	
+	protected function function_round() {
+	
+	}
+	
+	protected function function_floor() {
+	
+	}
+	
+	protected function function_ceiling() {
+	
 	}
 
 }
