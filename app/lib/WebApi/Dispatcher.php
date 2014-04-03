@@ -46,20 +46,21 @@ class Dispatcher extends \Slim\Middleware {
 				}
 			}
 		} catch (\Exception $e) {
-			;
+			echo $e;
 		}
 		
 		$this->next->call();
 		
 		if (isset($this->app->resource)) {
 			// Get output format
+			// set the recordcount option and other headers
 			$response->setStatus(200);
-			
 			$response->headers->set('Content-Type', 'application/json');
-			
-			$response->setBody(json_encode($this->app->resource->get(), JSON_PRETTY_PRINT));
-			
-            // set the recordcount option and other headers
+			//try {
+				$response->setBody(json_encode($this->app->resource->get(), JSON_PRETTY_PRINT));
+			//} catch (\Exception $e) {
+				
+			//}
         }
 	}
 }
